@@ -58,6 +58,10 @@ count(){
 	ls $@ -1 | wc -l
 }
 
+e(){
+	gnvim $@ & disown 
+}
+
 #####################################################################################
 #Aliases
 #####################################################################################
@@ -69,7 +73,6 @@ alias got='git'
 alias ipconfig='ifconfig'
 alias ll='ls -la'
 alias dc='cd'
-alias g='nvim'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
 alias vim='nvim'
 alias n='nodemon '
@@ -77,10 +80,10 @@ alias gomon='nodemon --exec go run'
 alias c='code .'
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
-alias eVim='g ~/.config/nvim/init.vim' 
+alias eVim='nvim ~/.config/nvim/init.vim' 
 alias evim='eVim'
 alias cat='bat'
-alias eRC='vim ~/.zshrc'
+alias eRC='nvim ~/.zshrc'
 alias erc='eRC'
 alias src='source ~/.zshrc'
 
@@ -97,6 +100,7 @@ alias py='py3'
 #####################################################################################
 export PATH="$PATH:~/scripts";
 export PATH="$PATH:/usr/local/go/src"
+export PATH="$PATH:/usr/local/Goneovim"
 
 #####################################################################################
 # Custom Services
@@ -111,6 +115,8 @@ alias statusSSH='sudo systemctl status sshd'
 alias startSSH='sudo systemctl start sshd; statusSSH'
 alias stopSSH='sudo systemctl stop sshd; statusSSH'
 
+# Setting for the new UTF-8 terminal support in Lion
+export LC_ALL=C
 #####################################################################################
 # Local Machine RC Files
 #####################################################################################

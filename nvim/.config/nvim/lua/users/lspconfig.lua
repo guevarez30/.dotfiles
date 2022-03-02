@@ -31,8 +31,11 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local servers = { 'tsserver' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
+      capabilities = capabilities,
+      on_attach = on_attach,
+      handlers = {
+        ['textDocument/publishDiagnostics'] = function() end,
+      },
     }
 end
 

@@ -23,7 +23,8 @@ set smarttab " Autotabs for certain code
 set shiftwidth=2
 set tabstop=2
 set encoding=UTF-8
-
+set clipboard=unnamed
+set guifont=Consolas:h11
 " -- Plugins
 call plug#begin('~/.config/nvim/plugged')
 " Telescope requires plenary to function
@@ -50,7 +51,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 " -- Icons
 Plug 'kyazdani42/nvim-web-devicons'
+" -- Prettier
+Plug 'sbdchd/neoformat'
 call plug#end()
+
+autocmd BufWritePre *.js Neoformat
 
 " declare your color scheme
 colorscheme dracula
@@ -60,11 +65,19 @@ set background=dark
 
 lua require('users')
 
-let g:netrw_liststyle = 3
-let g:netrw_banner = 0
-let g:netrw_winsize = 25
-let g:netrw_liststyle = 3
-
+let mapleader = " " " map leader to Space
+" -- Navigate Tab
+nnoremap <leader>tl  :tabnext<CR>
+nnoremap <leader>th  :tabprev<CR>
+nnoremap <leader>td  :tabclose<CR>
+nnoremap <leader>tn  :tabnew<CR>
+nnoremap <leader>t1  1gt
+nnoremap <leader>t2  2gt
+nnoremap <leader>t3  3gt
+nnoremap <leader>t4  4gt
+nnoremap <leader>t5  5gt
+nnoremap <leader>t6  6gt
+nnoremap <leader>f   <S-^>
+nnoremap <leader>e   <S-$>
+nnoremap <C-x> :Explore <Cr>
 nnoremap <C-p> :Telescope find_files<Cr>
-" -- Prettier
-let g:neoformat_try_node_exe = 1
