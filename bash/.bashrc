@@ -14,7 +14,6 @@ alias mv='mv -i'
 ###################################################################################
 # Functions
 ###################################################################################
-
 killport() {
 	fuser -k $@/tcp
 }
@@ -37,7 +36,6 @@ newBranch(){
 count(){
 	ls $@ -1 | wc -l
 }
-
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -68,10 +66,12 @@ alias gomon='nodemon --exec go run'
 alias c='code .'
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
-alias eVim='g ~/.config/nvim/init.vim' 
-alias evim='eVim'
 alias cat='bat'
 alias e='nvim'
+alias eVim='e ~/.config/nvim/init.vim' 
+alias evim='eVim'
+alias ebash='e ~/.bashrc'
+alias eBash='ebash'
 #####################################################################################
 #Python
 #####################################################################################
