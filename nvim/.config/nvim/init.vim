@@ -48,7 +48,7 @@ Plug 'tpope/vim-fugitive'
 " -- Lightline
 Plug 'itchyny/lightline.vim'
 " -- Nerdtree
-Plug 'preservim/nerdtree'
+#Plug 'preservim/nerdtree'
 " -- Icons
 Plug 'kyazdani42/nvim-web-devicons'
 " -- Prettier
@@ -56,29 +56,38 @@ Plug 'sbdchd/neoformat'
 call plug#end()
 
 autocmd BufWritePre *.js Neoformat
-" -- NerdTree
-" Start NERDTree. If a file is specified, move the cursor to its window.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-" Start NERDTree when Vim starts with a directory argument.
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
-    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
-" Open the existing NERDTree on each new tab.
-autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-" Toggle Nerd Tree Window
-nnoremap <leader>wt :NERDTreeToggle<CR>
-nnoremap <leader>wl  <C-w>l
-nnoremap <leader>w <C-W>
-nnoremap <leader>wq <C-w>q
+
+"# " Start NERDTree. If a file is specified, move the cursor to its window.
+"# autocmd StdinReadPre * let s:std_in=1
+"# autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+"# " Start NERDTree when Vim starts with a directory argument.
+"# autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+"#     \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+"# " Open the existing NERDTree on each new tab.
+"# autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+"# " Exit Vim if NERDTree is the only window remaining in the only tab.
+"# autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+"# " Toggle Nerd Tree Window
+"# " Disable new buffers being created in nerd tree window
+"# autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" | b# | endif
+
 " declare your color scheme
 colorscheme dracula
 
 " Use this for dark color schemes
 set background=dark
 
+
 lua require('users')
+
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 25
+
+
+
+
+
 
 let mapleader = " " " map leader to Space
 " -- Navigate Tab
@@ -95,4 +104,5 @@ nnoremap <leader>t6  6gt
 nnoremap <leader>f   <S-^>
 nnoremap <leader>e   <S-$>
 nnoremap <C-p> :Telescope find_files<Cr>
-
+nnoremap <leader>wl  <C-w>l
+nnoremap <leader>w <C-W>
