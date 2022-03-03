@@ -45,6 +45,7 @@ Plug 'onsails/lspkind-nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " -- vim-fugitive
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
 " -- Lightline
 Plug 'itchyny/lightline.vim'
 " -- Icons
@@ -56,6 +57,9 @@ Plug 'tpope/vim-vinegar'
 call plug#end()
 
 autocmd BufWritePre *.js Neoformat
+
+
+set mouse=a
 
 " declare your color scheme
 colorscheme dracula
@@ -80,5 +84,3 @@ nnoremap <leader>t6  6gt
 nnoremap <leader>f   <S-^>
 nnoremap <leader>e   <S-$>
 nnoremap <C-p> :Telescope find_files<Cr>
-nnoremap <leader>wl  <C-w>l
-nnoremap <leader>w <C-W>

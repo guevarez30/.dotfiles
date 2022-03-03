@@ -15,5 +15,3 @@ nix-env -iA \
 stow git
 stow zsh
 stow nvim
-
-

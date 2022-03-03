@@ -72,6 +72,7 @@ alias eVim='e ~/.config/nvim/init.vim'
 alias evim='eVim'
 alias ebash='e ~/.bashrc'
 alias eBash='ebash'
+alias dot='cd ~/.dotfiles'
 #####################################################################################
 #Python
 #####################################################################################
