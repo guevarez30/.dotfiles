@@ -22,7 +22,6 @@ set ruler " Always shows location in file (line#)
 set smarttab " Autotabs for certain code
 set shiftwidth=2
 set tabstop=2
-set guifont=Consolas:h11
 " -- Plugins
 call plug#begin('~/.config/nvim/plugged')
 " Telescope requires plenary to function
@@ -58,14 +57,8 @@ call plug#end()
 
 autocmd BufWritePre *.js Neoformat
 
-
-set mouse=a
-
 " declare your color scheme
 colorscheme dracula
-
-" Use this for dark color schemes
-set background=dark
 
 lua require('users')
 

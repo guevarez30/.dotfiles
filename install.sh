@@ -8,8 +8,7 @@ nix-env -iA \
   nixpkgs.yarn \
   nixpkgs.stow \
   nixpkgs.bat \
-  nixpkgs.cmake \
-  nixpkgs.llvm
+  nixpkgs.neovim-qt
 
 # Stow
 stow git
