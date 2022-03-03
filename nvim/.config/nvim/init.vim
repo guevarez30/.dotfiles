@@ -22,8 +22,6 @@ set ruler " Always shows location in file (line#)
 set smarttab " Autotabs for certain code
 set shiftwidth=2
 set tabstop=2
-set encoding=UTF-8
-set clipboard=unnamed
 set guifont=Consolas:h11
 " -- Plugins
 call plug#begin('~/.config/nvim/plugged')
@@ -81,3 +79,4 @@ nnoremap <leader>f   <S-^>
 nnoremap <leader>e   <S-$>
 nnoremap <C-x> :Explore <Cr>
 nnoremap <C-p> :Telescope find_files<Cr>
+

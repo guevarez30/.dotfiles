@@ -1,25 +1,8 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+export PATH="$PATH:~/scripts";
 
-autoload -Uz compinit
-compinit
-
-###################################################################################
-# NVM
-###################################################################################
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Source plugins
-source ~/.zsh_plugins.sh
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Show only directory on terminal line
+            # Yellow time     \cyan direcotry \ Green directory  \ White $ on new line
+export PS1='\n\[\e[00;33m\]\t \[\e[01;36m\]\w  \[\e[01;37m\]\n$ '
 
 # Export Path login 
 PATHLOGIN=${PATH}
@@ -31,6 +14,7 @@ alias mv='mv -i'
 ###################################################################################
 # Functions
 ###################################################################################
+
 killport() {
 	fuser -k $@/tcp
 }
@@ -38,14 +22,10 @@ alias killPort='killport';
 
 term() { printf "\033]0;$*\007"; }
 
-aerialGIT(){
-	git config user.email taylor.guevarez@aerialapplications.com
-	git config user.name 'Taylor Guevarez'
-}
-
 taylorGIT(){
 	git config user.email guevarez30@gmail.com
 	git config user.name 'Taylor Guevarez'
+	#git config --list --local
 }
 
 newBranch(){
@@ -58,9 +38,15 @@ count(){
 	ls $@ -1 | wc -l
 }
 
-e(){
-	gnvim $@ & disown 
-}
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
 
 #####################################################################################
 #Aliases
@@ -74,19 +60,18 @@ alias ipconfig='ifconfig'
 alias ll='ls -la'
 alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
+alias src='source ~/.bashrc'
+alias ebash='g ~/.bashrc'
 alias vim='nvim'
 alias n='nodemon '
 alias gomon='nodemon --exec go run'
 alias c='code .'
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
-alias eVim='nvim ~/.config/nvim/init.vim' 
+alias eVim='g ~/.config/nvim/init.vim' 
 alias evim='eVim'
 alias cat='bat'
-alias eRC='nvim ~/.zshrc'
-alias erc='eRC'
-alias src='source ~/.zshrc'
-
+alias e='nvim'
 #####################################################################################
 #Python
 #####################################################################################
@@ -100,8 +85,6 @@ alias py='py3'
 #####################################################################################
 export PATH="$PATH:~/scripts";
 export PATH="$PATH:/usr/local/go/src"
-export PATH="$PATH:/usr/local/Goneovim"
-
 #####################################################################################
 # Custom Services
 #####################################################################################
@@ -111,13 +94,23 @@ alias stopMariadb='sudo systemctl stop mariadb; statusMariadb'
 alias statusMongo='sudo systemctl status mongod'
 alias startMongo='sudo systemctl start mongod; statusMongo'
 alias stopMongo='sudo systemctl stop mongod; statusMongo'
+
 alias statusSSH='sudo systemctl status sshd'
 alias startSSH='sudo systemctl start sshd; statusSSH'
 alias stopSSH='sudo systemctl stop sshd; statusSSH'
 
+#####################################################################################
+# Node Version Manager
+#####################################################################################
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#####################################################################################
+# Go
+#####################################################################################
+export PATH="$PATH:/usr/local/go/bin";
+
 # Setting for the new UTF-8 terminal support in Lion
 export LC_ALL=C
-#####################################################################################
-# Local Machine RC Files
-#####################################################################################
+
 source ~/.mapwarerc
