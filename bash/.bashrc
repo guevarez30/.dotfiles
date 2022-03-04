@@ -1,8 +1,14 @@
 export PATH="$PATH:~/scripts";
 
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
+}
+
+
 # Show only directory on terminal line
-            # Yellow time     \cyan direcotry \ Green directory  \ White $ on new line
-export PS1='\n\[\e[00;33m\]\t \[\e[01;36m\]\w  \[\e[01;37m\]\n$ '
+            # Yellow time     \cyan direcotry \ Git Branch \ White $ on new line
+export PS1="\n\[\e[00;33m\]\t \[\e[01;36m\]\w  \[\e[00;90m\]$(parse_git_branch)\[\033[00m\] \n$ "
 
 # Export Path login 
 PATHLOGIN=${PATH}
@@ -49,6 +55,7 @@ fi
 #####################################################################################
 #Aliases
 #####################################################################################
+# alias nvim-qt='/usr/bin/nvim-qt'
 alias clc='clear'
 alias cls='clear'
 alias clera='clear'
