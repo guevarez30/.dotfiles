@@ -1,9 +1,8 @@
 export PATH="$PATH:~/scripts";
 
-source ~/.git-prompt.sh
 # Show only directory on terminal line
-            # Yellow time     \cyan direcotry \ Git Branch                        \ White $ on new line
-export PS1="\n\[\e[00;33m\]\t \[\e[01;36m\]\w  \[\e[00;90m\]   $(__git_ps1 " (%s)")\[\033[00m\] \n$ "
+            # Yellow time     \cyan direcotry \ White $ on new line
+export PS1="\n\[\e[00;33m\]\t \[\e[01;36m\]\w  \[\033[00m\] \n$ "
 
 # Export Path login 
 PATHLOGIN=${PATH}
@@ -89,7 +88,7 @@ alias pip='pip3'
 alias py3='nodemon --exec python3'
 alias py2='nodemon --exec python2'
 alias py='py3'
-
+alias g='git'
 #####################################################################################
 #Include Scripts to Path and Custom Functions
 #####################################################################################
@@ -120,7 +119,5 @@ export NVM_DIR="$HOME/.nvm"
 #####################################################################################
 export PATH="$PATH:/usr/local/go/bin";
 
-# Setting for the new UTF-8 terminal support in Lion
-export LC_ALL=C
 
 source ~/.mapwarerc
