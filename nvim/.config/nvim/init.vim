@@ -53,7 +53,10 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'sbdchd/neoformat'
 " -- VIM Vinegar
 Plug 'tpope/vim-vinegar'
-Plug 'ap/vim-buftabline'
+" -- Plug 'ap/vim-buftabline'
+Plug 'ThePrimeagen/harpoon'
+" -- Find
+Plug 'dyng/ctrlsf.vim'
 call plug#end()
 
 autocmd BufWritePre *.js Neoformat
@@ -67,7 +70,24 @@ let mapleader = " " " map leader to Space
 nnoremap <leader>bn :bnext <CR>
 nnoremap <leader>bp :bprev <CR>
 nnoremap <leader>bd :bd <CR>
+nnoremap <leader>bl :buffers <CR>
+" -- Horizontal Movement
 nnoremap <leader>f   <S-^>
 nnoremap <leader>e   <S-$>
 nnoremap <C-p> :Telescope find_files<Cr>
-nnoremap <leader>bl :buffers <CR>
+" -- Ctrl SF word search
+nmap     <C-F>f <Plug>CtrlSFPrompt
+nnoremap <C-F>t :CtrlSFToggle<CR>
+inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+" -- Harpoon
+nnoremap <leader>m  :lua require("harpoon.mark").add_file() <CR>
+nnoremap <leader>ml :lua require("harpoon.ui").toggle_quick_menu() <CR>
+nnoremap <leader>m1 :lua require("harpoon.ui").nav_file(1) <CR>
+nnoremap <leader>m2 :lua require("harpoon.ui").nav_file(2) <CR>
+nnoremap <leader>m3 :lua require("harpoon.ui").nav_file(3) <CR>
+nnoremap <leader>m4 :lua require("harpoon.ui").nav_file(4) <CR>
+nnoremap <leader>mn :lua require("harpoon.ui").nav_next() <CR>
+nnoremap <leader>mp :lua require("harpoon.ui").nav_prev() <CR>
+
+nnoremap <C-Up> <Up>ddp<Up>
+nnoremap <C-Down> ddp
