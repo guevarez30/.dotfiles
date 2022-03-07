@@ -122,5 +122,3 @@ export PATH="$PATH:/usr/local/go/bin";
 
 # Setting for the new UTF-8 terminal support in Lion
 export LC_ALL=C
-
-source ~/.mapwarerc

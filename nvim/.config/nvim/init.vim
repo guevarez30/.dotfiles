@@ -53,6 +53,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'sbdchd/neoformat'
 " -- VIM Vinegar
 Plug 'tpope/vim-vinegar'
+Plug 'ap/vim-buftabline'
 call plug#end()
 
 autocmd BufWritePre *.js Neoformat
@@ -61,19 +62,12 @@ autocmd BufWritePre *.js Neoformat
 colorscheme dracula
 
 lua require('users')
-
 let mapleader = " " " map leader to Space
-" -- Navigate Tab
-nnoremap <leader>tl  :tabnext<CR>
-nnoremap <leader>th  :tabprev<CR>
-nnoremap <leader>td  :tabclose<CR>
-nnoremap <leader>tn  :tabnew<CR>
-nnoremap <leader>t1  1gt
-nnoremap <leader>t2  2gt
-nnoremap <leader>t3  3gt
-nnoremap <leader>t4  4gt
-nnoremap <leader>t5  5gt
-nnoremap <leader>t6  6gt
+" -- Navigate Buffer Tab
+nnoremap <leader>bn :bnext <CR>
+nnoremap <leader>bp :bprev <CR>
+nnoremap <leader>bd :bd <CR>
 nnoremap <leader>f   <S-^>
 nnoremap <leader>e   <S-$>
 nnoremap <C-p> :Telescope find_files<Cr>
+nnoremap <leader>bl :buffers <CR>
