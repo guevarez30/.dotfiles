@@ -13,3 +13,6 @@ nix-env -iA \
 stow git
 stow nvim
 stow bash
+
+touch ~/.localrc
+source ~/.bashrc
