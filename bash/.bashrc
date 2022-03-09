@@ -81,6 +81,8 @@ alias evim='eVim'
 alias ebash='e ~/.bashrc'
 alias eBash='ebash'
 alias dot='cd ~/.dotfiles'
+alias worktree='git worktree'
+alias tree='worktree'
 #####################################################################################
 #Python
 #####################################################################################
@@ -103,7 +105,6 @@ alias stopMariadb='sudo systemctl stop mariadb; statusMariadb'
 alias statusMongo='sudo systemctl status mongod'
 alias startMongo='sudo systemctl start mongod; statusMongo'
 alias stopMongo='sudo systemctl stop mongod; statusMongo'
-
 alias statusSSH='sudo systemctl status sshd'
 alias startSSH='sudo systemctl start sshd; statusSSH'
 alias stopSSH='sudo systemctl stop sshd; statusSSH'
