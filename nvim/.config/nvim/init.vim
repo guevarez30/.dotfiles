@@ -22,6 +22,8 @@ set ruler " Always shows location in file (line#)
 set smarttab " Autotabs for certain code
 set shiftwidth=2
 set tabstop=2
+set autochdir
+
 " -- Plugins
 call plug#begin('~/.config/nvim/plugged')
 " Telescope requires plenary to function
@@ -57,6 +59,10 @@ Plug 'tpope/vim-vinegar'
 Plug 'ThePrimeagen/harpoon'
 " -- Find
 Plug 'dyng/ctrlsf.vim'
+" -- Rainbow brackets
+Plug 'p00f/nvim-ts-rainbow'
+" -- Shell Syntax Sugr
+Plug 'tpope/vim-eunuch'
 call plug#end()
 
 autocmd BufWritePre *.js Neoformat
@@ -72,8 +78,8 @@ nnoremap <leader>bp :bprev <CR>
 nnoremap <leader>bd :bd <CR>
 nnoremap <leader>bl :buffers <CR>
 " -- Horizontal Movement
-nnoremap <leader>f   <S-^>
-nnoremap <leader>e   <S-$>
+nnoremap <leader>h   <S-^>
+nnoremap <leader>l   <S-$>
 nnoremap <C-p> :Telescope find_files<Cr>
 " -- Ctrl SF word search
 nmap     <C-F>f <Plug>CtrlSFPrompt
@@ -82,12 +88,11 @@ inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 " -- Harpoon
 nnoremap <leader>m  :lua require("harpoon.mark").add_file() <CR>
 nnoremap <leader>ml :lua require("harpoon.ui").toggle_quick_menu() <CR>
-nnoremap <leader>m1 :lua require("harpoon.ui").nav_file(1) <CR>
-nnoremap <leader>m2 :lua require("harpoon.ui").nav_file(2) <CR>
-nnoremap <leader>m3 :lua require("harpoon.ui").nav_file(3) <CR>
-nnoremap <leader>m4 :lua require("harpoon.ui").nav_file(4) <CR>
 nnoremap <leader>mn :lua require("harpoon.ui").nav_next() <CR>
 nnoremap <leader>mp :lua require("harpoon.ui").nav_prev() <CR>
-
+" -- Move entire line up or down
 nnoremap <C-Up> <Up>ddp<Up>
 nnoremap <C-Down> ddp
+" -- Git
+nnoremap <leader>gs :G<CR>
+

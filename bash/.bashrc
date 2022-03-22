@@ -83,6 +83,11 @@ alias eBash='ebash'
 alias dot='cd ~/.dotfiles'
 alias worktree='git worktree'
 alias tree='worktree'
+alias elocal='e ~/.localrc'
+alias push='g push'
+alias pull='g pull'
+alias branch='g branch'
+alias status='g status'
 #####################################################################################
 #Python
 #####################################################################################
@@ -119,5 +124,9 @@ export NVM_DIR="$HOME/.nvm"
 # Go
 #####################################################################################
 export PATH="$PATH:/usr/local/go/bin";
+
+if [ -f ~/.git-completion.bash ]; then
+    . ~/.git-completion.bash
+fi
 
 source ~/.localrc

@@ -7,7 +7,9 @@ nix-env -iA \
   nixpkgs.neovim \
   nixpkgs.yarn \
   nixpkgs.stow \
-  nixpkgs.bat 
+  nixpkgs.bat \
+  nixpkgs.bash-completion
+
 
 # Stow
 stow git
