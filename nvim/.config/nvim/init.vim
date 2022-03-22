@@ -22,7 +22,6 @@ set ruler " Always shows location in file (line#)
 set smarttab " Autotabs for certain code
 set shiftwidth=2
 set tabstop=2
-set autochdir
 
 " -- Plugins
 call plug#begin('~/.config/nvim/plugged')
@@ -63,7 +62,12 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'p00f/nvim-ts-rainbow'
 " -- Shell Syntax Sugr
 Plug 'tpope/vim-eunuch'
+" -- Rooter auto set directory of project
+Plug 'airblade/vim-rooter'
 call plug#end()
+
+" -- Rooter auto detect project root
+let g:rooter_patterns = ['.git']
 
 autocmd BufWritePre *.js Neoformat
 
