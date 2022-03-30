@@ -88,6 +88,7 @@ alias push='g push'
 alias pull='g pull'
 alias branch='g branch'
 alias status='g status'
+alias jsonToCsv='jsonToCSV'
 #####################################################################################
 #Python
 #####################################################################################
@@ -124,9 +125,5 @@ export NVM_DIR="$HOME/.nvm"
 # Go
 #####################################################################################
 export PATH="$PATH:/usr/local/go/bin";
-
-if [ -f ~/.git-completion.bash ]; then
-    . ~/.git-completion.bash
-fi
 
 source ~/.localrc

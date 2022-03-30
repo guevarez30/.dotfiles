@@ -53,22 +53,21 @@ Plug 'kyazdani42/nvim-web-devicons'
 " -- Prettier
 Plug 'sbdchd/neoformat'
 " -- VIM Vinegar
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
 " -- Plug 'ap/vim-buftabline'
 Plug 'ThePrimeagen/harpoon'
 " -- Find
 Plug 'dyng/ctrlsf.vim'
 " -- Rainbow brackets
 Plug 'p00f/nvim-ts-rainbow'
-" -- Shell Syntax Sugr
-Plug 'tpope/vim-eunuch'
 " -- Rooter auto set directory of project
 Plug 'airblade/vim-rooter'
+" -- Fern File Tree
+Plug 'lambdalisue/fern.vim'
 call plug#end()
 
 " -- Rooter auto detect project root
 let g:rooter_patterns = ['.git']
-
 autocmd BufWritePre *.js Neoformat
 
 " declare your color scheme
@@ -76,12 +75,7 @@ colorscheme dracula
 
 lua require('users')
 let mapleader = " " " map leader to Space
-" -- Navigate Buffer Tab
-nnoremap <leader>bn :bnext <CR>
-nnoremap <leader>bp :bprev <CR>
-nnoremap <leader>bd :bd <CR>
-nnoremap <leader>bl :buffers <CR>
-" -- Horizontal Movement
+
 nnoremap <leader>h   <S-^>
 nnoremap <leader>l   <S-$>
 nnoremap <C-p> :Telescope find_files<Cr>
@@ -89,14 +83,40 @@ nnoremap <C-p> :Telescope find_files<Cr>
 nmap     <C-F>f <Plug>CtrlSFPrompt
 nnoremap <C-F>t :CtrlSFToggle<CR>
 inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+
 " -- Harpoon
 nnoremap <leader>m  :lua require("harpoon.mark").add_file() <CR>
 nnoremap <leader>ml :lua require("harpoon.ui").toggle_quick_menu() <CR>
 nnoremap <leader>mn :lua require("harpoon.ui").nav_next() <CR>
 nnoremap <leader>mp :lua require("harpoon.ui").nav_prev() <CR>
+
 " -- Move entire line up or down
 nnoremap <C-Up> <Up>ddp<Up>
 nnoremap <C-Down> ddp
+
+" -- Move Windows
+nnoremap <leader>w <C-w>w
+
 " -- Git
 nnoremap <leader>gs :G<CR>
 
+" -- Fern
+let g:fern#drawer_width = 30
+let g:fern#default_hidden = 1
+
+nnoremap <leader>- :Fern . -drawer -toggle <CR>
+function! s:init_fern() abort 
+  nmap <buffer> t <Plug>(fern-action-new-file)
+  nmap <buffer> d <Plug>(fern-action-new-dir)
+  nmap <buffer> D <Plug>(fern-action-remove)
+  nmap <buffer> m <Plug>(fern-action-move)
+  nmap <buffer> M <Plug>(fern-action-rename)
+  nmap <buffer> r <Plug>(fern-action-reload)
+  nmap <buffer> h <Plug>(fern-action-open:split)
+  nmap <buffer> v <Plug>(fern-action-open:vsplit)
+endfunction
+
+augroup FernGroup
+  autocmd! *
+  autocmd FileType fern call s:init_fern()
+augroup END
