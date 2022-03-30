@@ -9,6 +9,7 @@ nix-env -iA \
   nixpkgs.stow \
   nixpkgs.bat 
 
+
 # Stow
 stow git
 stow nvim

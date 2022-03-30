@@ -83,6 +83,12 @@ alias eBash='ebash'
 alias dot='cd ~/.dotfiles'
 alias worktree='git worktree'
 alias tree='worktree'
+alias elocal='e ~/.localrc'
+alias push='g push'
+alias pull='g pull'
+alias branch='g branch'
+alias status='g status'
+alias jsonToCsv='jsonToCSV'
 #####################################################################################
 #Python
 #####################################################################################
