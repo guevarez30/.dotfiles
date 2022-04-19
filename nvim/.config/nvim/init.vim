@@ -53,8 +53,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 " -- Prettier
 Plug 'sbdchd/neoformat'
 " -- VIM Vinegar
-" Plug 'tpope/vim-vinegar'
-" -- Plug 'ap/vim-buftabline'
+Plug 'tpope/vim-vinegar'
 Plug 'ThePrimeagen/harpoon'
 " -- Find
 Plug 'dyng/ctrlsf.vim'
@@ -62,8 +61,8 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'p00f/nvim-ts-rainbow'
 " -- Rooter auto set directory of project
 Plug 'airblade/vim-rooter'
-" -- Fern File Tree
-Plug 'lambdalisue/fern.vim'
+" -- Startify Page
+Plug 'mhinz/vim-startify'
 call plug#end()
 
 " -- Rooter auto detect project root
@@ -76,9 +75,14 @@ colorscheme dracula
 lua require('users')
 let mapleader = " " " map leader to Space
 
+" -- Movement
 nnoremap <leader>h   <S-^>
 nnoremap <leader>l   <S-$>
+nnoremap <leader>o o<Esc>
+nnoremap <leader>O O<Esc>
+
 nnoremap <C-p> :Telescope find_files<Cr>
+
 " -- Ctrl SF word search
 nmap     <C-F>f <Plug>CtrlSFPrompt
 nnoremap <C-F>t :CtrlSFToggle<CR>
@@ -97,26 +101,32 @@ nnoremap <C-Down> ddp
 " -- Move Windows
 nnoremap <leader>w <C-w>w
 
+" -- Vexplore
+nnoremap <leader>v :Vexplore<CR>
+
 " -- Git
 nnoremap <leader>gs :G<CR>
 
-" -- Fern
-let g:fern#drawer_width = 30
-let g:fern#default_hidden = 1
+" -- Startify
 
-nnoremap <leader>- :Fern . -drawer -toggle <CR>
-function! s:init_fern() abort 
-  nmap <buffer> t <Plug>(fern-action-new-file)
-  nmap <buffer> d <Plug>(fern-action-new-dir)
-  nmap <buffer> D <Plug>(fern-action-remove)
-  nmap <buffer> m <Plug>(fern-action-move)
-  nmap <buffer> M <Plug>(fern-action-rename)
-  nmap <buffer> r <Plug>(fern-action-reload)
-  nmap <buffer> h <Plug>(fern-action-open:split)
-  nmap <buffer> v <Plug>(fern-action-open:vsplit)
-endfunction
+let g:startify_lists = [
+\ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+\ { 'type': 'commands',  'header': ['   Commands']       },
+\ ]
 
-augroup FernGroup
-  autocmd! *
-  autocmd FileType fern call s:init_fern()
-augroup END
+let g:startify_bookmarks = [
+  \ { 'b': '~/.bashrc' },
+  \ { 'n': '~/.config/nvim/init.vim' },
+  \ { 'l': '~/.localrc' },
+  \ ]
+
+let g:startify_commands = [
+    \ {'p': ['Find Files', 'Telescope find_files']},
+    \ {'x': ['Explore', 'Explore']},
+    \ ]
+
+let g:startify_custom_header = [
+ \' _  _ ____ ____ _  _ _ _  _',
+ \' |\ | |___ |  | |  | | |\/|',
+ \' | \| |___ |__|  \/  | |  |',
+ \]
