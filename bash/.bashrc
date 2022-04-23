@@ -17,6 +17,7 @@ alias mv='mv -i'
 killport() {
 	fuser -k $@/tcp
 }
+
 alias killPort='killport';
 
 term() { printf "\033]0;$*\007"; }
@@ -55,7 +56,6 @@ fi
 #####################################################################################
 #Aliases
 #####################################################################################
-# alias nvim-qt='/usr/bin/nvim-qt'
 alias clc='clear'
 alias cls='clear'
 alias clera='clear'
@@ -66,24 +66,14 @@ alias ll='ls -la'
 alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
 alias src='source ~/.bashrc'
-alias ebash='g ~/.bashrc'
-alias vim='nvim'
+alias vim='nvim-qt'
 alias n='nodemon '
 alias gomon='nodemon --exec go run'
 alias c='code .'
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
 alias cat='bat'
-alias nvim='nvim-qt'
-alias e='nvim-qt'
-alias eVim='e ~/.config/nvim/init.vim' 
-alias evim='eVim'
-alias ebash='e ~/.bashrc'
-alias eBash='ebash'
 alias dot='cd ~/.dotfiles'
-alias worktree='git worktree'
-alias tree='worktree'
-alias elocal='e ~/.localrc'
 alias push='g push'
 alias pull='g pull'
 alias branch='g branch'
@@ -92,6 +82,7 @@ alias jsonToCsv='jsonToCSV'
 #####################################################################################
 #Python
 #####################################################################################
+alias python='python3'
 alias pip='pip3'
 alias py3='nodemon --exec python3'
 alias py2='nodemon --exec python2'
@@ -125,5 +116,10 @@ export NVM_DIR="$HOME/.nvm"
 # Go
 #####################################################################################
 export PATH="$PATH:/usr/local/go/bin";
+
+note () {
+  term Notes $(date '+%Y-%m-%d')
+  \nvim ~/notes/$(date '+%Y-%m-%d').md
+}
 
 source ~/.localrc
