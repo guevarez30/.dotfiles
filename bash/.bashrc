@@ -17,6 +17,7 @@ alias mv='mv -i'
 killport() {
 	fuser -k $@/tcp
 }
+
 alias killPort='killport';
 
 term() { printf "\033]0;$*\007"; }
@@ -115,5 +116,10 @@ export NVM_DIR="$HOME/.nvm"
 # Go
 #####################################################################################
 export PATH="$PATH:/usr/local/go/bin";
+
+note () {
+  term Notes $(date '+%Y-%m-%d')
+  \nvim ~/notes/$(date '+%Y-%m-%d').md
+}
 
 source ~/.localrc
