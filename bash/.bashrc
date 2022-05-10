@@ -53,6 +53,11 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+editor(){
+  term "NVIM"
+  vim $@
+}
+
 #####################################################################################
 #Aliases
 #####################################################################################
@@ -122,4 +127,7 @@ note () {
   \nvim ~/notes/$(date '+%Y-%m-%d').md
 }
 
+alias notes='note'
+
 source ~/.localrc
+

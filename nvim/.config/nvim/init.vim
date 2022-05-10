@@ -63,6 +63,8 @@ Plug 'p00f/nvim-ts-rainbow'
 Plug 'airblade/vim-rooter'
 " -- Startify Page
 Plug 'mhinz/vim-startify'
+" -- Go Formatter
+Plug 'darrikonn/vim-gofmt', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " -- Rooter auto detect project root
@@ -104,6 +106,8 @@ nnoremap <leader>w <C-w>w
 " -- Vexplore
 nnoremap <leader>v :Vexplore<CR>
 
+nnorema <leader>q :q<CR>
+
 " -- Git
 nnoremap <leader>gs :G<CR>
 
@@ -130,3 +134,6 @@ let g:startify_custom_header = [
  \' |\ | |___ |  | |  | | |\/|',
  \' | \| |___ |__|  \/  | |  |',
  \]
+
+"-- Go AutoFormatter
+au BufWritePre,FileWritePre *.go :GoFmt
