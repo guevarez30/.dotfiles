@@ -69,12 +69,16 @@ call plug#end()
 
 " -- Rooter auto detect project root
 let g:rooter_patterns = ['.git']
-autocmd BufWritePre *.js Neoformat
 
-" declare your color scheme
+" -- Standard File Save
+autocmd BufWritePre *.js Neoformat
+au BufWritePre,FileWritePre *.go :GoFmt
+
+" Color Scheme
 colorscheme dracula
 
 lua require('users')
+
 let mapleader = " " " map leader to Space
 
 " -- Movement
@@ -112,7 +116,6 @@ nnorema <leader>q :q<CR>
 nnoremap <leader>gs :G<CR>
 
 " -- Startify
-
 let g:startify_lists = [
 \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
 \ { 'type': 'commands',  'header': ['   Commands']       },
@@ -134,6 +137,3 @@ let g:startify_custom_header = [
  \' |\ | |___ |  | |  | | |\/|',
  \' | \| |___ |__|  \/  | |  |',
  \]
-
-"-- Go AutoFormatter
-au BufWritePre,FileWritePre *.go :GoFmt
