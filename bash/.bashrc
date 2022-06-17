@@ -5,21 +5,20 @@ export PATH="$PATH:~/scripts";
 ###################################################################################
 source ~/.git-prompt.sh
 
-WHITE="\033[00m"
-YELLOW="\e[00;33m"
-CYAN="\e[01;36m"
-PINK="\e[91m"
-PURPLE="\e[00;34m"
+PINK="\[\e[91m\]"
+PURPLE="\[\e[00;34m\]"
+CYAN="\[\e[01;36m\]"
+WHITE="\[\033[00m\]"
 
 update_PS1(){
-  PS1="${PINK}┏ "
-  PS1+="${PURPLE}\T "                  # Yellow Time
-  PS1+="${CYAN}\w"                    # Cyan Directory
-  PS1+="${PINK}$(__git_ps1 " (%s)")"
+  PS1="${PINK}┏"
+  PS1+=" ${PURPLE}\T"
+  PS1+=" ${CYAN}\w"
+  PS1+=" ${PINK}$(__git_ps1 " (%s)")"
   PS1+="\n"
-  PS1+="${PINK}┗ "
-  PS1+="${PURPLE}$ ${WHITE}"                  # Promt on new white line
-  PS1=$'\n'"$PS1"
+  PS1+="${PINK}┗"
+  PS1+=" ${PURPLE}$ ${WHITE}"
+  PS1=$"\n""$PS1"
 }
 
 PROMPT_COMMAND=update_PS1
