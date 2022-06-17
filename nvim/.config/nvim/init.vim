@@ -23,6 +23,10 @@ set smarttab " Autotabs for certain code
 set shiftwidth=2
 set tabstop=2
 
+" -- Highlight Current Line
+set cursorline
+:highlight Cursorline cterm=bold ctermbg=black
+
 " -- Plugins
 call plug#begin('~/.config/nvim/plugged')
 " Telescope requires plenary to function
@@ -48,12 +52,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 " -- Lightline
 Plug 'itchyny/lightline.vim'
-" -- Icons
-Plug 'kyazdani42/nvim-web-devicons'
 " -- Prettier
 Plug 'sbdchd/neoformat'
 " -- VIM Vinegar
 Plug 'tpope/vim-vinegar'
+" -- Harpoon
 Plug 'ThePrimeagen/harpoon'
 " -- Find
 Plug 'dyng/ctrlsf.vim'
@@ -110,10 +113,12 @@ nnoremap <leader>w <C-w>w
 " -- Vexplore
 nnoremap <leader>v :Vexplore<CR>
 
-nnorema <leader>q :q<CR>
-
 " -- Git
 nnoremap <leader>gs :G<CR>
+
+" -- Terminal
+nnoremap <leader>t :terminal<CR>
+tnoremap <Esc> <C-\><C-n>
 
 " -- Startify
 let g:startify_lists = [

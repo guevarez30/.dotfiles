@@ -14,7 +14,7 @@ PURPLE="\e[00;34m"
 update_PS1(){
   PS1="${PINK}┏ "
   PS1+="${PURPLE}\T "                  # Yellow Time
-  PS1+="${CYAN}\w "                    # Cyan Directory
+  PS1+="${CYAN}\w"                    # Cyan Directory
   PS1+="${PINK}$(__git_ps1 " (%s)")"
   PS1+="\n"
   PS1+="${PINK}┗ "
@@ -23,6 +23,7 @@ update_PS1(){
 }
 
 PROMPT_COMMAND=update_PS1
+
 # Export Path login 
 PATHLOGIN=${PATH}
 export PATHLOGIN
@@ -105,19 +106,6 @@ export PATH="$PATH:~/scripts";
 export PATH="$PATH:/usr/local/go/src"
 
 #####################################################################################
-# Custom Services
-#####################################################################################
-alias statusMariadb='sudo systemctl status mariadb'
-alias startMariadb='sudo systemctl start mariadb; statusMariadb'
-alias stopMariadb='sudo systemctl stop mariadb; statusMariadb'
-alias statusMongo='sudo systemctl status mongod'
-alias startMongo='sudo systemctl start mongod; statusMongo'
-alias stopMongo='sudo systemctl stop mongod; statusMongo'
-alias statusSSH='sudo systemctl status sshd'
-alias startSSH='sudo systemctl start sshd; statusSSH'
-alias stopSSH='sudo systemctl stop sshd; statusSSH'
-
-#####################################################################################
 # Node Version Manager
 #####################################################################################
 export NVM_DIR="$HOME/.nvm"
@@ -143,8 +131,4 @@ alias notes='note'
 # Local .rc file
 #####################################################################################
 source ~/.localrc
-
-
-
-
 
