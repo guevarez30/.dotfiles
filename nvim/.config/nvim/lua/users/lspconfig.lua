@@ -1,6 +1,5 @@
 -- lspconfig  https://www.jakewiesler.com/blog/getting-started-with-vim
 local nvim_lsp = require('lspconfig')
-local servers = { 'tsserver' }
 
 local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -28,7 +27,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local servers = { 'tsserver' }
+local servers = { 'tsserver', 'gopls', 'rust-analyzer'}
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       capabilities = capabilities,

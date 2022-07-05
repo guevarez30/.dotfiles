@@ -1,15 +1,31 @@
 export PATH="$PATH:~/scripts";
 
-# Show only directory on terminal line
-            # Yellow time     \cyan direcotry \ White $ on new line
-export PS1="\n\[\e[00;33m\]\t \[\e[01;36m\]\w  \[\033[00m\] \n$ "
+###################################################################################
+# PS1
+###################################################################################
+source ~/.git-prompt.sh
+
+PINK="\[\e[91m\]"
+PURPLE="\[\e[00;34m\]"
+CYAN="\[\e[01;36m\]"
+WHITE="\[\033[00m\]"
+
+update_PS1(){
+  PS1="${PINK}┏"
+  PS1+=" ${PURPLE}\T"
+  PS1+=" ${CYAN}\w"
+  PS1+=" ${PINK}$(__git_ps1 " (%s)")"
+  PS1+="\n"
+  PS1+="${PINK}┗"
+  PS1+=" ${PURPLE}$ ${WHITE}"
+  PS1=$"\n""$PS1"
+}
+
+PROMPT_COMMAND=update_PS1
 
 # Export Path login 
 PATHLOGIN=${PATH}
 export PATHLOGIN
-
-#Protects from copying or renaming a file to a place where it already exist
-alias mv='mv -i'
 
 ###################################################################################
 # Functions
@@ -25,19 +41,6 @@ term() { printf "\033]0;$*\007"; }
 taylorGIT(){
 	git config user.email guevarez30@gmail.com
 	git config user.name 'Taylor Guevarez'
-	#git config --list --local
-}
-
-newBranch(){
-	echo Checking out $@
-	git fetch origin
-	git checkout -b"$@" "origin/$@"
-  src
-}
-
-checkout(){
-  git checkout $@
-  src
 }
 
 count(){
@@ -56,6 +59,8 @@ fi
 #####################################################################################
 #Aliases
 #####################################################################################
+#Protects from copying or renaming a file to a place where it already exist
+alias mv='mv -i'
 alias clc='clear'
 alias cls='clear'
 alias clera='clear'
@@ -68,17 +73,17 @@ alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' |
 alias src='source ~/.bashrc'
 alias vim='nvim-qt'
 alias n='nodemon '
-alias gomon='nodemon --exec go run'
-alias c='code .'
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
 alias cat='bat'
 alias dot='cd ~/.dotfiles'
-alias push='g push'
-alias pull='g pull'
-alias branch='g branch'
-alias status='g status'
 alias jsonToCsv='jsonToCSV'
+
+#####################################################################################
+#RUST
+#####################################################################################
+. "$HOME/.cargo/env"
+
 #####################################################################################
 #Python
 #####################################################################################
@@ -88,23 +93,12 @@ alias py3='nodemon --exec python3'
 alias py2='nodemon --exec python2'
 alias py='py3'
 alias g='git'
+
 #####################################################################################
 #Include Scripts to Path and Custom Functions
 #####################################################################################
 export PATH="$PATH:~/scripts";
 export PATH="$PATH:/usr/local/go/src"
-#####################################################################################
-# Custom Services
-#####################################################################################
-alias statusMariadb='sudo systemctl status mariadb'
-alias startMariadb='sudo systemctl start mariadb; statusMariadb'
-alias stopMariadb='sudo systemctl stop mariadb; statusMariadb'
-alias statusMongo='sudo systemctl status mongod'
-alias startMongo='sudo systemctl start mongod; statusMongo'
-alias stopMongo='sudo systemctl stop mongod; statusMongo'
-alias statusSSH='sudo systemctl status sshd'
-alias startSSH='sudo systemctl start sshd; statusSSH'
-alias stopSSH='sudo systemctl stop sshd; statusSSH'
 
 #####################################################################################
 # Node Version Manager
@@ -112,14 +106,24 @@ alias stopSSH='sudo systemctl stop sshd; statusSSH'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 #####################################################################################
 # Go
 #####################################################################################
 export PATH="$PATH:/usr/local/go/bin";
 
+#####################################################################################
+# Notes
+#####################################################################################
 note () {
   term Notes $(date '+%Y-%m-%d')
   \nvim ~/notes/$(date '+%Y-%m-%d').md
 }
 
+alias notes='note'
+
+#####################################################################################
+# Local .rc file
+#####################################################################################
 source ~/.localrc
+

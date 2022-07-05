@@ -23,6 +23,16 @@ set smarttab " Autotabs for certain code
 set shiftwidth=2
 set tabstop=2
 
+
+" -- Rust
+syntax enable
+filetype plugin indent on
+let g:rustfmt_autosave = 1
+
+" -- Highlight Current Line
+set cursorline
+:highlight Cursorline cterm=bold ctermbg=black
+
 " -- Plugins
 call plug#begin('~/.config/nvim/plugged')
 " Telescope requires plenary to function
@@ -48,12 +58,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 " -- Lightline
 Plug 'itchyny/lightline.vim'
-" -- Icons
-Plug 'kyazdani42/nvim-web-devicons'
 " -- Prettier
 Plug 'sbdchd/neoformat'
 " -- VIM Vinegar
 Plug 'tpope/vim-vinegar'
+" -- Harpoon
 Plug 'ThePrimeagen/harpoon'
 " -- Find
 Plug 'dyng/ctrlsf.vim'
@@ -63,16 +72,25 @@ Plug 'p00f/nvim-ts-rainbow'
 Plug 'airblade/vim-rooter'
 " -- Startify Page
 Plug 'mhinz/vim-startify'
+" -- Go Formatter
+Plug 'darrikonn/vim-gofmt', { 'do': ':GoUpdateBinaries' }
+" -- coc
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
 " -- Rooter auto detect project root
 let g:rooter_patterns = ['.git']
-autocmd BufWritePre *.js Neoformat
 
-" declare your color scheme
+" -- Standard File Save
+autocmd BufWritePre *.js Neoformat
+au BufWritePre,FileWritePre *.go :GoFmt
+
+" Color Scheme
 colorscheme dracula
 
 lua require('users')
+
 let mapleader = " " " map leader to Space
 
 " -- Movement
@@ -107,8 +125,11 @@ nnoremap <leader>v :Vexplore<CR>
 " -- Git
 nnoremap <leader>gs :G<CR>
 
-" -- Startify
+" -- Terminal
+nnoremap <leader>t :terminal<CR>
+tnoremap <Esc> <C-\><C-n>
 
+" -- Startify
 let g:startify_lists = [
 \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
 \ { 'type': 'commands',  'header': ['   Commands']       },
