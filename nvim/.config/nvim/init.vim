@@ -23,6 +23,12 @@ set smarttab " Autotabs for certain code
 set shiftwidth=2
 set tabstop=2
 
+
+" -- Rust
+syntax enable
+filetype plugin indent on
+let g:rustfmt_autosave = 1
+
 " -- Highlight Current Line
 set cursorline
 :highlight Cursorline cterm=bold ctermbg=black
@@ -68,6 +74,9 @@ Plug 'airblade/vim-rooter'
 Plug 'mhinz/vim-startify'
 " -- Go Formatter
 Plug 'darrikonn/vim-gofmt', { 'do': ':GoUpdateBinaries' }
+" -- coc
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
 " -- Rooter auto detect project root

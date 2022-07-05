@@ -77,10 +77,6 @@ alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
 alias cat='bat'
 alias dot='cd ~/.dotfiles'
-alias push='g push'
-alias pull='g pull'
-alias branch='g branch'
-alias status='g status'
 alias jsonToCsv='jsonToCSV'
 
 #####################################################################################
