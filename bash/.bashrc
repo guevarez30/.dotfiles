@@ -1,31 +1,35 @@
 export PATH="$PATH:~/scripts";
+export BROWSER="/snap/bin/firefox"
 
 ###################################################################################
 # PS1
+# Default if no starship installed
 ###################################################################################
-source ~/.git-prompt.sh
+# source ~/.git-prompt.sh
 
-PINK="\[\e[91m\]"
-PURPLE="\[\e[00;34m\]"
-CYAN="\[\e[01;36m\]"
-WHITE="\[\033[00m\]"
+# PINK="\[\e[91m\]"
+# PURPLE="\[\e[00;34m\]"
+# CYAN="\[\e[01;36m\]"
+# WHITE="\[\033[00m\]"
 
-update_PS1(){
-  PS1="${PINK}┏"
-  PS1+=" ${PURPLE}\T"
-  PS1+=" ${CYAN}\w"
-  PS1+=" ${PINK}$(__git_ps1 " (%s)")"
-  PS1+="\n"
-  PS1+="${PINK}┗"
-  PS1+=" ${PURPLE}$ ${WHITE}"
-  PS1=$"\n""$PS1"
-}
+# update_PS1(){
+#   PS1="${PINK}┏"
+#   PS1+=" ${PURPLE}\T"
+#   PS1+=" ${CYAN}\w"
+#   PS1+=" ${PINK}$(__git_ps1 " (%s)")"
+#   PS1+="\n"
+#   PS1+="${PINK}┗"
+#   PS1+=" ${PURPLE}$ ${WHITE}"
+#   PS1=$"\n""$PS1"
+# }
 
-PROMPT_COMMAND=update_PS1
+# PROMPT_COMMAND=update_PS1
 
-# Export Path login 
-PATHLOGIN=${PATH}
-export PATHLOGIN
+# # Export Path login 
+# PATHLOGIN=${PATH}
+# export PATHLOGIN
+
+eval "$(starship init bash)"
 
 ###################################################################################
 # Functions
@@ -71,13 +75,14 @@ alias ll='ls -la'
 alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
 alias src='source ~/.bashrc'
-alias vim='nvim-qt'
+alias vim='nvim'
 alias n='nodemon '
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
 alias cat='bat'
 alias dot='cd ~/.dotfiles'
 alias jsonToCsv='jsonToCSV'
+alias find="fd"
 
 #####################################################################################
 #RUST
@@ -122,8 +127,18 @@ note () {
 
 alias notes='note'
 
+1v1(){
+  term 1v1
+  \nvim ~/notes/1v1/$(date '+%Y-%m-%d').md
+}
+
+
 #####################################################################################
 # Local .rc file
 #####################################################################################
 source ~/.localrc
 
+#####################################################################################
+# Alacritty
+#####################################################################################
+source /home/taylorguevarez/alacritty/extra/completions/alacritty.bash

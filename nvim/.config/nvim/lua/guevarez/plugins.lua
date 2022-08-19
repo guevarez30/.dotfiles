@@ -8,9 +8,6 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   -- You can alias plugin names
   use {'dracula/vim', as = 'dracula'}
-  -- vim-fugitive
-  use 'tpope/vim-fugitive'
-  use 'tpope/vim-commentary'
   -- Harpoon
   use 'ThePrimeagen/harpoon'
   -- Lightline
@@ -39,4 +36,10 @@ return require('packer').startup(function()
     'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'} }
   }
   use 'rust-lang/rust.vim'
+  use {
+    'numToStr/Comment.nvim',
+     config = function()
+       require('Comment').setup()
+     end
+  }
 end)
