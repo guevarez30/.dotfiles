@@ -1,4 +1,5 @@
 export PATH="$PATH:~/scripts";
+export BROWSER="/snap/bin/firefox"
 
 ###################################################################################
 # PS1
@@ -27,6 +28,8 @@ export PATH="$PATH:~/scripts";
 # # Export Path login 
 # PATHLOGIN=${PATH}
 # export PATHLOGIN
+
+eval "$(starship init bash)"
 
 ###################################################################################
 # Functions
@@ -72,7 +75,7 @@ alias ll='ls -la'
 alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
 alias src='source ~/.bashrc'
-alias vim='nvim-qt'
+alias vim='nvim'
 alias n='nodemon '
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
@@ -124,10 +127,18 @@ note () {
 
 alias notes='note'
 
-eval "$(starship init bash)"
+1v1(){
+  term 1v1
+  \nvim ~/notes/1v1/$(date '+%Y-%m-%d').md
+}
+
 
 #####################################################################################
 # Local .rc file
 #####################################################################################
 source ~/.localrc
 
+#####################################################################################
+# Alacritty
+#####################################################################################
+source /home/taylorguevarez/alacritty/extra/completions/alacritty.bash
