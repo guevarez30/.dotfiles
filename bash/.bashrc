@@ -1,5 +1,4 @@
 export PATH="$PATH:~/scripts";
-export BROWSER="/snap/bin/firefox"
 
 ###################################################################################
 # PS1
