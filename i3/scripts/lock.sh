@@ -14,6 +14,6 @@ convert $img -blur 2,5 $img
 # convert $img $icon -gravity center -composite $img
 
 # Run i3lock with custom background
-i3lock -i $img
+i3lock -i $img && systemctl suspend
 # Remove the tmp file
 rm $img

@@ -30,12 +30,15 @@ export PATH="$PATH:~/scripts";
 
 eval "$(starship init bash)"
 
+
+
 ###################################################################################
 # Functions
 ###################################################################################
 killport() {
 	fuser -k $@/tcp
 }
+export BROWSER="/usr/bin/google-chrome"
 
 alias killPort='killport';
 
@@ -75,6 +78,7 @@ alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
 alias src='source ~/.bashrc'
 alias vim='nvim'
+alias v='vim'
 alias n='nodemon '
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
