@@ -14,7 +14,6 @@ set.backup=false
 set.undofile=true
 set.incsearch=true
 set.termguicolors=true
-set.scrolloff=8
 set.showmode=false
 set.showmatch=true 
 set.ruler=true 

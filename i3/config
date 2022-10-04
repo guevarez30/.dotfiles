@@ -116,7 +116,7 @@ set $ws4 ""
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "8"
+set $ws8 ""
 set $ws9 ""
 set $ws0 "10"
 
@@ -150,11 +150,13 @@ assign [class="Google-chrome"] $ws2
 assign [class="Slack"] $ws3
 assign [class="Postman"] $ws9
 assign [class="Spotify"] $ws4
+assign [class="Gnome-control-center"] $ws8
 
 exec --no-startup-id alacritty
 exec --no-startup-id google-chrome
 exec --no-startup-id slack
 exec --no-startup-id spotify
+exec --no-startup-id gnome-control-center
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -227,10 +229,13 @@ exec_always --no-startup-id feh --bg-scale /home/taylorguevarez/.dotfiles/wallpa
 exec_always --no-startup-id . ~/.config/i3/scripts/screen.sh 
 
 # - Slow mouse movement
-exec_always --no-startup-id xinput --set-prop 25 "Coordinate Transformation Matrix" 0.3 0 0 0 0.3 0 0 0 3.5
+exec_always --no-startup-id xinput --set-prop 26 "Coordinate Transformation Matrix" 0.3 0 0 0 0.3 0 0 0 3.5
 
 # - Picom Transparency
 exec --no-startup-id picom --experimental-backends -b
+
+# Set timeout
+exec --no-startup-id xset s 1500
 
 # - Move workspace to other window
 # move focused workspace between monitors
@@ -243,3 +248,8 @@ bindsym $mod+shift+f exec --no-startup-id nautilus
 # - Remove Title Bar
 default_border pixel 1
 default_floating_border pixel 1
+
+
+
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +20%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set -20%

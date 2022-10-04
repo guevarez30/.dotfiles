@@ -77,7 +77,7 @@ alias ll='ls -la'
 alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
 alias src='source ~/.bashrc'
-alias vim='nvim'
+alias vim='hx'
 alias v='vim'
 alias n='nodemon '
 alias Downloads='cd ~/Downloads'
@@ -86,6 +86,7 @@ alias cat='bat'
 alias dot='cd ~/.dotfiles'
 alias jsonToCsv='jsonToCSV'
 alias find="fd"
+alias settings="gnome-control-center"
 
 #####################################################################################
 #RUST
