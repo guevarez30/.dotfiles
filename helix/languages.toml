@@ -1,0 +1,7 @@
+[[language]]
+name = "javascript"
+auto-format = true
+
+[[language]]
+name = "rust"
+auto-format = true

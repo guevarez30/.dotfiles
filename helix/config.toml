@@ -1,0 +1,18 @@
+theme = "dracula"
+
+[editor]
+line-number = "relative"
+auto-format = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[keys.normal]
+C-s= ":w"
+C-o= ":open ~/.config/helix/config.toml"
+C-p= "file_picker"
+C-v= "vsplit" 
+C-q= "wclose"
+C-f= "global_search"
