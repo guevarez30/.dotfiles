@@ -149,7 +149,7 @@ assign [class="Alacritty"] $ws1
 assign [class="Google-chrome"] $ws2
 assign [class="Slack"] $ws3
 assign [class="Postman"] $ws9
-assign [class="Spotify"] $ws4
+assign [class="spotify"] $ws4
 assign [class="Gnome-control-center"] $ws8
 
 exec --no-startup-id alacritty
@@ -229,7 +229,7 @@ exec_always --no-startup-id feh --bg-scale /home/taylorguevarez/.dotfiles/wallpa
 exec_always --no-startup-id . ~/.config/i3/scripts/screen.sh 
 
 # - Slow mouse movement
-exec_always --no-startup-id xinput --set-prop 26 "Coordinate Transformation Matrix" 0.3 0 0 0 0.3 0 0 0 3.5
+exec_always --no-startup-id xinput --set-prop 9 "Coordinate Transformation Matrix" 0.3 0 0 0 0.3 0 0 0 3.5
 
 # - Picom Transparency
 exec --no-startup-id picom --experimental-backends -b

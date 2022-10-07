@@ -126,7 +126,7 @@ export PATH="$PATH:/usr/local/go/bin";
 #####################################################################################
 note () {
   term Notes $(date '+%Y-%m-%d')
-  \nvim ~/notes/$(date '+%Y-%m-%d').md
+  hx ~/notes/$(date '+%Y-%m-%d').md
 }
 
 alias notes='note'

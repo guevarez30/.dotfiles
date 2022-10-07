@@ -1,6 +1,7 @@
 [[language]]
 name = "javascript"
 auto-format = true
+diagnostic-severity = "Error"
 
 [[language]]
 name = "rust"
