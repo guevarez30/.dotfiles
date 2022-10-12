@@ -15,7 +15,7 @@ update_PS1(){
   PS1=""
   PS1+="${PURPLE}\T"
   PS1+=" ${CYAN}\w"
-  PS1+=" ${PINK}$(__git_ps1 " (%s)")"
+  PS1+=" ${PINK}$(__git_ps1 " %s")"
   PS1+="\n"
   PS1+="${GREEN}"
   PS1+=" ${WHITE}"
