@@ -30,6 +30,8 @@ return require('packer').startup(function()
   use 'sbdchd/neoformat'
   -- VIM Vinegar
   use 'tpope/vim-vinegar'
+  -- VIM surround
+  use 'tpope/vim-surround'
   -- Go Formatter
   use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
   -- telescope

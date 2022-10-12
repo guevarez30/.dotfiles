@@ -3,6 +3,7 @@ theme = "dracula"
 [editor]
 line-number = "relative"
 auto-format = true
+scrolloff = 20
 
 [editor.cursor-shape]
 insert = "bar"
