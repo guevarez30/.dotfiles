@@ -1,3 +1,4 @@
+alias src='source ~/.bashrc'
 export PATH="$PATH:~/scripts";
 
 ###################################################################################
@@ -17,7 +18,7 @@ update_PS1(){
   PS1+=" ${CYAN}\w"
   PS1+=" ${PINK}$(__git_ps1 " %s")"
   PS1+="\n"
-  PS1+="${GREEN}"
+  PS1+="${GREEN}"
   PS1+=" ${WHITE}"
   PS1=$"\n""$PS1"
 }
@@ -68,7 +69,6 @@ alias ipconfig='ifconfig'
 alias ll='ls -la'
 alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
-alias src='source ~/.bashrc'
 alias vim='nvim'
 alias v='vim'
 alias n='nodemon '
@@ -76,7 +76,6 @@ alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
 alias cat='bat'
 alias dot='cd ~/.dotfiles'
-alias jsonToCsv='jsonToCSV'
 alias find="fd"
 alias settings="gnome-control-center"
 
