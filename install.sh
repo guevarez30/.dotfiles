@@ -6,14 +6,16 @@ nix-env -iA \
   nixpkgs.git \
   nixpkgs.neovim \
   nixpkgs.yarn \
-  nixpkgs.stow \
-  nixpkgs.bat 
+  nixpkgs.bat  \
+  nixos.rustup \
+  nixos.rust-analyzer 
 
+# Install Rust
+rustup update --quiet
 
-# Stow
-stow git
-stow nvim
-stow bash
+# Install Node
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+nvm install node
 
 touch ~/.localrc
 source ~/.bashrc

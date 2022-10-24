@@ -15,7 +15,7 @@ WHITE="\[\033[00m\]"
 update_PS1(){
   PS1=""
   PS1+="${PURPLE}\T"
-  PS1+=" ${CYAN}\w"
+  PS1+=" ${CYAN}\W"
   PS1+=" ${PINK}$(__git_ps1 " %s")"
   PS1+="\n"
   PS1+="${GREEN}"
@@ -31,7 +31,6 @@ PROMPT_COMMAND=update_PS1
 killport() {
 	fuser -k $@/tcp
 }
-export BROWSER="/usr/bin/google-chrome"
 
 alias killPort='killport';
 
