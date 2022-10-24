@@ -7,11 +7,17 @@ nix-env -iA \
   nixpkgs.neovim \
   nixpkgs.yarn \
   nixpkgs.bat  \
-  nixos.rustup \
-  nixos.rust-analyzer 
+  nixpkgs.i3 \
+  nixpkgs.rofi \
+  nixpkgs.picom \
+  nixpkgs.rustup \
+  nixpkgs.rust-analyzer 
 
 # Install Rust
 rustup update --quiet
+
+# Install Alacrity 
+cargo install alacritty
 
 # Install Node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
