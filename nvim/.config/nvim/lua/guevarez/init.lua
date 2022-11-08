@@ -13,3 +13,6 @@ require("guevarez.telescope")
 require("guevarez.lightline")
 require("guevarez.lspconfig")
 require("guevarez.treesitter")
+
+
+

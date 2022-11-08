@@ -54,7 +54,7 @@ bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -show run
+bindsym $mod+d exec --no-startup-id rofi modie drun -show drun
 
 # change focus
 bindsym $mod+j focus left
@@ -143,6 +143,8 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws0
 
+
+
 # App Assignment
 assign [class="Alacritty"] $ws1
 assign [class="Google-chrome"] $ws2
@@ -203,6 +205,8 @@ client.background       $purple
 
 # hide_edge_borders both
 bar {
+  font pango:System San Francisco Display 12
+
   colors {
     background $deep-purple
     statusline $purple
@@ -248,7 +252,11 @@ bindsym $mod+shift+f exec --no-startup-id nautilus
 default_border pixel 1
 default_floating_border pixel 1
 
-
+# - Move size of window
+bindsym $mod+Ctrl+Right resize shrink width 1 px or 1 ppt
+bindsym $mod+Ctrl+Up resize grow height 1 px or 1 ppt
+bindsym $mod+Ctrl+Down resize shrink height 1 px or 1 ppt
+bindsym $mod+Ctrl+Left resize grow width 1 px or 1 ppt
 
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +20%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set -20%

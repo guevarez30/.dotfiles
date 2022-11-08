@@ -1,4 +1,4 @@
-# install nix
+#install nix
 sh <(curl -L https://nixos.org/nix/install) --daemon
 
 # install packages
@@ -10,18 +10,27 @@ nix-env -iA \
   nixpkgs.i3 \
   nixpkgs.rofi \
   nixpkgs.picom \
-  nixpkgs.rustup \
-  nixpkgs.rust-analyzer 
+
+touch ~/.localrc
+
+# Create Links
+rm ~/.bashrc
+ln -s ~/.dotfiles/bash/.bashrc ~/.bashrc
+ln -s ~/.dotfiles/git/* ~/
 
 # Install Rust
-rustup update --quiet
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.bashrc
 
-# Install Alacrity 
+## Install Alacrity
 cargo install alacritty
+
+## Install rust-analyzer
+git clone https://github.com/rust-lang/rust-analyzer.git && cd rust-analyzer
+cargo xtask install --server
 
 # Install Node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
-nvm install node
-
-touch ~/.localrc
 source ~/.bashrc
+
+nvm install node

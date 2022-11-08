@@ -10,5 +10,4 @@ filetype plugin indent on
 let g:rustfmt_autosave = 1
 
 tnoremap <Esc> <C-\><C-n>
-autocmd TermOpen * setlocal nonumber norelativenumber
 set clipboard+=unnamedplus

@@ -13,7 +13,6 @@ set.swapfile=false
 set.backup=false
 set.undofile=true
 set.incsearch=true
-set.termguicolors=true
 set.showmode=false
 set.showmatch=true 
 set.ruler=true 
