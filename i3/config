@@ -225,8 +225,8 @@ bar {
     statusline $white
     separator  $light-black
 
-    focused_workspace  $black $black $magenta
-    active_workspace   $black $black $magenta
+    focused_workspace  $black $black $alert-red
+    active_workspace   $black $black $alert-red
     inactive_workspace $black $black $white
     urgent_workspace   $alert-red   $alert-red   $white
     binding_mode       $alert-red   $alert-red   $white
