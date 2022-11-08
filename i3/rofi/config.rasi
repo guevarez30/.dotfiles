@@ -1,11 +1,13 @@
-/*Dracula theme based on the Purple official rofi theme*/
 * {
     font: "System San Francisco Display 12";
-    background-color: #282a3600;
-    active-background: #6272a4;
+    transparent-black: #1A1B1F00;
+    blue: #7EB7E6;
+    black: #272932; 
+    background-color: @transparent-black;
+    active-background: @blue;
     foreground: @active-background;
-    urgent-background: #ff5555;
-    selected-background: @active-background;
+    urgent-background: #E85A84;
+    selected-background: @black;
     selected-urgent-background: @urgent-background;
     selected-active-background: @active-background;
     separatorcolor: @active-background;

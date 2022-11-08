@@ -9,6 +9,8 @@ return require('packer').startup(function()
   -- You can alias plugin names
   use 'folke/tokyonight.nvim'
   -- use 'Mofiqul/dracula.nvim'
+  --
+  use 'Yazeed1s/minimal.nvim'
   -- Harpoon
   use 'ThePrimeagen/harpoon'
   -- Lightline
