@@ -37,7 +37,7 @@ if [ ! -z "$connections" ]; then
    fi
    echo " $name"
    echo " $name"
-   echo "#8BE9FD\n"
+   echo "#CFD0D7\n"
 else
    echo ""
    echo ""

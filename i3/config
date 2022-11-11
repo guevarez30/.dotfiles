@@ -11,12 +11,28 @@
 
 set $mod Mod4
 
-set $blue-purple  #6272A4
-set $deep-purple  #282A36
-set $purple       #44475A
-set $blue         #8BE9FD
-set $green        #50FA7B
-set $alert-red    #FF5555
+# color scheme from 
+#  primary:
+#    background: '#1A1B1F'
+#    foreground: '#DFE0EA'
+#  normal:
+#    black:   '#272932'
+#    red:     '#E85A84'
+#    green:   '#94DD8E'
+#    yellow:  '#E9D26C'
+#    blue:    '#7EB7E6'
+#    magenta: '#D895C7'
+#    cyan:    '#89BEB7'
+#    white:   '#CFD0D7'
+
+set $yellow  #E9D26C
+set $black  #1A1B1F
+set $light-black #272932
+set $white       #CFD0D7
+set $blue         #7EB7E6
+set $green        #94DD8E
+set $alert-red    #E85A84
+set $magenta      #D895C7
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -149,8 +165,8 @@ bindsym $mod+Shift+0 move container to workspace $ws0
 assign [class="Alacritty"] $ws1
 assign [class="Google-chrome"] $ws2
 assign [class="Slack"] $ws3
-assign [class="Insomnia"] $ws9
-assign [class="spotify"] $ws4
+assign [class="Postman"] $ws9
+assign [class="Spotify"] $ws4
 assign [class="Gnome-control-center"] $ws8
 
 exec --no-startup-id alacritty
@@ -193,30 +209,27 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Dracula Theme
-# class                 border            bground           text      indicator     child_border
-client.focused          $blue-purple      $blue-purple      $purple       $blue-purple    $blue-purple
-client.focused_inactive $purple           $purple           $purple       $purple         $purple
-client.unfocused        $deep-purple      $deep-purple      $purple       $deep-purple    $deep-purple
-client.urgent           $purple           $alert-red        $purple       $alert-red      $alert-red
-client.placeholder      $deep-purple      $deep-purple      $purple       $deep-purple    $deep-purple
+# class                 border            bground           text            indicator     child_border
+client.focused          $light-black      $light-black      $white          $light-black   $light-black
+client.focused_inactive $light-black      $light-black      $light-black    $light-black   $black
+client.unfocused        $black            $black            $white          $black         $black
+client.urgent           $white            $alert-red        $white          $alert-red     $alert-red
+client.placeholder      $black            $black            $white          $black         $black
+client.background       $white
 
-client.background       $purple
-
-# hide_edge_borders both
 bar {
   font pango:System San Francisco Display 12
 
   colors {
-    background $deep-purple
-    statusline $purple
-    separator  $purple
+    background $black
+    statusline $white
+    separator  $light-black
 
-    focused_workspace  $deep-purple $deep-purple $green
-    active_workspace   $deep-purple $deep-purple $green
-    inactive_workspace $deep-purple $deep-purple $blue
-    urgent_workspace   $alert-red   $alert-red   $purple
-    binding_mode       $alert-red   $alert-red   $purple
+    focused_workspace  $black $black $alert-red
+    active_workspace   $black $black $alert-red
+    inactive_workspace $black $black $white
+    urgent_workspace   $alert-red   $alert-red   $white
+    binding_mode       $alert-red   $alert-red   $white
   }
 
   status_command i3blocks -c ~/.config/i3/i3blocks.conf
