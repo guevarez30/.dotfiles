@@ -11,3 +11,5 @@ let g:rustfmt_autosave = 1
 
 tnoremap <Esc> <C-\><C-n>
 set clipboard+=unnamedplus
+
+set termguicolors
