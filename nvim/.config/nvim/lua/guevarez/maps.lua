@@ -22,6 +22,9 @@ map("n", "<C-Down>", "ddp")
 map("n", "<C-p>", ":Telescope find_files <CR>")
 map("n", "<C-f>", ":Telescope live_grep <CR>")
 
+-- LazyGit
+map("n", "<leader>lg", ":FloatermNew lazygit <CR>")
+
 -- Harpoon
 map("n", "<leader>m", ":lua require('harpoon.mark').add_file() <CR>")
 map("n","<leader>ml", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
