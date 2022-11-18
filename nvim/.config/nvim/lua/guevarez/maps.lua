@@ -24,6 +24,12 @@ map("n", "<C-f>", ":Telescope live_grep <CR>")
 
 -- LazyGit
 map("n", "<leader>lg", ":FloatermNew lazygit <CR>")
+map("n", "<leader>ft", ":FloatermNew cargo test")
+
+-- Test
+map("n", "<leader>tn", ":TestNearest <CR>")
+map("n", "<leader>tf", ":TestFile <CR>")
+map("n", "<leader>ts", ":TestSuite <CR>")
 
 -- Harpoon
 map("n", "<leader>m", ":lua require('harpoon.mark').add_file() <CR>")

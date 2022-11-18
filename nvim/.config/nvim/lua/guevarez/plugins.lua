@@ -45,6 +45,15 @@ return require('packer').startup(function()
   use 'voldikss/vim-floaterm'
   -- Rust
   use 'rust-lang/rust.vim'
+  
+  -- Test Suite
+  use {
+    "klen/nvim-test",
+    config = function()
+      require('nvim-test').setup()
+    end
+  }
+
   use {
     'numToStr/Comment.nvim',
      config = function()
