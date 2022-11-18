@@ -8,9 +8,12 @@ function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-map("n", "<Leader>h", ":Vexplore<CR>")
-map("n", "<Leader>v", ":Hexplore<CR>")
-map("n", "<Leader>w", "<C-w>w")
+-- Control Splits
+map("n", "<Leader>sv", ":Vexplore<CR>")
+map("n", "<Leader>sh", ":Hexplore<CR>")
+map("n", "<Leader>se", "<C-w>=")
+
+-- Add empty lines 
 map("n", "<Leader>o", "o<Esc>")
 map("n", "<Leader>O", "O<Esc>")
 

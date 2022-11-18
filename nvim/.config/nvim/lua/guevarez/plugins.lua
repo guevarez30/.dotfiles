@@ -61,4 +61,7 @@ return require('packer').startup(function()
      end
   }
 
+  -- Tmux Intergration
+  use('christoomey/vim-tmux-navigator')
+
 end)
