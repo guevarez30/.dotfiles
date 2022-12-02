@@ -25,10 +25,6 @@ map("n", "<C-Down>", "ddp")
 map("n", "<C-p>", ":Telescope find_files <CR>")
 map("n", "<C-f>", ":Telescope live_grep <CR>")
 
--- LazyGit
-map("n", "<leader>lg", ":FloatermNew lazygit <CR>")
-map("n", "<leader>ft", ":FloatermNew cargo test")
-
 -- Test
 map("n", "<leader>tn", ":TestNearest <CR>")
 map("n", "<leader>tf", ":TestFile <CR>")
