@@ -13,8 +13,13 @@ return require('packer').startup(function()
   use 'Yazeed1s/minimal.nvim'
   -- Harpoon
   use 'ThePrimeagen/harpoon'
-  -- Lightline
-  use 'itchyny/lightline.vim'
+
+  -- Lua line
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
+
   -- LSP 
   use 'neovim/nvim-lspconfig'
   -- Tree sitter
@@ -61,5 +66,7 @@ return require('packer').startup(function()
 
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
-
+ 
+  -- CoPilot
+  -- use('github/copilot.vim')
 end)
