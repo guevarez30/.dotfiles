@@ -13,6 +13,9 @@ map("n", "<Leader>sv", ":Vexplore<CR>")
 map("n", "<Leader>sh", ":Hexplore<CR>")
 map("n", "<Leader>se", "<C-w>=")
 
+-- Move Windows
+map("n", "<Leader>w", "<C-w>w<CR>")
+
 -- Add empty lines 
 map("n", "<Leader>o", "o<Esc>")
 map("n", "<Leader>O", "O<Esc>")

@@ -6,11 +6,13 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
-  -- You can alias plugin names
-  use 'folke/tokyonight.nvim'
-  -- use 'Mofiqul/dracula.nvim'
-  --
+  -- Themes
   use 'Yazeed1s/minimal.nvim'
+  -- use 'Mofiqul/dracula.nvim'
+  -- use 'folke/tokyonight.nvim'
+  use { "catppuccin/nvim", as = "catppuccin" }
+
+
   -- Harpoon
   use 'ThePrimeagen/harpoon'
 

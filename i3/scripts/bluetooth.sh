@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 get_from_file() {
    dev=$1
    name=
@@ -37,7 +38,7 @@ if [ ! -z "$connections" ]; then
    fi
    echo " $name"
    echo " $name"
-   echo "#E85A84\n"
+   echo "#fab387\n"
 else
    echo ""
    echo ""

@@ -1,11 +1,8 @@
 * {
     font: "System San Francisco Display 12";
     transparent-black: #1A1B1F00;
-    blue: #7EB7E6;
     black: #272932; 
-    green: #94DD8E;
-    magenta: #D895C7;
-    alert-red: #E85A84;
+    alert-red: #fab387;
     background-color: @transparent-black;
     active-background: @alert-red;
     foreground: @active-background;
