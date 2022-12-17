@@ -21,26 +21,34 @@ font:
   # Point size
   size: 11.0
 
-# Colors (Tomorrow Night Bright)
+# Nightfox Alacritty Colors
+# Style: nightfox
+# Upstream: https://github.com/edeneast/nightfox.nvim/raw/main/extra/nightfox/nightfox_alacritty.yml
 colors:
+  # Default colors
   primary:
-    background: '#1A1B1F'
-    foreground: '#DFE0EA'
+    background: '0x192330'
+    foreground: '0xcdcecf'
+  # Normal colors
   normal:
-    black:   '#272932'
-    red:     '#E85A84'
-    green:   '#94DD8E'
-    yellow:  '#E9D26C'
-    blue:    '#7EB7E6'
-    magenta: '#D895C7'
-    cyan:    '#89BEB7'
-    white:   '#CFD0D7'
+    black:   '0x393b44'
+    red:     '0xc94f6d'
+    green:   '0x81b29a'
+    yellow:  '0xdbc074'
+    blue:    '0x719cd6'
+    magenta: '0x9d79d6'
+    cyan:    '0x63cdcf'
+    white:   '0xdfdfe0'
+  # Bright colors
   bright:
-    black:   '#CFD0D7'
-    red:     '#E85A84'
-    green:   '#94DD8E'
-    yellow:  '#E9D26C'
-    blue:    '#7EB7E6'
-    magenta: '#D895C7'
-    cyan:    '#89BEB7'
-    white:   '#DFE0EA'
+    black:   '0x575860'
+    red:     '0xd16983'
+    green:   '0x8ebaa4'
+    yellow:  '0xe0c989'
+    blue:    '0x86abdc'
+    magenta: '0xbaa1e2'
+    cyan:    '0x7ad5d6'
+    white:   '0xe4e4e5'
+  indexed_colors:
+    - { index: 16, color: '0xf4a261' }
+    - { index: 17, color: '0xd67ad2' }
