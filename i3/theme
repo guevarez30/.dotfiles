@@ -1,0 +1,34 @@
+set $background  #192330
+set $foreground  #81b29a
+set $white       #cdcecf
+set $blue        #7EB7E6
+set $green       #94DD8E
+set $alert       #81b29a
+set $magenta     #D895C7
+
+# class                 border            bground           text            indicator      child_border
+client.focused          $foreground      $foreground        $white          $foreground   $foreground
+client.focused_inactive $foreground      $foreground        $foreground     $foreground   $background
+client.unfocused        $background      $black             $white          $background    $background
+client.urgent           $white           $alert         $white          $alert-red     $alert-red
+client.placeholder      $background      $black             $white          $background    $background
+client.background       $white
+
+bar {
+  font pango:System San Francisco Display 12
+
+  colors {
+    background $background
+    statusline $white
+    separator  $foreground
+
+    focused_workspace  $background  $background $alert
+    active_workspace   $background  $background $alert
+    inactive_workspace $background  $background $white
+    urgent_workspace   $alert   $alert-red   $white
+    binding_mode       $alert   $alert-red   $white
+  }
+
+  status_command i3blocks -c ~/.config/i3/i3blocks.conf
+  position top
+}
