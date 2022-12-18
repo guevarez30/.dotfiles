@@ -78,6 +78,8 @@ alias dot='cd ~/.dotfiles'
 alias find="fd"
 alias settings="gnome-control-center"
 alias lg='lazygit'
+alias luaG='cd ~/.dotfiles/nvim/.config/nvim/lua/guevarez' 
+alias luag='luaG' 
 #####################################################################################
 #RUST
 #####################################################################################

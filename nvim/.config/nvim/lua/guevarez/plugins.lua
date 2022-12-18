@@ -41,12 +41,15 @@ return require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
   use 'onsails/lspkind-nvim'
+
   -- Prettier
   use 'sbdchd/neoformat'
   -- VIM Vinegar
   use 'tpope/vim-vinegar'
   -- VIM surround
   use 'tpope/vim-surround'
+  use 'tpope/vim-fugitive'
+
   -- Go Formatter
   use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
   -- telescope
@@ -74,6 +77,4 @@ return require('packer').startup(function()
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
  
-  -- CoPilot
-  -- use('github/copilot.vim')
 end)
