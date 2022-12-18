@@ -2,7 +2,7 @@
     font: "System San Francisco Display 12";
     transparent-black: #1A1B1F00;
     black: #272932; 
-    alert: #63cdcf;
+    alert: #c4a7e7;
     background-color: @transparent-black;
     active-background: @alert;
     foreground: @active-background;

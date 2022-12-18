@@ -1,10 +1,7 @@
-set $background  #192330
-set $foreground  #81b29a
-set $white       #cdcecf
-set $blue        #7EB7E6
-set $green       #94DD8E
-set $alert       #81b29a
-set $magenta     #D895C7
+set $background  #191724
+set $foreground  #e0def4
+set $white       #e0def4
+set $alert       #ebbcba
 
 # class                 border            bground           text            indicator      child_border
 client.focused          $foreground      $foreground        $white          $foreground   $foreground
@@ -25,8 +22,8 @@ bar {
     focused_workspace  $background  $background $alert
     active_workspace   $background  $background $alert
     inactive_workspace $background  $background $white
-    urgent_workspace   $alert   $alert-red   $white
-    binding_mode       $alert   $alert-red   $white
+    urgent_workspace   $alert   $alert   $white
+    binding_mode       $alert   $alert   $white
   }
 
   status_command i3blocks -c ~/.config/i3/i3blocks.conf

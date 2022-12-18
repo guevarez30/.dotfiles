@@ -21,34 +21,44 @@ font:
   # Point size
   size: 11.0
 
-# Nightfox Alacritty Colors
-# Style: nightfox
-# Upstream: https://github.com/edeneast/nightfox.nvim/raw/main/extra/nightfox/nightfox_alacritty.yml
 colors:
-  # Default colors
   primary:
-    background: '0x192330'
-    foreground: '0xcdcecf'
-  # Normal colors
+    background: "0x191724"
+    foreground: "0xe0def4"
+  cursor:
+    text: "0xe0def4"
+    cursor: "0x524f67"
+  vi_mode_cursor:
+    text: "0xe0def4"
+    cursor: "0x524f67"
+  line_indicator:
+    foreground: None
+    background: None
+  selection:
+    text: "0xe0def4"
+    background: "0x403d52"
   normal:
-    black:   '0x393b44'
-    red:     '0xc94f6d'
-    green:   '0x81b29a'
-    yellow:  '0xdbc074'
-    blue:    '0x719cd6'
-    magenta: '0x9d79d6'
-    cyan:    '0x63cdcf'
-    white:   '0xdfdfe0'
-  # Bright colors
+    black: "0x26233a"
+    red: "0xeb6f92"
+    green: "0x31748f"
+    yellow: "0xf6c177"
+    blue: "0x9ccfd8"
+    magenta: "0xc4a7e7"
+    cyan: "0xebbcba"
+    white: "0xe0def4"
   bright:
-    black:   '0x575860'
-    red:     '0xd16983'
-    green:   '0x8ebaa4'
-    yellow:  '0xe0c989'
-    blue:    '0x86abdc'
-    magenta: '0xbaa1e2'
-    cyan:    '0x7ad5d6'
-    white:   '0xe4e4e5'
-  indexed_colors:
-    - { index: 16, color: '0xf4a261' }
-    - { index: 17, color: '0xd67ad2' }
+    black: "0x6e6a86"
+    red: "0xeb6f92"
+    green: "0x31748f"
+    yellow: "0xf6c177"
+    blue: "0x9ccfd8"
+    magenta: "0xc4a7e7"
+    cyan: "0xebbcba"
+    white: "0xe0def4"
+  hints:
+    start:
+      foreground: "#908caa"
+      background: "#1f1d2e"
+    end:
+      foreground: "#6e6a86"
+      background: "#1f1d2e"
