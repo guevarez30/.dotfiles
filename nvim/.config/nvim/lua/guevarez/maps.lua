@@ -37,8 +37,9 @@ map("n", "<C-p>", ":Telescope find_files <CR>")
 map("n", "<C-f>", ":Telescope live_grep <CR>")
 
 -- Git Fugitive
+map("n", "<leader>gs", ":G <CR>")
+map("n", "<leader>gd", ":Gvdiffsplit <CR>")
 
-map("n", "<leader>gs", ":Git <CR>")
 
 -- Test
 map("n", "<leader>tn", ":TestNearest <CR>")
