@@ -23,8 +23,8 @@ map("v", "K", ":m '<-2<CR>gv=gv")
 
 -- Make J not suck by keeping cursor in place
 map("n", "J", "mzJ`z")
-
--- Vertical Page Movements
+--
+-- -- Vertical Page Movements
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 
@@ -37,9 +37,9 @@ map("n", "<C-p>", ":Telescope find_files <CR>")
 map("n", "<C-f>", ":Telescope live_grep <CR>")
 
 -- Git Fugitive
-map("n", "<leader>gs", ":G <CR>")
-map("n", "<leader>gd", ":Gvdiffsplit <CR>")
-map("n", "<leader>gl", ":G log --all --decorate --oneline --graph <CR>")
+map("n", "<leader>gs", ":0G <CR>")
+map("n", "<leader>gd", ":0Gvdiffsplit <CR>")
+map("n", "<leader>gl", ":0G log --all --decorate --oneline --graph <CR>")
 
 -- Test
 map("n", "<leader>tn", ":TestNearest <CR>")
@@ -49,5 +49,3 @@ map("n", "<leader>ts", ":TestSuite <CR>")
 -- Harpoon
 map("n", "<leader>m", ":lua require('harpoon.mark').add_file() <CR>")
 map("n","<leader>ml", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
-map("n","<leader>mn", ":lua require('harpoon.ui').nav_next() <CR>")
-map("n","<leader>mp", ":lua require('harpoon.ui').nav_prev() <CR>")

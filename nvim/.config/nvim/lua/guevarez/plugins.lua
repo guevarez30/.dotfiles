@@ -76,5 +76,9 @@ return require('packer').startup(function()
 
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
+
+  -- colorizer
+  use 'norcalli/nvim-colorizer.lua'
+  
  
 end)
