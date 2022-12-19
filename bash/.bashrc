@@ -80,6 +80,7 @@ alias settings="gnome-control-center"
 alias lg='lazygit'
 alias luaG='cd ~/.dotfiles/nvim/.config/nvim/lua/guevarez' 
 alias luag='luaG' 
+alias logger='docker run --detach --volume=/var/run/docker.sock:/var/run/docker.sock -p 8082:8080 amir20/dozzle'
 #####################################################################################
 #RUST
 #####################################################################################

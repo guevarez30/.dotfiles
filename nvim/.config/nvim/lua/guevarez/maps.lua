@@ -40,6 +40,7 @@ map("n", "<C-f>", ":Telescope live_grep <CR>")
 map("n", "<leader>gs", ":0G <CR>")
 map("n", "<leader>gd", ":0Gvdiffsplit <CR>")
 map("n", "<leader>gl", ":0G log --all --decorate --oneline --graph <CR>")
+map("n", "<leader>gp", ":G -c push.default=current push <CR>")
 
 -- Test
 map("n", "<leader>tn", ":TestNearest <CR>")
