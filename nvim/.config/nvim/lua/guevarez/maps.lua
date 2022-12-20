@@ -37,9 +37,10 @@ map("n", "<C-p>", ":Telescope find_files <CR>")
 map("n", "<C-f>", ":Telescope live_grep <CR>")
 
 -- Git Fugitive
-map("n", "<leader>gs", ":0G <CR>")
-map("n", "<leader>gd", ":0Gvdiffsplit <CR>")
-map("n", "<leader>gl", ":0G log --all --decorate --oneline --graph <CR>")
+map("n", "<leader>gg", ":G <CR>")
+map("n", "<leader>gd", ":Gvdiffsplit <CR>")
+map("n", "<leader>gl", ":G log --all --decorate --oneline --graph <CR>")
+map("n", "<leader>gb", ":G branch -vv <CR>")
 map("n", "<leader>gp", ":G -c push.default=current push <CR>")
 
 -- Test
