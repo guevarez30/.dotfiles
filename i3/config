@@ -126,7 +126,7 @@ assign [class="Insomnia"] $ws9
 # Spotify is weird
 for_window [class="Spotify"] move to workspace $ws4
 exec --no-startup-id alacritty
-exec --no-startup-id google-chrome
+exec --no-startup-id brave
 exec --no-startup-id slack
 exec --no-startup-id spotify
 exec --no-startup-id gnome-control-center

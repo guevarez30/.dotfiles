@@ -17,7 +17,6 @@ return require('packer').startup(function()
       as = 'rose-pine',
   })
 
-
   -- Harpoon
   use 'ThePrimeagen/harpoon'
 
@@ -29,12 +28,14 @@ return require('packer').startup(function()
 
   -- LSP 
   use 'neovim/nvim-lspconfig'
+
   -- Tree sitter
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
   }
   use 'nvim-treesitter/nvim-treesitter-context'
+
   -- CMP
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
@@ -79,6 +80,4 @@ return require('packer').startup(function()
 
   -- colorizer
   use 'norcalli/nvim-colorizer.lua'
-  
- 
 end)

@@ -39,9 +39,11 @@ map("n", "<C-f>", ":Telescope live_grep <CR>")
 -- Git Fugitive
 map("n", "<leader>gg", ":G <CR>")
 map("n", "<leader>gd", ":Gvdiffsplit <CR>")
-map("n", "<leader>gl", ":G log --all --decorate --oneline --graph <CR>")
-map("n", "<leader>gb", ":G branch -vv <CR>")
+map("n", "<leader>gl", ":G log origin/main.. --decorate --oneline --graph <CR>")
 map("n", "<leader>gp", ":G -c push.default=current push <CR>")
+map("n", "<leader>gf", ":G fetch origin <CR>")
+map("n", "<leader>gb", ":G branch <CR>")
+map("n", "<leader>gr", ":G rebase -i origin/main <CR>")
 
 -- Test
 map("n", "<leader>tn", ":TestNearest <CR>")
