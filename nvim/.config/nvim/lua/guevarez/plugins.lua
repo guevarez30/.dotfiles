@@ -49,7 +49,9 @@ return require('packer').startup(function()
   use 'tpope/vim-vinegar'
   -- VIM surround
   use 'tpope/vim-surround'
-  use 'tpope/vim-fugitive'
+
+  -- Git
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
 
   -- Go Formatter
   use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
