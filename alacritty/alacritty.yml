@@ -2,7 +2,9 @@
 env:
   TERM: xterm-256color
 
-#
+window:
+  opacity: 0.92
+
 # Font configuration
 font:
   # Normal (roman) font face
