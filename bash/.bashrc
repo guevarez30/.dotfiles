@@ -68,7 +68,7 @@ alias ipconfig='ifconfig'
 alias ll='ls -la'
 alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
-alias vim='nvim'
+alias vim='hx'
 alias v='vim'
 alias n='nodemon '
 alias Downloads='cd ~/Downloads'
@@ -94,7 +94,7 @@ alias pip='pip3'
 alias py3='nodemon --exec python3'
 alias py2='nodemon --exec python2'
 alias py='py3'
-alias g='git'
+alias g='gitui'
 
 #####################################################################################
 #Include Scripts to Path and Custom Functions
@@ -128,3 +128,4 @@ alias notes='note'
 # Local .rc file
 #####################################################################################
 source ~/.localrc
+

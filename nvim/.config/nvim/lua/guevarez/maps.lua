@@ -36,11 +36,11 @@ map("n", "N", "Nzzzv")
 map("n", "<C-p>", ":Telescope find_files <CR>")
 map("n", "<C-f>", ":Telescope live_grep <CR>")
 
--- Git Fugitive
-map("n", "<leader>gg", ":Neogit <CR>")
-map("n", "<leader>gl", ":Neogit log<CR>")
-map("n", "<leader>gp", ":Neogit push<CR>")
-map("n", "<leader>gb", ":Neogit branch<CR>")
+-- Git 
+map("n", "<leader>gg", ":LazyGit <CR>")
+
+-- Refresh buffers
+map("n", "<leader>r", ":checktime <CR>")
 
 -- Test
 map("n", "<leader>tn", ":TestNearest <CR>")

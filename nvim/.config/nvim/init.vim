@@ -16,3 +16,7 @@ set clipboard+=unnamedplus
 set termguicolors
 highlight Normal guibg=none
 highlight NonText guibg=none
+
+" -- Auto update on file change
+set autoread
+au FocusGained * :checktime

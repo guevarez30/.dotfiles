@@ -50,9 +50,6 @@ return require('packer').startup(function()
   -- VIM surround
   use 'tpope/vim-surround'
 
-  -- Git
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-
   -- Go Formatter
   use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
   -- telescope
@@ -77,9 +74,9 @@ return require('packer').startup(function()
      end
   }
 
+  -- Lazy git
+  use 'kdheepak/lazygit.nvim'
+
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
-
-  -- colorizer
-  use 'norcalli/nvim-colorizer.lua'
 end)
