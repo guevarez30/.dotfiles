@@ -38,6 +38,10 @@ map("n", "<C-f>", ":Telescope live_grep <CR>")
 
 -- Git 
 map("n", "<leader>gg", ":LazyGit <CR>")
+map("n", "<leader>gd", ":GitGutterDiffOrig <CR>")
+map("n", "]h", ":GitGutterNextHunk <CR>")
+map("n", "]h", ":GitGutterNextHunk <CR>")
+
 
 -- Refresh buffers
 map("n", "<leader>r", ":checktime <CR>")

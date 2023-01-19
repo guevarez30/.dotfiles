@@ -45,19 +45,12 @@ count(){
 	ls $@ -1 | wc -l
 }
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
 
 #####################################################################################
 #Aliases
 #####################################################################################
 #Protects from copying or renaming a file to a place where it already exist
+alias ls='lsd'
 alias mv='mv -i'
 alias clc='clear'
 alias cls='clear'
@@ -68,8 +61,9 @@ alias ipconfig='ifconfig'
 alias ll='ls -la'
 alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
-alias vim='hx'
+alias vim='nvim'
 alias v='vim'
+alias h='vim'
 alias n='nodemon '
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
@@ -128,4 +122,3 @@ alias notes='note'
 # Local .rc file
 #####################################################################################
 source ~/.localrc
-

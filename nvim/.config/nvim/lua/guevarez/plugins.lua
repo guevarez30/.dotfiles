@@ -67,6 +67,9 @@ return require('packer').startup(function()
     end
   }
 
+  -- Git 
+  use 'airblade/vim-gitgutter'
+
   use {
     'numToStr/Comment.nvim',
      config = function()
