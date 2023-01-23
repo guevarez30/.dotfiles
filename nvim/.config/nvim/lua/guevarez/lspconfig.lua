@@ -57,7 +57,7 @@ require('lspconfig')['rust_analyzer'].setup{
       ["rust-analyzer"] = {
       diagnostics = {
                 disabled = { "unresolved-import" }
-      },
+                      },
       checkOnSave = {
                   command = "clippy"
                         },

@@ -10,8 +10,8 @@ return require('packer').startup(function()
   -- Themes
   -- use 'folke/tokyonight.nvim'
   -- use 'Mofiqul/dracula.nvim'
-  use 'Yazeed1s/minimal.nvim'
-  use "EdenEast/nightfox.nvim" 
+  -- use 'Yazeed1s/minimal.nvim'
+  -- use "EdenEast/nightfox.nvim" 
   use({
       'rose-pine/neovim',
       as = 'rose-pine',
@@ -45,19 +45,22 @@ return require('packer').startup(function()
 
   -- Prettier
   use 'sbdchd/neoformat'
+  -- Go Formatter
+  use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
+  
   -- VIM Vinegar
   use 'tpope/vim-vinegar'
   -- VIM surround
   use 'tpope/vim-surround'
 
-  -- Go Formatter
-  use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
   -- telescope
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'} }
   }
   -- Rust
   use 'rust-lang/rust.vim'
+
+  use 'norcalli/nvim-colorizer.lua'
   
   -- Test Suite
   use {
