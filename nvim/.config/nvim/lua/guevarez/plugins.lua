@@ -42,6 +42,10 @@ return require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
   use 'onsails/lspkind-nvim'
+  use {
+  	"windwp/nvim-autopairs",
+      config = function() require("nvim-autopairs").setup {} end
+  }
 
   -- Prettier
   use 'sbdchd/neoformat'
@@ -85,4 +89,5 @@ return require('packer').startup(function()
 
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
+
 end)

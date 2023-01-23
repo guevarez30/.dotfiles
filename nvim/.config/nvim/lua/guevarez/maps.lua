@@ -11,7 +11,6 @@ end
 -- Control Splits
 map("n", "<Leader>sv", ":Vexplore<CR>")
 map("n", "<Leader>sh", ":Hexplore<CR>")
-map("n", "<Leader>se", "<C-w>=")
 
 -- Add empty lines 
 map("n", "<Leader>o", "o<Esc>")
@@ -23,7 +22,7 @@ map("v", "K", ":m '<-2<CR>gv=gv")
 
 -- Make J not suck by keeping cursor in place
 map("n", "J", "mzJ`z")
---
+
 -- -- Vertical Page Movements
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
@@ -41,9 +40,6 @@ map("n", "<leader>gg", ":LazyGit <CR>")
 map("n", "<leader>lg", ":LazyGit <CR>")
 map("n", "<leader>gd", ":Gitsigns diffthis <CR>")
 
--- Refresh buffers
-map("n", "<leader>r", ":checktime <CR>")
-
 -- Test
 map("n", "<leader>tn", ":TestNearest <CR>")
 map("n", "<leader>tf", ":TestFile <CR>")
@@ -52,3 +48,5 @@ map("n", "<leader>ts", ":TestSuite <CR>")
 -- Harpoon
 map("n", "<leader>m", ":lua require('harpoon.mark').add_file() <CR>")
 map("n","<leader>ml", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
+
+-- Additional Mapping in lspconfig
