@@ -10,10 +10,11 @@ require("guevarez.colors")
 
 -- Plugins
 require("guevarez.telescope")
-require("guevarez.lightline")
 require("guevarez.lspconfig")
 require("guevarez.treesitter")
-
+require("guevarez.test")
+require("guevarez.lualine")
+require("guevarez.git")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {

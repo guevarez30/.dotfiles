@@ -1,9 +1,9 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 env:
-  # TERM variable
-  TERM: alacritty
-  LANG: "en_US.UTF-8"
-  LC_CTYPE: en_US.UTF-8
+  TERM: xterm-256color
+
+window:
+  opacity: 0.92
 
 # Font configuration
 font:
@@ -23,26 +23,45 @@ font:
   # Point size
   size: 11.0
 
-# Colors (Tomorrow Night Bright)
 colors:
   primary:
-    background: '#1A1B1F'
-    foreground: '#DFE0EA'
+    background: "0x191724"
+    foreground: "0xe0def4"
+  cursor:
+    text: "0xe0def4"
+    cursor: "0x524f67"
+  vi_mode_cursor:
+    text: "0xe0def4"
+    cursor: "0x524f67"
+  line_indicator:
+    foreground: None
+    background: None
+  selection:
+    text: "0xe0def4"
+    background: "0x403d52"
   normal:
-    black:   '#272932'
-    red:     '#E85A84'
-    green:   '#94DD8E'
-    yellow:  '#E9D26C'
-    blue:    '#7EB7E6'
-    magenta: '#D895C7'
-    cyan:    '#89BEB7'
-    white:   '#CFD0D7'
+    black: "0x26233a"
+    red: "0xeb6f92"
+    green: "0x31748f"
+    yellow: "0xf6c177"
+    blue: "0x9ccfd8"
+    magenta: "0xc4a7e7"
+    cyan: "0xebbcba"
+    white: "0xe0def4"
   bright:
-    black:   '#16181D'
-    red:     '#E85A84'
-    green:   '#94DD8E'
-    yellow:  '#E9D26C'
-    blue:    '#7EB7E6'
-    magenta: '#D895C7'
-    cyan:    '#89BEB7'
-    white:   '#DFE0EA'
+    black: "0x6e6a86"
+    red: "0xeb6f92"
+    green: "0x31748f"
+    yellow: "0xf6c177"
+    blue: "0x9ccfd8"
+    magenta: "0xc4a7e7"
+    cyan: "0xebbcba"
+    white: "0xe0def4"
+  hints:
+    start:
+      foreground: "#908caa"
+      background: "#1f1d2e"
+    end:
+      foreground: "#6e6a86"
+      background: "#1f1d2e"
+

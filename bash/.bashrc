@@ -45,19 +45,12 @@ count(){
 	ls $@ -1 | wc -l
 }
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
 
 #####################################################################################
 #Aliases
 #####################################################################################
 #Protects from copying or renaming a file to a place where it already exist
+alias ls='lsd'
 alias mv='mv -i'
 alias clc='clear'
 alias cls='clear'
@@ -70,6 +63,7 @@ alias dc='cd'
 alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
 alias vim='nvim'
 alias v='vim'
+alias h='vim'
 alias n='nodemon '
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
@@ -77,7 +71,10 @@ alias cat='bat'
 alias dot='cd ~/.dotfiles'
 alias find="fd"
 alias settings="gnome-control-center"
-
+alias lg='lazygit'
+alias luaG='cd ~/.dotfiles/nvim/.config/nvim/lua/guevarez' 
+alias luag='luaG' 
+alias logger='docker run --detach --volume=/var/run/docker.sock:/var/run/docker.sock -p 8082:8080 amir20/dozzle'
 #####################################################################################
 #RUST
 #####################################################################################
@@ -91,7 +88,7 @@ alias pip='pip3'
 alias py3='nodemon --exec python3'
 alias py2='nodemon --exec python2'
 alias py='py3'
-alias g='git'
+alias g='gitui'
 
 #####################################################################################
 #Include Scripts to Path and Custom Functions
@@ -125,8 +122,3 @@ alias notes='note'
 # Local .rc file
 #####################################################################################
 source ~/.localrc
-
-#####################################################################################
-# Alacritty
-#####################################################################################
-source /home/taylorguevarez/alacritty/extra/completions/alacritty.bash

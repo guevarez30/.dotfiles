@@ -19,3 +19,4 @@ set.ruler=true
 set.smarttab=true
 set.shiftwidth=2
 set.tabstop=2
+set.autoread=true
