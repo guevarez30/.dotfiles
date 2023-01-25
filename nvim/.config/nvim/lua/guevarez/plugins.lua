@@ -56,6 +56,8 @@ return require('packer').startup(function()
   use 'tpope/vim-vinegar'
   -- VIM surround
   use 'tpope/vim-surround'
+  -- VIM comment
+  use 'tpope/vim-commentary'
 
   -- telescope
   use {
@@ -76,13 +78,6 @@ return require('packer').startup(function()
 
   -- Git 
   use 'lewis6991/gitsigns.nvim'
-
-  use {
-    'numToStr/Comment.nvim',
-     config = function()
-       require('Comment').setup()
-     end
-  }
 
   -- Lazy git
   use 'kdheepak/lazygit.nvim'
