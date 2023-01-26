@@ -6,19 +6,21 @@ export PATH="$PATH:~/scripts";
 ###################################################################################
 source ~/.git-prompt.sh
 
-PINK="\[\e[91m\]"
-GREEN="\[\e[92m\]"
-PURPLE="\[\e[00;34m\]"
-CYAN="\[\e[01;36m\]"
-WHITE="\[\033[00m\]"
+RED="\[\e[0;31m\]"
+GREEN="\[\e[0;32m\]"
+YELLOW="\[\e[0;33m\]"
+BLUE="\[\e[0;34m\]"
+PURPLE="\[\e[0;35m\]"
+CYAN="\[\e[0;36m\]"
+WHITE="\[\e[0;37m\]"
 
 update_PS1(){
   PS1=""
-  PS1+="${PURPLE}\T"
-  PS1+=" ${CYAN}\W"
-  PS1+=" ${PINK}$(__git_ps1 " %s")"
+  PS1+="${GREEN}\T"
+  PS1+=" ${BLUE}\W"
+  PS1+=" ${RED}$(__git_ps1 " %s")"
   PS1+="\n"
-  PS1+="${GREEN}"
+  PS1+="${YELLOW}"
   PS1+=" ${WHITE}"
   PS1=$"\n""$PS1"
 }
@@ -59,12 +61,6 @@ alias ckear='clear'
 alias got='git'
 alias ipconfig='ifconfig'
 alias ll='ls -la'
-alias dc='cd'
-alias killscreens="screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill"
-alias vim='nvim'
-alias v='vim'
-alias h='vim'
-alias n='nodemon '
 alias Downloads='cd ~/Downloads'
 alias downloads='Downloads'
 alias cat='bat'
@@ -74,7 +70,6 @@ alias settings="gnome-control-center"
 alias lg='lazygit'
 alias luaG='cd ~/.dotfiles/nvim/.config/nvim/lua/guevarez' 
 alias luag='luaG' 
-alias logger='docker run --detach --volume=/var/run/docker.sock:/var/run/docker.sock -p 8082:8080 amir20/dozzle'
 #####################################################################################
 #RUST
 #####################################################################################
@@ -88,7 +83,6 @@ alias pip='pip3'
 alias py3='nodemon --exec python3'
 alias py2='nodemon --exec python2'
 alias py='py3'
-alias g='gitui'
 
 #####################################################################################
 #Include Scripts to Path and Custom Functions
