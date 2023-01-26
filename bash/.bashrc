@@ -53,6 +53,7 @@ count(){
 #####################################################################################
 #Protects from copying or renaming a file to a place where it already exist
 alias ls='lsd'
+alias vim='nvim'
 alias mv='mv -i'
 alias clc='clear'
 alias cls='clear'
