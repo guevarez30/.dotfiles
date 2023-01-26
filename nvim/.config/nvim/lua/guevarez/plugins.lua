@@ -8,10 +8,9 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Themes
-  -- use 'folke/tokyonight.nvim'
-  -- use 'Mofiqul/dracula.nvim'
-  -- use 'Yazeed1s/minimal.nvim'
-  -- use "EdenEast/nightfox.nvim" 
+  use 'folke/tokyonight.nvim'
+  use 'Mofiqul/dracula.nvim'
+  use 'joshdick/onedark.vim'
   use({
       'rose-pine/neovim',
       as = 'rose-pine',
