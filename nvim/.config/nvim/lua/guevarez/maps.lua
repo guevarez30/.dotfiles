@@ -36,8 +36,7 @@ map("n", "<C-p>", ":Telescope find_files <CR>")
 map("n", "<C-f>", ":Telescope live_grep <CR>")
 
 -- Git 
-map("n", "<leader>gg", ":LazyGit <CR>")
-map("n", "<leader>lg", ":LazyGit <CR>")
+map("n", "<leader>gg", ":Git <CR>")
 map("n", "<leader>gd", ":Gitsigns diffthis <CR>")
 
 -- Test

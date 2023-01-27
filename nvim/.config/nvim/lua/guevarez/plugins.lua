@@ -8,9 +8,6 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Themes
-  use 'folke/tokyonight.nvim'
-  use 'Mofiqul/dracula.nvim'
-  use 'joshdick/onedark.vim'
   use({
       'rose-pine/neovim',
       as = 'rose-pine',
@@ -57,6 +54,8 @@ return require('packer').startup(function()
   use 'tpope/vim-surround'
   -- VIM comment
   use 'tpope/vim-commentary'
+  -- Fugitive
+  use 'tpope/vim-fugitive'
 
   -- telescope
   use {
@@ -77,9 +76,6 @@ return require('packer').startup(function()
 
   -- Git 
   use 'lewis6991/gitsigns.nvim'
-
-  -- Lazy git
-  use 'kdheepak/lazygit.nvim'
 
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
