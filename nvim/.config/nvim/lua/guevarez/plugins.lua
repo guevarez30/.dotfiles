@@ -9,6 +9,8 @@ return require('packer').startup(function()
 
   -- Themes
   use 'folke/tokyonight.nvim'
+  -- Using Packer:
+  use 'Mofiqul/dracula.nvim'
   use({
       'rose-pine/neovim',
       as = 'rose-pine',
