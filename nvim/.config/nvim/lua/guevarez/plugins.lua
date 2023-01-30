@@ -78,7 +78,8 @@ return require('packer').startup(function()
   }
 
   -- Git 
-  use 'lewis6991/gitsigns.nvim'
+  -- use 'lewis6991/gitsigns.nvim'
+  use "airblade/vim-gitgutter"
 
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
