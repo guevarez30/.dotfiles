@@ -37,7 +37,9 @@ map("n", "<C-f>", ":Telescope live_grep <CR>")
 
 -- Git 
 map("n", "<leader>gg", ":Git <CR>")
-map("n", "<leader>gd", ":Gitsigns diffthis <CR>")
+map("n", "<leader>gd", ":Gvdiffsplit <CR>")
+map("n", "<leader>gv", ":Gvdiffsplit! <CR>")
+map("n", "<leader>gp", ":Git -c push.default=current push <CR>")
 
 -- Test
 map("n", "<leader>tn", ":TestNearest <CR>")

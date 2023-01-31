@@ -48,6 +48,7 @@ return require('packer').startup(function()
 
   -- Prettier
   use 'sbdchd/neoformat'
+
   -- Go Formatter
   use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
   
@@ -78,7 +79,6 @@ return require('packer').startup(function()
   }
 
   -- Git 
-  -- use 'lewis6991/gitsigns.nvim'
   use "airblade/vim-gitgutter"
 
   -- Tmux Intergration
