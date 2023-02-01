@@ -16,6 +16,11 @@ return require('packer').startup(function()
       as = 'rose-pine',
   })
 
+  use {
+    "jesseleite/nvim-noirbuddy",
+    requires = { "tjdevries/colorbuddy.nvim", branch = "dev" }
+  }
+
   -- Harpoon
   use 'ThePrimeagen/harpoon'
 
