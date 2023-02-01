@@ -27,6 +27,10 @@ map("n", "J", "mzJ`z")
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 
+-- Move across line
+map("n", "<leader>h", "_")
+map("n", "<leader>l", "$")
+
 -- Search terms in middle
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
@@ -38,6 +42,7 @@ map("n", "<C-f>", ":Telescope live_grep <CR>")
 -- Git 
 map("n", "<leader>gg", ":Git <CR>")
 map("n", "<leader>gd", ":Gvdiffsplit <CR>")
+map("n", "<leader>gb", ":G branch <CR>")
 map("n", "<leader>gv", ":Gvdiffsplit! <CR>")
 map("n", "<leader>gp", ":Git -c push.default=current push <CR>")
 

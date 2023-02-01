@@ -8,13 +8,13 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Themes
-  use 'folke/tokyonight.nvim'
-  use 'Mofiqul/dracula.nvim'
+  -- use 'folke/tokyonight.nvim'
+  -- use 'Mofiqul/dracula.nvim'
   use 'Yazeed1s/minimal.nvim'
-  use({
-      'rose-pine/neovim',
-      as = 'rose-pine',
-  })
+  -- use({
+  --     'rose-pine/neovim',
+  --     as = 'rose-pine',
+  -- })
 
   use {
     "jesseleite/nvim-noirbuddy",
@@ -65,6 +65,8 @@ return require('packer').startup(function()
   use 'tpope/vim-commentary'
   -- Fugitive
   use 'tpope/vim-fugitive'
+  -- Git gutter
+  use 'mhinz/vim-signify'
 
   -- telescope
   use {
@@ -82,9 +84,6 @@ return require('packer').startup(function()
       require('nvim-test').setup()
     end
   }
-
-  -- Git 
-  use "airblade/vim-gitgutter"
 
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
