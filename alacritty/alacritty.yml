@@ -37,7 +37,7 @@ colors:
     cyan:    '#89BEB7'
     white:   '#CFD0D7'
   bright:
-    black:   '#16181D'
+    black:   '#949494'
     red:     '#E85A84'
     green:   '#94DD8E'
     yellow:  '#E9D26C'
@@ -46,7 +46,3 @@ colors:
     cyan:    '#89BEB7'
     white:   '#DFE0EA'
 
-  # background = '#121212',
-  # primary = '#ff0088',
-  # secondary = '#d5d5d5',
-  # noir_0 = '#ffffff',
