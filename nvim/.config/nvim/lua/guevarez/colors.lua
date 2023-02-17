@@ -7,7 +7,7 @@
 require('noirbuddy').setup {
   colors = {
     primary = '#E9D26C',
-    secondary = '#E85A84',
+    secondary = '#89BEB7',
     diagnostic_error = '#D895C7',
     diff_add = '#94DD8E',
     diagnostic_info = '#7EB7E6',

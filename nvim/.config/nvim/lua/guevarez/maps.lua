@@ -23,7 +23,7 @@ map("v", "K", ":m '<-2<CR>gv=gv")
 -- Make J not suck by keeping cursor in place
 map("n", "J", "mzJ`z")
 
--- -- Vertical Page Movements
+-- Vertical Page Movements
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 

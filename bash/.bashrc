@@ -16,9 +16,9 @@ WHITE="\[\e[0;37m\]"
 
 update_PS1(){
   PS1=""
-  PS1+="${GREEN}\T"
+  PS1+="${CYAN}\T"
   PS1+=" ${BLUE}\W"
-  PS1+=" ${RED}$(__git_ps1 " %s")"
+  PS1+=" ${PURPLE}$(__git_ps1 " %s")"
   PS1+="\n"
   PS1+="${YELLOW}"
   PS1+=" ${WHITE}"
