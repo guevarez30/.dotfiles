@@ -16,8 +16,8 @@ WHITE="\[\e[0;37m\]"
 
 update_PS1(){
   PS1=""
-  PS1+="${CYAN}\T"
-  PS1+=" ${BLUE}\W"
+  # PS1+="${CYAN}\T"
+  PS1+="${BLUE}\W"
   PS1+=" ${PURPLE}$(__git_ps1 " %s")"
   PS1+="\n"
   PS1+="${YELLOW}"
@@ -48,6 +48,29 @@ count(){
 }
 
 
+###################################################################################
+# TMUX
+###################################################################################
+tn(){
+  dir=$(pwd | sed "s/.*\///g")
+  DIR=${dir^^}
+  tmux new -s $DIR
+}
+
+ta(){
+  tmux attach-session -t $@
+}
+
+
+tk(){
+  tmux kill-session -t  $@
+}
+
+
+tl(){
+  tmux ls
+}
+
 #####################################################################################
 #Aliases
 #####################################################################################
@@ -62,15 +85,12 @@ alias ckear='clear'
 alias got='git'
 alias ipconfig='ifconfig'
 alias ll='ls -la'
-alias Downloads='cd ~/Downloads'
-alias downloads='Downloads'
 alias cat='bat'
 alias dot='cd ~/.dotfiles'
 alias find="fd"
-alias settings="gnome-control-center"
 alias lg='lazygit'
-alias luaG='cd ~/.dotfiles/nvim/.config/nvim/lua/guevarez' 
-alias luag='luaG' 
+alias grep='rg'
+
 #####################################################################################
 #RUST
 #####################################################################################
@@ -112,6 +132,12 @@ note () {
 }
 
 alias notes='note'
+
+#####################################################################################
+# Notes
+#####################################################################################
+eval "$(zoxide init bash)"
+alias cd='z'
 
 #####################################################################################
 # Local .rc file
