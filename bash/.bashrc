@@ -87,7 +87,6 @@ alias ipconfig='ifconfig'
 alias ll='ls -la'
 alias cat='bat'
 alias dot='cd ~/.dotfiles'
-alias find="fd"
 alias lg='lazygit'
 alias grep='rg'
 
@@ -134,10 +133,15 @@ note () {
 alias notes='note'
 
 #####################################################################################
+# FZF
+#####################################################################################
+alias f='fzf --print0 | xargs -0 -o nvim'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+
+#####################################################################################
 # Notes
 #####################################################################################
 eval "$(zoxide init bash)"
-alias cd='z'
 
 #####################################################################################
 # Local .rc file
