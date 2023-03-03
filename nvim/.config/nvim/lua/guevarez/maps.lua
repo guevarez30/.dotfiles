@@ -34,6 +34,7 @@ map("n", "<leader>l", "$")
 -- Search terms in middle
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
+map("n", "*", "*zzzv")
 
 -- Telescope
 map("n", "<C-p>", ":Telescope find_files <CR>")
