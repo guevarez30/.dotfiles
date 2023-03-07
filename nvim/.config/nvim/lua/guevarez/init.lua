@@ -14,12 +14,9 @@ require("guevarez.lspconfig")
 require("guevarez.treesitter")
 require("guevarez.test")
 require("guevarez.lualine")
+require("guevarez.signify")
 
-
--- Set number line transparency
 vim.cmd[[highlight clear LineNr]]
--- Set git gutter transparency
-vim.cmd[[highlight clear SignColumn]]
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -29,4 +26,3 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     update_in_insert = false,
   }
 )
-
