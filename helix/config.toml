@@ -10,5 +10,3 @@ bufferline = "multiple"
 insert = "bar"
 normal = "block"
 select = "underline"
-
-
