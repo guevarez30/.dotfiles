@@ -8,10 +8,6 @@ function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
--- Control Splits
-map("n", "<Leader>sv", ":Vexplore<CR>")
-map("n", "<Leader>sh", ":Hexplore<CR>")
-
 -- Add empty lines 
 map("n", "<Leader>o", "o<Esc>")
 map("n", "<Leader>O", "O<Esc>")
@@ -55,5 +51,8 @@ map("n", "<leader>ts", ":TestSuite <CR>")
 -- Harpoon
 map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
 map("n","<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
+
+-- NVIM Tree
+map("n","<leader>nt", ":NvimTreeToggle <CR>")
 
 -- Additional Mapping in lspconfig

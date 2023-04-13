@@ -63,6 +63,9 @@ use { "catppuccin/nvim", as = "catppuccin" }
   -- Git gutter
   use 'mhinz/vim-signify'
 
+  -- NVIM Tree
+  use 'nvim-tree/nvim-tree.lua' 
+
   -- telescope
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { {'nvim-lua/plenary.nvim'} }

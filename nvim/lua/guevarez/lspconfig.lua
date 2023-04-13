@@ -61,7 +61,6 @@ require('lspconfig')['gopls'].setup{
     flags = lsp_flags,
 }
 
-
 -- nvim-cmp
 local cmp = require('cmp')
 local lspkind = require('lspkind')

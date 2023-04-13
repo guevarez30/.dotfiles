@@ -20,3 +20,4 @@ highlight NonText guibg=none
 " -- Auto update on file change
 set autoread
 au FocusGained * :checktime
+
