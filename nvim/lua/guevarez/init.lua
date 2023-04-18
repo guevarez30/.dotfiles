@@ -15,7 +15,6 @@ require("guevarez.treesitter")
 require("guevarez.test")
 require("guevarez.lualine")
 require("guevarez.signify")
-require("guevarez.nvimtree")
 
 vim.cmd[[highlight clear LineNr]]
 
