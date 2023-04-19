@@ -49,9 +49,10 @@ use { "catppuccin/nvim", as = "catppuccin" }
   -- Prettier
   use 'sbdchd/neoformat'
 
-  -- Go Formatter
-  use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
-  
+  -- Go 
+  -- use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
+  use {'fatih/vim-go', run= ':GoUpdateBinaries' }
+
   -- VIM Vinegar
   use 'tpope/vim-vinegar'
   -- VIM surround
@@ -62,9 +63,6 @@ use { "catppuccin/nvim", as = "catppuccin" }
   use 'tpope/vim-fugitive'
   -- Git gutter
   use 'mhinz/vim-signify'
-
-  -- NVIM Tree
-  use 'nvim-tree/nvim-tree.lua' 
 
   -- telescope
   use {
@@ -85,5 +83,4 @@ use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
-
 end)
