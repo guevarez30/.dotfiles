@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/home/taylorguevarez/.local/share/nvim/site/pack/packer/start/colorbuddy.nvim",
     url = "https://github.com/tjdevries/colorbuddy.nvim"
   },
+  ["dracula.nvim"] = {
+    loaded = true,
+    path = "/home/taylorguevarez/.local/share/nvim/site/pack/packer/start/dracula.nvim",
+    url = "https://github.com/Mofiqul/dracula.nvim"
+  },
   harpoon = {
     loaded = true,
     path = "/home/taylorguevarez/.local/share/nvim/site/pack/packer/start/harpoon",

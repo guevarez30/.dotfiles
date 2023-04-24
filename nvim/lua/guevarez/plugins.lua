@@ -9,8 +9,8 @@ return require('packer').startup(function()
 
   -- Themes
   -- use 'folke/tokyonight.nvim'
-  -- use 'Mofiqul/dracula.nvim'
-use { "catppuccin/nvim", as = "catppuccin" }
+  use 'Mofiqul/dracula.nvim'
+  use { "catppuccin/nvim", as = "catppuccin" }
   use {
     "jesseleite/nvim-noirbuddy",
     requires = { "tjdevries/colorbuddy.nvim", branch = "dev" }

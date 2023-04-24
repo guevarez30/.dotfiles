@@ -1,5 +1,5 @@
 -- vim.cmd[[colorscheme tokyonight-night]]
--- vim.cmd[[colorscheme dracula]]
+vim.cmd[[colorscheme dracula]]
 -- vim.cmd[[colorscheme minimal]] 
 -- vim.cmd[[colorscheme nightfox]] 
 -- vim.cmd[[colorscheme rose-pine]] 
@@ -17,4 +17,4 @@
 --     diagnostic_warning = '#89BEB7',
 --   },
 -- }
-vim.cmd.colorscheme "catppuccin"
+-- vim.cmd.colorscheme "catppuccin"
