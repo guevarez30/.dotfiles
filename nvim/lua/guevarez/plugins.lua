@@ -9,8 +9,8 @@ return require('packer').startup(function()
 
   -- Themes
   -- use 'folke/tokyonight.nvim'
-  -- use 'Mofiqul/dracula.nvim'
-use { "catppuccin/nvim", as = "catppuccin" }
+  use 'Mofiqul/dracula.nvim'
+  use { "catppuccin/nvim", as = "catppuccin" }
   use {
     "jesseleite/nvim-noirbuddy",
     requires = { "tjdevries/colorbuddy.nvim", branch = "dev" }
@@ -49,9 +49,10 @@ use { "catppuccin/nvim", as = "catppuccin" }
   -- Prettier
   use 'sbdchd/neoformat'
 
-  -- Go Formatter
-  use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
-  
+  -- Go 
+  -- use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
+  use {'fatih/vim-go', run= ':GoUpdateBinaries' }
+
   -- VIM Vinegar
   use 'tpope/vim-vinegar'
   -- VIM surround
@@ -82,5 +83,4 @@ use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
-
 end)

@@ -36,6 +36,10 @@ map("n", "*", "*zzzv")
 map("n", "<leader>p", ":Telescope find_files <CR>")
 map("n", "<leader>f", ":Telescope live_grep <CR>")
 
+-- Split
+map("n", "<leader>sv", ":Vexplore <CR>")
+map("n", "<leader>sh", ":Hexplore <CR>")
+
 -- Git 
 map("n", "<leader>gg", ":Git <CR>")
 map("n", "<leader>gd", ":Gvdiffsplit <CR>")
@@ -47,6 +51,9 @@ map("n", "<leader>gl", ":Git log --decorate --graph <CR>")
 map("n", "<leader>tn", ":TestNearest <CR>")
 map("n", "<leader>tf", ":TestFile <CR>")
 map("n", "<leader>ts", ":TestSuite <CR>")
+
+-- Go 
+map("n", "<leader>rg", ":GoRun <CR>")
 
 -- Harpoon
 map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")

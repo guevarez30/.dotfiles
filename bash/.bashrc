@@ -86,7 +86,7 @@ alias dot='cd ~/.dotfiles'
 alias lg='lazygit'
 alias grep='rg'
 alias find='fd'
-alias ls='lsd'
+alias ls='exa -a --group-directories-first'
 alias loads='cd ~/loads'
 
 #####################################################################################
