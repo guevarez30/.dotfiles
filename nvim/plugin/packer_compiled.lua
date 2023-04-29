@@ -204,13 +204,8 @@ _G.packer_plugins = {
   },
   ["vim-go"] = {
     loaded = true,
-<<<<<<< HEAD
-    path = "/Users/taylorguevarez/.local/share/nvim/site/pack/packer/start/vim-gofmt",
-    url = "https://github.com/darrikonn/vim-gofmt"
-=======
     path = "/home/taylorguevarez/.local/share/nvim/site/pack/packer/start/vim-go",
     url = "https://github.com/fatih/vim-go"
->>>>>>> 98024a6cade2e37d1c60743b10e8cb8fdb8a64be
   },
   ["vim-signify"] = {
     loaded = true,
