@@ -11,8 +11,7 @@ window:
 # Font configuration
 font:
   normal:
-    family: "DejaVu Sans Mono"
-    style: Medium
+    family: "Hack Nerd Font Mono"
   size: 11.0
 
 colors:
