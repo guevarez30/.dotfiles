@@ -8,13 +8,7 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Themes
-  -- use 'folke/tokyonight.nvim'
-  use 'Mofiqul/dracula.nvim'
   use { "catppuccin/nvim", as = "catppuccin" }
-  use {
-    "jesseleite/nvim-noirbuddy",
-    requires = { "tjdevries/colorbuddy.nvim", branch = "dev" }
-  }
 
   -- Harpoon
   use 'ThePrimeagen/harpoon'
@@ -50,7 +44,6 @@ return require('packer').startup(function()
   use 'sbdchd/neoformat'
 
   -- Go 
-  -- use { 'darrikonn/vim-gofmt', run = ':GoUpdateBinaries' }
   use {'fatih/vim-go', run= ':GoUpdateBinaries' }
 
   -- VIM Vinegar
@@ -73,14 +66,6 @@ return require('packer').startup(function()
 
   use 'norcalli/nvim-colorizer.lua'
   
-  -- Test Suite
-  use {
-    "klen/nvim-test",
-    config = function()
-      require('nvim-test').setup()
-    end
-  }
-
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
 end)

@@ -47,19 +47,11 @@ map("n", "<leader>gb", ":G branch <CR>")
 map("n", "<leader>gp", ":Git -c push.default=current push <CR>")
 map("n", "<leader>gl", ":Git log --decorate --graph <CR>")
 
--- Test
-map("n", "<leader>tn", ":TestNearest <CR>")
-map("n", "<leader>tf", ":TestFile <CR>")
-map("n", "<leader>ts", ":TestSuite <CR>")
-
 -- Go 
 map("n", "<leader>rg", ":GoRun <CR>")
 
 -- Harpoon
 map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
 map("n","<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
-
--- NVIM Tree
-map("n","<leader>nt", ":NvimTreeToggle <CR>")
 
 -- Additional Mapping in lspconfig
