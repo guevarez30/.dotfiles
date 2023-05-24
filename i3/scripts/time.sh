@@ -1,2 +1,0 @@
-time=$(date '+%Y-%m-%d %H:%M')
-echo "  $time" 
