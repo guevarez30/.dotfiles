@@ -54,4 +54,8 @@ map("n", "<leader>rg", ":GoRun <CR>")
 map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
 map("n","<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
 
+-- Test
+map("n", "<leader>tn", ":TestNearest <CR>")
+map("n", "<leader>tf", ":TestFile <CR>")
+map("n", "<leader>ts", ":TestSuite <CR>")
 -- Additional Mapping in lspconfig

@@ -64,6 +64,14 @@ return require('packer').startup(function()
   -- Rust
   use 'rust-lang/rust.vim'
 
+  -- Test Suite
+  use {
+    "klen/nvim-test",
+    config = function()
+      require('nvim-test').setup()
+    end
+  }
+
   use 'norcalli/nvim-colorizer.lua'
   
   -- Tmux Intergration
