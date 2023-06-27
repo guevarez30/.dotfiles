@@ -12,7 +12,6 @@ require("guevarez.colors")
 require("guevarez.telescope")
 require("guevarez.lspconfig")
 require("guevarez.treesitter")
-require("guevarez.test")
 require("guevarez.lualine")
 require("guevarez.signify")
 
