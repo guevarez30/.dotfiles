@@ -43,16 +43,9 @@ map("n", "<leader>sh", ":Hexplore <CR>")
 -- Git 
 map("n", "<leader>gg", ":Git <CR>")
 map("n", "<leader>gd", ":Gvdiffsplit <CR>")
-map("n", "<leader>gb", ":G branch <CR>")
 map("n", "<leader>gp", ":Git -c push.default=current push <CR>")
 map("n", "<leader>gl", ":Git log --decorate --graph <CR>")
-
--- Go 
-map("n", "<leader>rg", ":GoRun <CR>")
 
 -- Harpoon
 map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
 map("n","<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
-
--- Test
-map("n", "<leader>tr", ":RustTest <CR>")
