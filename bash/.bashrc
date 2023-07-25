@@ -96,8 +96,6 @@ alias src='source ~/.bashrc'
 #####################################################################################
 alias python='python3'
 alias pip='pip3'
-alias py3='nodemon --exec python3'
-alias py2='nodemon --exec python2'
 alias py='py3'
 
 #####################################################################################
