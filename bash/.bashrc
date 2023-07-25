@@ -33,13 +33,6 @@ killport() {
 
 alias killPort='killport';
 
-term() { printf "\033]0;$*\007"; }
-
-taylorGIT(){
-	git config user.email guevarez30@gmail.com
-	git config user.name 'Taylor Guevarez'
-}
-
 count(){
 	ls $@ -1 | wc -l
 }
@@ -80,12 +73,12 @@ alias got='git'
 alias ipconfig='ifconfig'
 alias cat='bat'
 alias dot='cd ~/.dotfiles'
-alias lg='lazygit'
 alias grep='rg'
 alias find='fd'
 alias ls='exa -a --group-directories-first'
 alias loads='cd ~/loads'
 alias src='source ~/.bashrc'
+
 #####################################################################################
 #RUST
 #####################################################################################
@@ -120,7 +113,6 @@ export PATH="$PATH:/usr/local/go/bin";
 # Notes
 #####################################################################################
 note () {
-  term Notes $(date '+%Y-%m-%d')
   \nvim ~/notes/$(date '+%Y-%m-%d').md
 }
 alias notes='note'
