@@ -1,6 +1,7 @@
 lua require("guevarez")
 
 " -- Standard File Save
+ let g:neoformat_try_node_exe = 1
 autocmd BufWritePre *.js Neoformat
 au BufWritePre,FileWritePre *.go :GoFmt
 
