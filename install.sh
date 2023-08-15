@@ -13,6 +13,7 @@ nix-env -iA \
 
 touch ~/.localrc
 
+
 # Create Links
 rm ~/.bashrc
 ln -s ~/.dotfiles/bash/.bashrc ~/.bashrc

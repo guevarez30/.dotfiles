@@ -9,6 +9,8 @@ return require('packer').startup(function()
 
   -- Themes
   use { "catppuccin/nvim", as = "catppuccin" }
+  use 'Yazeed1s/minimal.nvim' 
+  use 'Mofiqul/dracula.nvim'
 
   -- Harpoon
   use 'ThePrimeagen/harpoon'
@@ -41,7 +43,8 @@ return require('packer').startup(function()
   }
 
   -- Prettier
-  use 'sbdchd/neoformat'
+ use 'Yazeed1s/minimal.nvim' 
+ use 'sbdchd/neoformat'
 
   -- Go 
   use {'fatih/vim-go', run= ':GoUpdateBinaries' }

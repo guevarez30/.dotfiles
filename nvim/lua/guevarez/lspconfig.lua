@@ -60,6 +60,27 @@ require('lspconfig')['gopls'].setup{
     flags = lsp_flags,
 }
 
+require'lspconfig'.ember.setup{}
+
+require'lspconfig'.eslint.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        codeActionOnSave = {
+            enable = true,
+            mode = "all"
+        },
+    }
+}
+
+ --Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.html.setup {
+  capabilities = capabilities,
+}
+
 -- nvim-cmp
 local cmp = require('cmp')
 local lspkind = require('lspkind')

@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["dracula.nvim"] = {
+    loaded = true,
+    path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/dracula.nvim",
+    url = "https://github.com/Mofiqul/dracula.nvim"
+  },
   harpoon = {
     loaded = true,
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/harpoon",
@@ -108,6 +113,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
+  ["minimal.nvim"] = {
+    loaded = true,
+    path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/minimal.nvim",
+    url = "https://github.com/Yazeed1s/minimal.nvim"
   },
   neoformat = {
     loaded = true,

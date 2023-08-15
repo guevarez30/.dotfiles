@@ -1,9 +1,9 @@
 lua require("guevarez")
 
 " -- Standard File Save
- let g:neoformat_try_node_exe = 1
-autocmd BufWritePre *.js Neoformat
 au BufWritePre,FileWritePre *.go :GoFmt
+
+autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
 
 " -- Rust
 syntax enable
@@ -21,4 +21,3 @@ highlight NonText guibg=none
 " -- Auto update on file change
 set autoread
 au FocusGained * :checktime
-
