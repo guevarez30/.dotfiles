@@ -9,8 +9,6 @@ return require('packer').startup(function()
 
   -- Themes
   use { "catppuccin/nvim", as = "catppuccin" }
-  use 'Yazeed1s/minimal.nvim' 
-  use 'Mofiqul/dracula.nvim'
 
   -- Harpoon
   use 'ThePrimeagen/harpoon'

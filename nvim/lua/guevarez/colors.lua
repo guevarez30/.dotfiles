@@ -17,4 +17,4 @@
 --     diagnostic_warning = '#89BEB7',
 --   },
 -- }
-vim.cmd.colorscheme "minimal"
+vim.cmd.colorscheme "catppuccin"
