@@ -35,6 +35,11 @@ map("n", "*", "*zzzv")
 -- Telescope
 map("n", "<leader>p", ":Telescope find_files <CR>")
 map("n", "<leader>f", ":Telescope live_grep <CR>")
+map("n", "<leader>q", ":Telescope quickfix<CR>")
+
+-- QuickFix
+map("n", "<leader>cn", ":cnext <CR>")
+map("n", "<leader>cp", ":cprevious <CR>")
 
 -- Split
 map("n", "<leader>sv", ":Vexplore <CR>")

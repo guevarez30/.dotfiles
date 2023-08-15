@@ -3,7 +3,7 @@ env:
   TERM: xterm-256color
 
 window:
-  opacity: 0.90
+  opacity: 0.99
   dimensions:
     columns: 100
     lines: 50
@@ -28,7 +28,7 @@ colors:
     cyan:    '#89BEB7'
     white:   '#CFD0D7'
   bright:
-    black:   '#16181D'
+    black:   '#b8b9ba'
     red:     '#E85A84'
     green:   '#94DD8E'
     yellow:  '#E9D26C'
