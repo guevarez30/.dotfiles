@@ -15,6 +15,8 @@ require("guevarez.treesitter")
 require("guevarez.lualine")
 require("guevarez.signify")
 
+require('nvim-ts-autotag').setup()
+
 vim.cmd[[highlight clear LineNr]]
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

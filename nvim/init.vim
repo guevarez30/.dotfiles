@@ -2,8 +2,7 @@ lua require("guevarez")
 
 " -- Standard File Save
 au BufWritePre,FileWritePre *.go :GoFmt
-
-autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
+autocmd BufWritePre,FileWritePre *.jsx,*.js EslintFixAll
 
 " -- Rust
 syntax enable

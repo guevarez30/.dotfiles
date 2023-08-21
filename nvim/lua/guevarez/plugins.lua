@@ -40,6 +40,8 @@ return require('packer').startup(function()
       config = function() require("nvim-autopairs").setup {} end
   }
 
+ use 'windwp/nvim-ts-autotag'
+
   -- Prettier
  use 'Yazeed1s/minimal.nvim' 
  use 'sbdchd/neoformat'
