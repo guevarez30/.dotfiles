@@ -94,11 +94,6 @@ _G.packer_plugins = {
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["dracula.nvim"] = {
-    loaded = true,
-    path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/dracula.nvim",
-    url = "https://github.com/Mofiqul/dracula.nvim"
-  },
   harpoon = {
     loaded = true,
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/harpoon",
@@ -154,6 +149,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/nvim-treesitter-context",
     url = "https://github.com/nvim-treesitter/nvim-treesitter-context"
+  },
+  ["nvim-ts-autotag"] = {
+    loaded = true,
+    path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag",
+    url = "https://github.com/windwp/nvim-ts-autotag"
   },
   ["nvim-web-devicons"] = {
     loaded = false,
