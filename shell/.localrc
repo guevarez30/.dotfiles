@@ -1,0 +1,149 @@
+#!/bin/sh
+
+###################################################################################
+# Functions
+###################################################################################
+killport() {
+	fuser -k $@/tcp
+}
+
+count(){
+	ls $@ -1 | wc -l
+}
+
+###################################################################################
+# TMUX
+###################################################################################
+tn(){
+  echo Creating Session: $@
+  tmux new -s $@
+}
+
+ta(){
+  tmux attach-session -t $@
+}
+
+tk(){
+  tmux kill-session -t  $@
+}
+
+tl(){
+  tmux ls
+}
+
+tmuxControl(){
+  dir=$1
+  session=$2
+
+  if [ "$PWD" != $dir ]; then
+    cd $dir 
+  fi
+
+  if [ "$TERM_PROGRAM" != tmux ]; then
+    ta $session || tn $session
+  else 
+    tmux switch -t $session 
+  fi
+}
+
+###################################################################################
+# Docker
+###################################################################################
+alias d='docker'
+alias dc='docker compose'
+
+#####################################################################################
+#Aliases
+#####################################################################################
+alias vim='nvim'
+alias v='nvim .'
+alias mv='mv -i'
+alias clc='clear'
+alias cls='clear'
+alias clera='clear'
+alias celar='clear'
+alias ckear='clear'
+alias ckear='clear'
+alias got='git'
+alias ipconfig='ifconfig'
+alias cat='bat'
+alias dot='cd ~/.dotfiles'
+alias grep='rg'
+alias find='fd'
+alias ls='exa --group-directories-first'
+alias lt='du -sh * | sort -h'
+alias loads='cd ~/loads'
+alias src='source ~/.zshrc'
+alias diff='nvim -d'
+alias dif='diff'
+alias pretty="jq '.'"
+
+###################################################################################
+# Shift4
+###################################################################################
+api() {
+  tmuxControl ~/loads/api API
+  nvm use
+
+  if [ -z "$1" ]; then
+    return
+  elif [ $1 = "run" ]; then
+    yarn run start:dev-w
+  elif [ $1 = "test" ]; then
+     yarn test
+  fi
+}
+
+frontend() {
+  tmuxControl ~/loads/frontend FRONTEND
+  nvm use
+
+  if [ -z "$1" ]; then
+    return
+  elif [ $1 = "run" ]; then
+    yarn run staging
+  fi
+}
+alias fe="frontend"
+
+#####################################################################################
+#RUST
+#####################################################################################
+. "$HOME/.cargo/env"
+
+#####################################################################################
+#Python
+#####################################################################################
+alias python='python3'
+alias pip='pip3'
+alias py='py3'
+
+#####################################################################################
+#Include Scripts to Path and Custom Functions
+#####################################################################################
+export PATH="$PATH:/usr/local/go/src"
+
+#####################################################################################
+# Node Version Manager
+#####################################################################################
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#####################################################################################
+# Go
+#####################################################################################
+export PATH="$PATH:/Users/TaylorGuevarez/go/bin";
+
+export PATH="$PATH:/Users/TaylorGuevarez/scripts";
+
+#####################################################################################
+# Notes
+#####################################################################################
+note () {
+  \nvim ~/notes/$(date '+%Y-%m-%d').md
+}
+alias notes='note'
+
+# Add a blank line after ps1
+precmd() { print "" }

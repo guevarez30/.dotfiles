@@ -3,8 +3,6 @@ require("guevarez.plugins")
 
 -- Vim Defaults
 require("guevarez.set")
--- Vim Remap
-require("guevarez.maps")
 -- Vim Colorscheme
 require("guevarez.colors")
 
@@ -14,8 +12,11 @@ require("guevarez.lspconfig")
 require("guevarez.treesitter")
 require("guevarez.lualine")
 require("guevarez.signify")
-
 require('nvim-ts-autotag').setup()
+
+-- Vim Remap
+require("guevarez.maps")
+
 
 vim.cmd[[highlight clear LineNr]]
 
@@ -27,3 +28,4 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     update_in_insert = false,
   }
 )
+
