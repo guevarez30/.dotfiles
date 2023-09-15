@@ -46,6 +46,8 @@ tmuxControl(){
   fi
 }
 
+alias loads='tmuxControl ~/loads/loads LOADS'
+
 ###################################################################################
 # Docker
 ###################################################################################
@@ -72,39 +74,10 @@ alias grep='rg'
 alias find='fd'
 alias ls='exa --group-directories-first'
 alias lt='du -sh * | sort -h'
-alias loads='cd ~/loads'
 alias src='source ~/.zshrc'
 alias diff='nvim -d'
 alias dif='diff'
 alias pretty="jq '.'"
-
-###################################################################################
-# Shift4
-###################################################################################
-api() {
-  tmuxControl ~/loads/api API
-  nvm use
-
-  if [ -z "$1" ]; then
-    return
-  elif [ $1 = "run" ]; then
-    yarn run start:dev-w
-  elif [ $1 = "test" ]; then
-     yarn test
-  fi
-}
-
-frontend() {
-  tmuxControl ~/loads/frontend FRONTEND
-  nvm use
-
-  if [ -z "$1" ]; then
-    return
-  elif [ $1 = "run" ]; then
-    yarn run staging
-  fi
-}
-alias fe="frontend"
 
 #####################################################################################
 #RUST
