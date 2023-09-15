@@ -1,5 +1,7 @@
 touch ~/.localrc
 
+f(err !=nil){
+
 # Create Links
 rm ~/.bashrc
 ln -s ~/.dotfiles/bash/.bashrc ~/.bashrc
@@ -9,6 +11,8 @@ ln -s ~/.dotfiles/git/* ~/
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source ~/.bashrc
 
+
+something
 ## Install Alacrity
 cargo install alacritty
 

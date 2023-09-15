@@ -8,10 +8,10 @@ function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+
 -- Add empty lines 
 map("n", "<Leader>o", "o<Esc>")
 map("n", "<Leader>O", "O<Esc>")
-
 
 -- Move HighLighted Lines
 map("v", "J", ":m '>+1<CR>gv=gv")
@@ -61,3 +61,18 @@ map("n", "<leader>gb",  ":Telescope git_branches<CR>" )
 -- Harpoon
 -- map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
 -- map("n","<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
+
+-- Error
+-- Go
+vim.keymap.set('n', '<Leader>ee', function() 
+  filetype = vim.bo.filetype 
+  print(filetype)
+
+  if(filetype == 'go') then
+    vim.cmd.normal "iif err != nil {\n\n}"
+    return vim.cmd.normal "k"
+  elseif(filetype == 'javascript' or filetype == 'typescript' ) then
+    vim.cmd.normal "itry {\n\n} catch(err) {\n  console.error(err)\n}"
+    return vim.cmd.normal "3k"
+  end
+end)
