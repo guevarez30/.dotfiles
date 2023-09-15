@@ -53,3 +53,5 @@ telescope.setup{
 
   extensions_list = { "themes", "terms" },
 }
+
+require('telescope').load_extension('vim_bookmarks' )

@@ -4,6 +4,8 @@ lua require("guevarez")
 au BufWritePre,FileWritePre *.go :GoFmt
 autocmd BufWritePre,FileWritePre *.jsx,*.js EslintFixAll
 
+autocmd BufWritePre,FileWritePre *.ts Neoformat tsfmt
+
 " -- Rust
 syntax enable
 filetype plugin indent on
@@ -16,6 +18,10 @@ set clipboard+=unnamedplus
 set termguicolors
 highlight Normal guibg=none
 highlight NonText guibg=none
+
+" -- Bookmarks
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_auto_save = 1
 
 " -- Auto update on file change
 set autoread

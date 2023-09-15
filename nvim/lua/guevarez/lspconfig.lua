@@ -60,6 +60,7 @@ require('lspconfig')['gopls'].setup{
 
 -- Ember Set Up
 require'lspconfig'.ember.setup{}
+-- require'lspconfig'.glint.setup{}
 
 require'lspconfig'.eslint.setup {
     on_attach = on_attach,
@@ -77,6 +78,10 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 require'lspconfig'.html.setup {
+  capabilities = capabilities,
+}
+
+require'lspconfig'.cssls.setup {
   capabilities = capabilities,
 }
 
