@@ -1,28 +1,4 @@
-###################################################################################
-# PS1
-###################################################################################
-source ~/.git-prompt.sh
-
-RED="\[\e[0;31m\]"
-GREEN="\[\e[0;32m\]"
-YELLOW="\[\e[0;33m\]"
-BLUE="\[\e[0;34m\]"
-PURPLE="\[\e[0;35m\]"
-CYAN="\[\e[0;36m\]"
-WHITE="\[\e[0;37m\]"
-
-update_PS1(){
-  PS1=""
-  # PS1+="${CYAN}\T"
-  PS1+="${BLUE}\W"
-  PS1+=" ${PURPLE}$(__git_ps1 " %s")"
-  PS1+="\n"
-  PS1+="${YELLOW}"
-  PS1+=" ${WHITE}"
-  PS1=$"\n""$PS1"
-}
-
-PROMPT_COMMAND=update_PS1
+#!/bin/sh
 
 ###################################################################################
 # Functions
@@ -30,8 +6,6 @@ PROMPT_COMMAND=update_PS1
 killport() {
 	fuser -k $@/tcp
 }
-
-alias killPort='killport';
 
 count(){
 	ls $@ -1 | wc -l
@@ -41,33 +15,56 @@ count(){
 # TMUX
 ###################################################################################
 tn(){
-  dir=$(pwd | sed "s/.*\///g")
-  DIR=${dir^^}
-  tmux new -s $DIR
+  echo Creating Session: $@
+  tmux new -s $@
 }
 
 ta(){
   tmux attach-session -t $@
 }
 
-
 tk(){
   tmux kill-session -t  $@
 }
-
 
 tl(){
   tmux ls
 }
 
+tmuxControl(){
+  dir=$1
+  session=$2
+
+  if [ "$PWD" != $dir ]; then
+    cd $dir 
+  fi
+
+  if [ "$TERM_PROGRAM" != tmux ]; then
+    ta $session || tn $session
+  else 
+    tmux switch -t $session 
+  fi
+}
+
+alias loads='tmuxControl ~/loads/loads LOADS'
+
+###################################################################################
+# Docker
+###################################################################################
+alias d='docker'
+alias dc='docker compose'
+
 #####################################################################################
 #Aliases
 #####################################################################################
 alias vim='nvim'
+alias v='nvim .'
 alias mv='mv -i'
 alias clc='clear'
 alias cls='clear'
 alias clera='clear'
+alias celar='clear'
+alias ckear='clear'
 alias ckear='clear'
 alias got='git'
 alias ipconfig='ifconfig'
@@ -75,9 +72,12 @@ alias cat='bat'
 alias dot='cd ~/.dotfiles'
 alias grep='rg'
 alias find='fd'
-alias ls='exa -a --group-directories-first'
-alias loads='cd ~/loads'
-alias src='source ~/.bashrc'
+alias ls='exa --group-directories-first'
+alias lt='du -sh * | sort -h'
+alias src='source ~/.zshrc'
+alias diff='nvim -d'
+alias dif='diff'
+alias pretty="jq '.'"
 
 #####################################################################################
 #RUST
@@ -94,7 +94,6 @@ alias py='py3'
 #####################################################################################
 #Include Scripts to Path and Custom Functions
 #####################################################################################
-export PATH="$PATH:~/scripts";
 export PATH="$PATH:/usr/local/go/src"
 
 #####################################################################################
@@ -107,7 +106,9 @@ export NVM_DIR="$HOME/.nvm"
 #####################################################################################
 # Go
 #####################################################################################
-export PATH="$PATH:/usr/local/go/bin";
+export PATH="$PATH:/Users/TaylorGuevarez/go/bin";
+
+export PATH="$PATH:/Users/TaylorGuevarez/scripts";
 
 #####################################################################################
 # Notes
@@ -117,7 +118,5 @@ note () {
 }
 alias notes='note'
 
-#####################################################################################
-# Local .rc file
-#####################################################################################
-source ~/.localrc
+# Add a blank line after ps1
+precmd() { print "" }

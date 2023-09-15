@@ -1,8 +1,10 @@
 lua require("guevarez")
 
 " -- Standard File Save
-autocmd BufWritePre *.js Neoformat
 au BufWritePre,FileWritePre *.go :GoFmt
+autocmd BufWritePre,FileWritePre *.jsx,*.js EslintFixAll
+
+autocmd BufWritePre,FileWritePre *.ts Neoformat tsfmt
 
 " -- Rust
 syntax enable
@@ -17,7 +19,10 @@ set termguicolors
 highlight Normal guibg=none
 highlight NonText guibg=none
 
+" -- Bookmarks
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_auto_save = 1
+
 " -- Auto update on file change
 set autoread
 au FocusGained * :checktime
-

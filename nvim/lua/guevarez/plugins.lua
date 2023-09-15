@@ -11,7 +11,7 @@ return require('packer').startup(function()
   use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Harpoon
-  use 'ThePrimeagen/harpoon'
+  -- use 'ThePrimeagen/harpoon'
 
   -- Lua line
   use {
@@ -40,8 +40,11 @@ return require('packer').startup(function()
       config = function() require("nvim-autopairs").setup {} end
   }
 
+ use 'windwp/nvim-ts-autotag'
+
   -- Prettier
-  use 'sbdchd/neoformat'
+ use 'Yazeed1s/minimal.nvim' 
+ use 'sbdchd/neoformat'
 
   -- Go 
   use {'fatih/vim-go', run= ':GoUpdateBinaries' }
@@ -68,4 +71,12 @@ return require('packer').startup(function()
   
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
+
+  use "lukas-reineke/indent-blankline.nvim"
+
+  use "MattesGroeger/vim-bookmarks"
+  use "tom-anders/telescope-vim-bookmarks.nvim"
+
+  use "EdenEast/nightfox.nvim" 
+
 end)

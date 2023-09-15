@@ -1,5 +1,3 @@
-
-
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -58,6 +56,33 @@ require('lspconfig')['rust_analyzer'].setup{
 require('lspconfig')['gopls'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
+}
+
+-- Ember Set Up
+require'lspconfig'.ember.setup{}
+-- require'lspconfig'.glint.setup{}
+
+require'lspconfig'.eslint.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        codeActionOnSave = {
+            enable = true,
+            mode = "all"
+        },
+    }
+}
+
+ --Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.html.setup {
+  capabilities = capabilities,
+}
+
+require'lspconfig'.cssls.setup {
+  capabilities = capabilities,
 }
 
 -- nvim-cmp

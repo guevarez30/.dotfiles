@@ -1,5 +1,6 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"python", "bash", "javascript", "go", "http", "json", "rust", "vim"},
+
+  ensure_installed = {"python", "bash", "javascript", "go", "http", "json", "rust", "vim", "glimmer"},
 
   -- Install languages synchronously (only applied to `ensure_installed`)
   sync_install = false,
