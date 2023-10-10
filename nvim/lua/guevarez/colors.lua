@@ -1,2 +1,3 @@
--- vim.cmd.colorscheme "catppuccin"
-vim.cmd.colorscheme "carbonfox"
+local cmd = vim.cmd
+-- cmd.colorscheme "catppuccin"
+cmd.colorscheme "carbonfox"
