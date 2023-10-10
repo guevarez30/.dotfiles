@@ -1,7 +1,5 @@
 touch ~/.localrc
 
-f(err !=nil){
-
 # Create Links
 rm ~/.bashrc
 ln -s ~/.dotfiles/bash/.bashrc ~/.bashrc

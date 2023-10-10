@@ -3,7 +3,6 @@ require("guevarez.plugins")
 
 -- Vim Defaults
 require("guevarez.set")
--- Vim Colorscheme
 require("guevarez.colors")
 
 -- Plugins
@@ -12,20 +11,31 @@ require("guevarez.lspconfig")
 require("guevarez.treesitter")
 require("guevarez.lualine")
 require("guevarez.signify")
-require('nvim-ts-autotag').setup()
+-- require('nvim-ts-autotag').setup()
 
--- Vim Remap
+-- After
 require("guevarez.maps")
+require("guevarez.bookmarks")
 
+-- Commands
+local cmd = vim.cmd
+-- Standard File Save
+local current_directory = vim.fn.getcwd()
+if string.match(current_directory, "loads/api")  then
+  cmd[[autocmd BufWritePre,FileWritePre *.jsx,*.js EslintFixAll]]
+else
+  cmd[[autocmd BufWritePre,FileWritePre *.jsx,*.js Neoformat jsbeautify]]
+end
+cmd[[autocmd BufWritePre,FileWritePre *.ts Neoformat tsfmt]]
+cmd[[autocmd BufWritePre,FileWritePre *.go :GoFmt]]
 
-vim.cmd[[highlight clear LineNr]]
+-- Rust
+cmd[[syntax enable]]
+cmd[[filetype plugin indent on]]
+vim.g.rustfmt_autosave = 1
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = false,
-    virtual_text = true,
-    signs = false,
-    update_in_insert = false,
-  }
-)
+-- Auto update on file change
+cmd[[autocmd FocusGained * :checktime]]
 
+-- Line number highlight
+cmd[[highlight clear LineNr]]

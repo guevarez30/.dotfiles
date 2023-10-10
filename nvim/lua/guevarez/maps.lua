@@ -43,8 +43,9 @@ map("n", "md", " <Plug>BookmarkClearAll")
 map("n", "ma", ":Telescope vim_bookmarks all <CR>")
 
 -- QuickFix
-map("n", "<leader>cn", ":cnext <CR>")
-map("n", "<leader>cp", ":cprevious <CR>")
+map("n", "cn", ":cnext <CR>")
+map("n", "cp", ":cprevious <CR>")
+map("n", "co", ":copen <CR>")
 
 -- Split
 map("n", "<leader>sv", ":Vexplore <CR>")
@@ -58,16 +59,16 @@ map("n", "<leader>gp", ":Git -c push.default=current push <CR>")
 map("n", "<leader>gl", ":Git log -n 20 --decorate <CR>")
 map("n", "<leader>gb",  ":Telescope git_branches<CR>" )
 
+-- Remap Esc in Terminal mode
+map('t', '<Esc>', '<C-\\><C-n>')
+
 -- Harpoon
 -- map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
 -- map("n","<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
 
 -- Error
--- Go
 vim.keymap.set('n', '<Leader>ee', function() 
   filetype = vim.bo.filetype 
-  print(filetype)
-
   if(filetype == 'go') then
     vim.cmd.normal "iif err != nil {\n\n}"
     return vim.cmd.normal "k"
