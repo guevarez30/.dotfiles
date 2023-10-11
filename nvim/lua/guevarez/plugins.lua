@@ -10,7 +10,7 @@ return require('packer').startup(function()
   -- use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Harpoon
-  -- use 'ThePrimeagen/harpoon'
+  use 'ThePrimeagen/harpoon'
 
   -- Lua line
   use {
@@ -59,9 +59,6 @@ return require('packer').startup(function()
   use 'norcalli/nvim-colorizer.lua'
   -- Tmux Intergration
   use('christoomey/vim-tmux-navigator')
-  -- Book Marks
-  use "MattesGroeger/vim-bookmarks"
-  use "tom-anders/telescope-vim-bookmarks.nvim"
 
 
 end)
