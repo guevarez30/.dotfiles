@@ -11,11 +11,9 @@ require("guevarez.lspconfig")
 require("guevarez.treesitter")
 require("guevarez.lualine")
 require("guevarez.signify")
--- require('nvim-ts-autotag').setup()
 
 -- After
 require("guevarez.maps")
-require("guevarez.bookmarks")
 
 -- Commands
 local cmd = vim.cmd

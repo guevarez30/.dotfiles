@@ -8,7 +8,6 @@ function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-
 -- Add empty lines 
 map("n", "<Leader>o", "o<Esc>")
 map("n", "<Leader>O", "O<Esc>")
@@ -37,11 +36,6 @@ map("n", "*", "*zzzv")
 map("n", "<leader>p", ":Telescope find_files <CR>")
 map("n", "<leader>f", ":Telescope live_grep <CR>")
 
--- Marks
-map("n", "<leader>m", ":Telescope vim_bookmarks all <CR>")
-map("n", "md", " <Plug>BookmarkClearAll")
-map("n", "ma", ":Telescope vim_bookmarks all <CR>")
-
 -- QuickFix
 map("n", "cn", ":cnext <CR>")
 map("n", "cp", ":cprevious <CR>")
@@ -53,18 +47,16 @@ map("n", "<leader>sh", ":Hexplore <CR>")
 
 -- Git 
 map("n", "<leader>gg", ":Git <CR>")
-map("n", "<leader>gf", ":Git fetch <CR>")
 map("n", "<leader>gd", ":Gvdiffsplit <CR>")
 map("n", "<leader>gp", ":Git -c push.default=current push <CR>")
 map("n", "<leader>gl", ":Git log -n 20 --decorate <CR>")
-map("n", "<leader>gb",  ":Telescope git_branches<CR>" )
 
 -- Remap Esc in Terminal mode
 map('t', '<Esc>', '<C-\\><C-n>')
 
 -- Harpoon
--- map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
--- map("n","<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
+map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
+map("n","<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
 
 -- Error
 vim.keymap.set('n', '<Leader>ee', function() 
