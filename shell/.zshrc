@@ -55,7 +55,7 @@ ZSH_THEME="robbyrussell"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Which plugins would you like to load?
-plugins=(git web-search sudo )
+plugins=(git web-search sudo)
 
 source $ZSH/oh-my-zsh.sh
 
