@@ -150,5 +150,10 @@ note () {
 }
 alias notes='note'
 
+
+alias clockLit="TZ='Europe/Vilnius' tty-clock -ct -f '%a, %d %b %Y %T' -C 3"
+alias clock="tty-clock -ct -f '%a, %d %b %Y %T' -C 3"
+
+
 # Add a blank line after ps1
 precmd() { print "" }
