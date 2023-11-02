@@ -59,7 +59,7 @@ return require("packer").startup(function()
 	})
 	-- Coloroizer
 	use("norcalli/nvim-colorizer.lua")
-	-- Tmux Intergration
+	-- Tmux Integration
 	use("christoomey/vim-tmux-navigator")
 	-- Autoformatter
 	use({
@@ -68,9 +68,11 @@ return require("packer").startup(function()
 			require("conform").setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
-					javascript = { "standardjs" },
+					javascript = { { "eslint_d", "standardjs" } },
 					go = { "gofmt" },
 					rust = { "rustfmt" },
+					["*"] = { "codespell" },
+					["_"] = { "trim_whitespace" },
 				},
 			})
 		end,
