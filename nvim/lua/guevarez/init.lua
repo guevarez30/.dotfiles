@@ -18,12 +18,6 @@ require("guevarez.maps")
 -- Commands
 local cmd = vim.cmd
 
--- Standard File Save For Shift4
-local current_directory = vim.fn.getcwd()
-if string.match(current_directory, "loads") then
-	cmd([[autocmd BufWritePre,FileWritePre *.jsx,*.js EslintFixAll]])
-end
-
 -- Auto update on file change
 cmd([[autocmd FocusGained * :checktime]])
 
