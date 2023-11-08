@@ -68,7 +68,7 @@ return require("packer").startup(function()
 			require("conform").setup({
 				formatters_by_ft = {
 					lua = { "stylua" },
-					javascript = { { "eslint_d", "standardjs" } },
+					javascript = { { "prettierd", "standardjs" } },
 					go = { "gofmt" },
 					rust = { "rustfmt" },
 					["*"] = { "codespell" },
