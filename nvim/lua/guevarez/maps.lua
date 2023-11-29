@@ -58,11 +58,6 @@ map("t", "<Esc>", "<C-\\><C-n>")
 map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
 map("n", "<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
 
--- Rest
-map("n", "<leader>rn", "<Plug>RestNvim")
-map("n", "<leader>rl", "<Plug>RestNvimLast")
-map("n", "<leader>rp", "<Plug>RestNvimPreview")
-
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
 	filetype = vim.bo.filetype

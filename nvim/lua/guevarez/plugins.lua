@@ -63,9 +63,4 @@ return require("packer").startup(function()
 	use("christoomey/vim-tmux-navigator")
 	-- Autoformatter
 	use("stevearc/conform.nvim")
-
-	use({
-		"rest-nvim/rest.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-	})
 end)
