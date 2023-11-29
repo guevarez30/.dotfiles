@@ -11,6 +11,8 @@ require("guevarez.lspconfig")
 require("guevarez.treesitter")
 require("guevarez.lualine")
 require("guevarez.signify")
+require("guevarez.rest")
+require("guevarez.conform")
 
 -- After
 require("guevarez.maps")

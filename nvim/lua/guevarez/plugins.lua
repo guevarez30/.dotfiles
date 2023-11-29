@@ -62,19 +62,10 @@ return require("packer").startup(function()
 	-- Tmux Integration
 	use("christoomey/vim-tmux-navigator")
 	-- Autoformatter
+	use("stevearc/conform.nvim")
+
 	use({
-		"stevearc/conform.nvim",
-		config = function()
-			require("conform").setup({
-				formatters_by_ft = {
-					lua = { "stylua" },
-					javascript = { { "eslint_d", "standardjs" } },
-					go = { "gofmt" },
-					rust = { "rustfmt" },
-					["*"] = { "codespell" },
-					["_"] = { "trim_whitespace" },
-				},
-			})
-		end,
+		"rest-nvim/rest.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
 	})
 end)
