@@ -63,4 +63,6 @@ return require("packer").startup(function()
 	use("christoomey/vim-tmux-navigator")
 	-- Autoformatter
 	use("stevearc/conform.nvim")
+
+	use("mustache/vim-mustache-handlebars")
 end)

@@ -166,11 +166,6 @@ _G.packer_plugins = {
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
-  ["rest.nvim"] = {
-    loaded = true,
-    path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/rest.nvim",
-    url = "https://github.com/rest-nvim/rest.nvim"
-  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -190,6 +185,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/vim-go",
     url = "https://github.com/fatih/vim-go"
+  },
+  ["vim-mustache-handlebars"] = {
+    loaded = true,
+    path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/vim-mustache-handlebars",
+    url = "https://github.com/mustache/vim-mustache-handlebars"
   },
   ["vim-signify"] = {
     loaded = true,

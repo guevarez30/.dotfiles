@@ -25,6 +25,9 @@ cmd([[autocmd FocusGained * :checktime]])
 -- Line number highlight
 cmd([[highlight clear LineNr]])
 
+-- Handlebars
+vim.g.mustache_abbreviations = 1
+
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
 	callback = function(args)

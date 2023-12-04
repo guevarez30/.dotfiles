@@ -59,7 +59,11 @@ require("lspconfig")["gopls"].setup({
 })
 
 -- Ember Set Up
-require("lspconfig").ember.setup({})
+require("lspconfig")["ember"].setup({
+	on_attach = on_attach,
+	flags = lsp_flags,
+	filetypes = { "handlebars", "html.handlebars" },
+})
 
 require("lspconfig").eslint.setup({
 	on_attach = on_attach,
