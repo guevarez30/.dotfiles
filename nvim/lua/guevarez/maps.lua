@@ -50,6 +50,7 @@ map("n", "<leader>gg", ":Git <CR>")
 map("n", "<leader>gd", ":Gvdiffsplit <CR>")
 map("n", "<leader>gp", ":Git -c push.default=current push <CR>")
 map("n", "<leader>gl", ":Git log -n 20 --decorate <CR>")
+map("n", "<leader>gb", ":Git blame <CR>")
 
 -- Remap Esc in Terminal mode
 map("t", "<Esc>", "<C-\\><C-n>")
@@ -57,6 +58,11 @@ map("t", "<Esc>", "<C-\\><C-n>")
 -- Harpoon
 map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
 map("n", "<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
+
+-- Rest
+map("n", "<leader>rn", "<Plug>RestNvim")
+map("n", "<leader>rl", "<Plug>RestNvimLast")
+map("n", "<leader>rp", "<Plug>RestNvimPreview")
 
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
