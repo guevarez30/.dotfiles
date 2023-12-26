@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ###################################################################################
 # Functions
 ###################################################################################
@@ -85,24 +83,33 @@ alias pretty="jq '.'"
 ###################################################################################
 api() {
   tmuxControl ~/loads/api API
-  nvm use
 
   if [ -z "$1" ]; then
     return
   elif [ $1 = "run" ]; then
+    nvm use
     yarn run start:dev-w
   elif [ $1 = "test" ]; then
+     nvm use
      yarn test
   fi
 }
 
+# controls(){
+#   cd $1
+#   nvm use
+# }
+# alias api="controls ~/loads/api"
+# alias fe="controls ~/loads/frontend"
+# alias models="controls ~/loads/models"
+
 frontend() {
   tmuxControl ~/loads/frontend FRONTEND
-  nvm use
 
   if [ -z "$1" ]; then
     return
   elif [ $1 = "run" ]; then
+    nvm use
     yarn run staging
   fi
 }

@@ -28,6 +28,15 @@ cmd([[highlight clear LineNr]])
 -- Handlebars
 vim.g.mustache_abbreviations = 1
 
+vim.g.dbs = {
+	{ name = "dev", url = "postgres://echoprodev:KbxRRnhXaVYPJi9xDwGMF4pUzZHebK@localhost:5432/echoprodev" },
+	{ name = "test", url = "postgres://echoprodev@localhost:5432/echoprodevtest" },
+	{
+		name = "staging",
+		url = "postgres://echoprodev:KbxRRnhXaVYPJi9xDwGMF4pUzZHebK@lh-staging-db-pool.shift4payments.internal/echoprodev",
+	},
+}
+
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
 	callback = function(args)

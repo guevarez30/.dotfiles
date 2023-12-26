@@ -65,4 +65,8 @@ return require("packer").startup(function()
 	use("stevearc/conform.nvim")
 
 	use("mustache/vim-mustache-handlebars")
+
+	-- Dadbod
+	use("tpope/vim-dadbod")
+	use("kristijanhusak/vim-dadbod-ui")
 end)
