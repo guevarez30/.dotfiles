@@ -1,19 +1,16 @@
+require("guevarez.set")
+
 -- Install plugins
 require("guevarez.plugins")
 
--- Vim Defaults
-require("guevarez.set")
-require("guevarez.colors")
-
 -- Plugins
+require("guevarez.colors")
 require("guevarez.telescope")
 require("guevarez.lspconfig")
 require("guevarez.treesitter")
 require("guevarez.lualine")
 require("guevarez.signify")
 require("guevarez.conform")
-
--- After
 require("guevarez.maps")
 
 -- Commands
