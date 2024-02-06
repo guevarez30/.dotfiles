@@ -14,113 +14,63 @@ font:
     family: "Hack Nerd Font Mono"
   size: 16.0
 
+#1a212e,
 
-# colors:
-#   primary:
-#       background: "#1E1E2E" # base
-#       foreground: "#CDD6F4" # text
-#       # Bright and dim foreground colors
-#       dim_foreground: "#CDD6F4" # text
-#       bright_foreground: "#CDD6F4" # text
-
-#   # Cursor colors
-#   cursor:
-#       text: "#1E1E2E" # base
-#       cursor: "#F5E0DC" # rosewater
-#   vi_mode_cursor:
-#       text: "#1E1E2E" # base
-#       cursor: "#B4BEFE" # lavender
-
-#   # Search colors
-#   search:
-#       matches:
-#           foreground: "#1E1E2E" # base
-#           background: "#A6ADC8" # subtext0
-#       focused_match:
-#           foreground: "#1E1E2E" # base
-#           background: "#A6E3A1" # green
-#       footer_bar:
-#           foreground: "#1E1E2E" # base
-#           background: "#A6ADC8" # subtext0
-
-#   # Keyboard regex hints
-#   hints:
-#       start:
-#           foreground: "#1E1E2E" # base
-#           background: "#F9E2AF" # yellow
-#       end:
-#           foreground: "#1E1E2E" # base
-#           background: "#A6ADC8" # subtext0
-
-#   # Selection colors
-#   selection:
-#       text: "#1E1E2E" # base
-#       background: "#F5E0DC" # rosewater
-
-#   # Normal colors
-#   normal:
-#       black: "#45475A" # surface1
-#       red: "#F38BA8" # red
-#       green: "#A6E3A1" # green
-#       yellow: "#F9E2AF" # yellow
-#       blue: "#89B4FA" # blue
-#       magenta: "#F5C2E7" # pink
-#       cyan: "#94E2D5" # teal
-#       white: "#BAC2DE" # subtext1
-
-#   # Bright colors
-#   bright:
-#       black: "#585B70" # surface2
-#       red: "#F38BA8" # red
-#       green: "#A6E3A1" # green
-#       yellow: "#F9E2AF" # yellow
-#       blue: "#89B4FA" # blue
-#       magenta: "#F5C2E7" # pink
-#       cyan: "#94E2D5" # teal
-#       white: "#A6ADC8" # subtext0
-
-#   # Dim colors
-#   dim:
-#       black: "#45475A" # surface1
-#       red: "#F38BA8" # red
-#       green: "#A6E3A1" # green
-#       yellow: "#F9E2AF" # yellow
-#       blue: "#89B4FA" # blue
-#       magenta: "#F5C2E7" # pink
-#       cyan: "#94E2D5" # teal
-#       white: "#BAC2DE" # subtext1
-
-#   indexed_colors:
-#       - { index: 16, color: "#FAB387" }
-#       - { index: 17, color: "#F5E0DC" }
-
-
-# # Nightfox Alacritty Colors
 colors:
   # Default colors
   primary:
-    background: '#161616'
-    foreground: '#f2f4f8'
+    background: '0x1a212e'
+    foreground: '0xabb2bf'
+
+    # Bright and dim foreground colors
+    #
+    # The dimmed foreground color is calculated automatically if it is not present.
+    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
+    # is `false`, the normal foreground color will be used.
+    #dim_foreground: '0x9a9a9a'
+    bright_foreground: '0xe6efff'
+
+  # Cursor colors
+  #
+  # Colors which should be used to draw the terminal cursor. If these are unset,
+  # the cursor color will be the inverse of the cell color.
+  #cursor:
+  #  text: '0x000000'
+  #  cursor: '0xffffff'
+
   # Normal colors
   normal:
-    black:   '#282828'
-    red:     '#ee5396'
-    green:   '#25be6a'
-    yellow:  '#08bdba'
-    blue:    '#78a9ff'
-    magenta: '#be95ff'
-    cyan:    '#33b1ff'
-    white:   '#dfdfe0'
+    black:   '0x1e2127'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0x828791'
+
   # Bright colors
   bright:
-    black:   '#484848'
-    red:     '#f16da6'
-    green:   '#46c880'
-    yellow:  '#2dc7c4'
-    blue:    '#8cb6ff'
-    magenta: '#c8a5ff'
-    cyan:    '#52bdff'
-    white:   '#e4e4e5'
-  indexed_colors:
-    - { index: 16, color: '#3ddbd9' }
-    - { index: 17, color: '#ff7eb6' }
+    black:   '0x5c6370'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0xe6efff'
+
+  # Dim colors
+  #
+  # If the dim colors are not set, they will be calculated automatically based
+  # on the `normal` colors.
+  dim:
+    black:   '0x1e2127'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0x828791'
+

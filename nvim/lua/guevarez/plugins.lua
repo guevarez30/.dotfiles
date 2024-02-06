@@ -7,7 +7,9 @@ return require("packer").startup(function()
 
 	-- Themes
 	use("EdenEast/nightfox.nvim")
-	use { "catppuccin/nvim", as = "catppuccin" }
+	use({ "catppuccin/nvim", as = "catppuccin" })
+	-- Using Packer
+	use("navarasu/onedark.nvim")
 
 	-- Harpoon
 	use("ThePrimeagen/harpoon")

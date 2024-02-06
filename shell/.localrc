@@ -95,14 +95,6 @@ api() {
   fi
 }
 
-# controls(){
-#   cd $1
-#   nvm use
-# }
-# alias api="controls ~/loads/api"
-# alias fe="controls ~/loads/frontend"
-# alias models="controls ~/loads/models"
-
 frontend() {
   tmuxControl ~/loads/frontend FRONTEND
 
@@ -114,6 +106,12 @@ frontend() {
   fi
 }
 alias fe="frontend"
+
+
+mlr() {
+  tmuxControl ~/loads/mlr MLR
+  nvm use
+}
 
 #####################################################################################
 #RUST
@@ -161,3 +159,5 @@ source ~/.shift4rc
 
 # Add a blank line after ps1
 precmd() { print "" }
+
+alias mergeDevelop="git merge develop --no-ff"
