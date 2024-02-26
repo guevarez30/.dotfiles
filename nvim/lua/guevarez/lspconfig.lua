@@ -39,6 +39,7 @@ require("lspconfig")["tsserver"].setup({
 
 require("lspconfig")["tailwindcss"].setup({
 	on_attach = on_attach,
+	filetypes = { "templ", "javascript", "typescript", "react" },
 	flags = lsp_flags,
 })
 
@@ -56,6 +57,11 @@ require("lspconfig")["rust_analyzer"].setup({
 			},
 		},
 	},
+})
+
+require("lspconfig")["templ"].setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
 })
 
 require("lspconfig")["gopls"].setup({

@@ -3,6 +3,8 @@ require("guevarez.set")
 -- Install plugins
 require("guevarez.plugins")
 
+vim.filetype.add({ extension = { templ = "templ" } })
+
 -- Plugins
 require("guevarez.colors")
 require("guevarez.telescope")

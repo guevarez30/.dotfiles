@@ -78,41 +78,6 @@ alias diff='nvim -d'
 alias dif='diff'
 alias pretty="jq '.'"
 
-###################################################################################
-# Shift4
-###################################################################################
-api() {
-  tmuxControl ~/loads/api API
-
-  if [ -z "$1" ]; then
-    return
-  elif [ $1 = "run" ]; then
-    nvm use
-    yarn run start:dev-w
-  elif [ $1 = "test" ]; then
-     nvm use
-     yarn test
-  fi
-}
-
-frontend() {
-  tmuxControl ~/loads/frontend FRONTEND
-
-  if [ -z "$1" ]; then
-    return
-  elif [ $1 = "run" ]; then
-    nvm use
-    yarn run staging
-  fi
-}
-alias fe="frontend"
-
-
-mlr() {
-  tmuxControl ~/loads/mlr MLR
-  nvm use
-}
-
 #####################################################################################
 #RUST
 #####################################################################################
@@ -159,5 +124,3 @@ source ~/.shift4rc
 
 # Add a blank line after ps1
 precmd() { print "" }
-
-alias mergeDevelop="git merge develop --no-ff"
