@@ -9,8 +9,6 @@ ln -s ~/.dotfiles/git/* ~/
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source ~/.bashrc
 
-
-something
 ## Install Alacrity
 cargo install alacritty
 
@@ -21,5 +19,4 @@ cargo xtask install --server
 # Install Node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 source ~/.bashrc
-
 nvm install node

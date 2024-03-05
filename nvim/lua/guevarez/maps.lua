@@ -67,7 +67,7 @@ map("n", "<leader>dbs", "<Plug>(DBUI_SaveQuery)")
 vim.keymap.set("n", "<Leader>ee", function()
 	filetype = vim.bo.filetype
 	if filetype == "go" then
-		vim.cmd.normal("if err != nil {\n\n}")
+		vim.cmd.normal("iif err != nil {\n\n}")
 		return vim.cmd.normal("k")
 	elseif filetype == "javascript" or filetype == "typescript" then
 		vim.cmd.normal("itry {\n\n} catch(err) {\n  console.error(err)\n}")
