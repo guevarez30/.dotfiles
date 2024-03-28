@@ -61,12 +61,12 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='nvim'
 else
   export EDITOR='nvim'
 fi
 
-source ~/.localrc 
+source ~/.localrc
 
 # bun completions
 [ -s "/Users/TaylorGuevarez/.bun/_bun" ] && source "/Users/TaylorGuevarez/.bun/_bun"

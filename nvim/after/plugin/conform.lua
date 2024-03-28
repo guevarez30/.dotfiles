@@ -5,6 +5,7 @@ conform.setup({
 		javascript = { { "eslint_d", "standardjs" } },
 		go = { "gofmt" },
 		rust = { "rustfmt" },
+		css = { "prettier" },
 		["_"] = { "trim_whitespace" },
 	},
 })

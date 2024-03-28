@@ -52,6 +52,24 @@ alias dc='docker compose'
 alias drm='docker rm $(docker ps --all --quiet)'
 alias drmi='docker rmi $(docker images --quiet --filter "dangling=true")'
 
+
+###################################################################################
+# Git
+###################################################################################
+alias got='git'
+alias pull='git pull'
+alias fetch='git fetch'
+alias checkout='git checkout'
+alias branch='git branch'
+push(){
+   git push --set-upstream origin $1
+}
+
+remote_checkout(){
+  fetch
+  git checkout -b $1 origin/$1
+}
+
 #####################################################################################
 #Aliases
 #####################################################################################
@@ -64,7 +82,6 @@ alias clera='clear'
 alias celar='clear'
 alias ckear='clear'
 alias ckear='clear'
-alias got='git'
 alias ipconfig='ifconfig'
 alias cat='bat'
 alias dot='cd ~/.dotfiles'
