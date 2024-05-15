@@ -27,6 +27,9 @@ local lsp_flags = {
 	debounce_text_changes = 150,
 }
 
+-- Add templ file type
+vim.filetype.add({ extension = { templ = "templ" } })
+
 require("lspconfig")["pyright"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
@@ -39,8 +42,9 @@ require("lspconfig")["tsserver"].setup({
 
 require("lspconfig")["tailwindcss"].setup({
 	on_attach = on_attach,
-	filetypes = { "templ", "javascript", "typescript", "react" },
-	flags = lsp_flags,
+	capabilities = capabilities,
+	filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+	init_options = { userLanguages = { templ = "html" } },
 })
 
 require("lspconfig")["rust_analyzer"].setup({
@@ -67,6 +71,7 @@ require("lspconfig")["templ"].setup({
 require("lspconfig")["gopls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
+	filetypes = { "go", "templ" },
 })
 
 -- Ember Set Up

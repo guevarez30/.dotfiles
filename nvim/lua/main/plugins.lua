@@ -22,6 +22,8 @@ return require("packer").startup(function()
 
 	-- LSP
 	use("neovim/nvim-lspconfig")
+
+	-- formatter
 	use("sbdchd/neoformat")
 	-- Tree sitter
 	use({
