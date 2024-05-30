@@ -22,6 +22,10 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, bufopts)
 end
 
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 local lsp_flags = {
 	-- This is the default in Nvim 0.7+
 	debounce_text_changes = 150,
@@ -29,6 +33,8 @@ local lsp_flags = {
 
 -- Add templ file type
 vim.filetype.add({ extension = { templ = "templ" } })
+
+require("mason").setup()
 
 require("lspconfig")["pyright"].setup({
 	on_attach = on_attach,
@@ -50,7 +56,6 @@ require("lspconfig")["tailwindcss"].setup({
 require("lspconfig")["rust_analyzer"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
-	-- Server-specific settings...
 	settings = {
 		["rust-analyzer"] = {
 			diagnostics = {
@@ -92,70 +97,10 @@ require("lspconfig").eslint.setup({
 	},
 })
 
---Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 require("lspconfig").html.setup({
 	capabilities = capabilities,
 })
 
 require("lspconfig").cssls.setup({
 	capabilities = capabilities,
-})
-
--- nvim-cmp
-local cmp = require("cmp")
-local lspkind = require("lspkind")
-local luasnip = require("luasnip")
-
--- better autocompletion experience
-vim.o.completeopt = "menuone,noselect"
-
-cmp.setup({
-	-- Format the autocomplete menu
-	formatting = {
-		format = lspkind.cmp_format(),
-	},
-	mapping = {
-		-- Use Tab and shift-Tab to navigate autocomplete menu
-		["<Tab>"] = function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			else
-				fallback()
-			end
-		end,
-		["<S-Tab>"] = function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end,
-		["<CR>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
-		}),
-	},
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-	},
-})
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	underline = false,
-	virtual_text = true,
-	signs = false,
-	update_in_insert = false,
 })

@@ -21,16 +21,19 @@ return require("packer").startup(function()
 	})
 
 	-- LSP
-	use("neovim/nvim-lspconfig")
+	use({
+		"neovim/nvim-lspconfig",
+		"williamboman/mason.nvim",
+	})
 
-	-- formatter
-	use("sbdchd/neoformat")
 	-- Tree sitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
+
 	use("nvim-treesitter/nvim-treesitter-context")
+
 	-- CMP
 	use("hrsh7th/nvim-cmp")
 	use("hrsh7th/cmp-nvim-lsp")
@@ -69,8 +72,4 @@ return require("packer").startup(function()
 	use("stevearc/conform.nvim")
 
 	use("mustache/vim-mustache-handlebars")
-
-	-- Dadbod
-	use("tpope/vim-dadbod")
-	use("kristijanhusak/vim-dadbod-ui")
 end)
