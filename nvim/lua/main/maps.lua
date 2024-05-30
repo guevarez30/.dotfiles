@@ -58,11 +58,6 @@ map("t", "<Esc>", "<C-\\><C-n>")
 -- Harpoon
 map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
 map("n", "<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
--- map("n", "<leader>hl", ":Telescope harpoon marks <CR>")
-
--- DB
-map("n", "<leader>db", ":DBUI <CR>")
-map("n", "<leader>dbs", "<Plug>(DBUI_SaveQuery)")
 
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
