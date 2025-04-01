@@ -12,9 +12,54 @@ count(){
 ###################################################################################
 # TMUX
 ###################################################################################
-tn(){
-  echo Creating Session: $@
-  tmux new -s $@
+ts() {
+    local session_name
+    if [ $# -gt 0 ]; then
+        session_name="$1"
+    else
+        session_name=$(basename "$PWD" | sed 's/[^a-zA-Z0-9_-]/_/g')
+         if [ -z "$session_name" ]; then
+             session_name="default"
+         fi
+    fi
+
+    if ! command -v tmux &> /dev/null; then
+        echo "Error: tmux command not found."
+        return 1
+    fi
+
+    # Check if running inside a tmux session
+    if [ -n "$TMUX" ]; then
+        if tmux has-session -t "$session_name" 2>/dev/null; then
+            # Session exists, switch the client to it
+            local current_session=$(tmux display-message -p '#S')
+            if [ "$current_session" != "$session_name" ]; then
+                 echo "Switching client to session: $session_name"
+                 tmux switch-client -t "$session_name"
+            else
+                 echo "Already attached to session: $session_name"
+            fi
+        else
+            # Session does not exist - Instruct user to exit first
+            echo "Session '$session_name' does not exist."
+            echo "To create a new session, please detach from your current tmux session first."
+            return 1
+        fi
+    else
+        # --- Running Outside Tmux ---
+        if tmux has-session -t "$session_name" 2>/dev/null; then
+            # Session exists, attach to it
+            echo "Attaching to existing tmux session: $session_name"
+            tmux attach-session -t "$session_name"
+        else
+            # Session does not exist, create it and attach
+            echo "Creating new session '$session_name' with VIM and server windows..."
+            tmux new-session -d -s "$session_name" -n "VIM" "nvim ."
+            tmux new-window -t "$session_name" -n "server"
+            tmux select-window -t "$session_name:1"
+            tmux attach-session -t "$session_name"
+        fi
+    fi
 }
 
 ta(){
@@ -27,21 +72,6 @@ tk(){
 
 tl(){
   tmux ls
-}
-
-tmuxControl(){
-  dir=$1
-  session=$2
-
-  if [ "$PWD" != $dir ]; then
-    cd $dir
-  fi
-
-  if [ "$TERM_PROGRAM" != tmux ]; then
-    ta $session || tn $session
-  else
-    tmux switch -t $session
-  fi
 }
 
 ###################################################################################
@@ -87,7 +117,6 @@ alias cat='bat'
 alias dot='cd ~/.dotfiles'
 alias grep='rg'
 alias find='fd'
-alias ls='exa --group-directories-first'
 alias lt='du -sh * | sort -h'
 alias loads='cd ~/loads'
 alias src='source ~/.zshrc'
@@ -100,12 +129,14 @@ alias pretty="jq '.'"
 #####################################################################################
 . "$HOME/.cargo/env"
 
-#####################################################################################
+##############################################
+#######################################
 #Python
 #####################################################################################
 alias python='python3'
 alias pip='pip3'
-alias py='py3'
+alias py='python'
+alias py-env="source .venv/bin/activate"
 
 #####################################################################################
 #Include Scripts to Path and Custom Functions

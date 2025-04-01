@@ -5,10 +5,7 @@ return require("packer").startup(function()
 	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
 
-	-- Themes
-	use("EdenEast/nightfox.nvim")
-	use({ "catppuccin/nvim", as = "catppuccin" })
-	-- Using Packer
+	-- Theme
 	use("navarasu/onedark.nvim")
 
 	-- Harpoon
@@ -48,20 +45,23 @@ return require("packer").startup(function()
 	})
 	-- Go
 	use({ "fatih/vim-go", run = ":GoUpdateBinaries" })
+
 	-- VIM Vinegar
 	use("tpope/vim-vinegar")
+
 	-- VIM surround
 	use("tpope/vim-surround")
-	-- VIM comment
-	use("tpope/vim-commentary")
+
 	-- Fugitive
 	use("tpope/vim-fugitive")
+
 	-- Git gutter
 	use("mhinz/vim-signify")
+
 	-- telescope
 	use({
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.0",
+		tag = "0.1.4",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 	-- Coloroizer

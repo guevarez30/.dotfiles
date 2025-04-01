@@ -39,9 +39,10 @@ require("mason").setup()
 require("lspconfig")["pyright"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
+	filetypes = { "python" },
 })
 
-require("lspconfig")["tsserver"].setup({
+require("lspconfig")["ts_ls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 })
@@ -49,7 +50,7 @@ require("lspconfig")["tsserver"].setup({
 require("lspconfig")["tailwindcss"].setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
-	filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+	filetypes = { "templ", "astro", "javascript", "typescript", "react", "javascriptreact" },
 	init_options = { userLanguages = { templ = "html" } },
 })
 
@@ -98,7 +99,15 @@ require("lspconfig").eslint.setup({
 })
 
 require("lspconfig").html.setup({
+	on_attach = on_attach,
 	capabilities = capabilities,
+	filetypes = { "html", "templ" },
+})
+
+require("lspconfig").htmx.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	filetypes = { "html", "templ" },
 })
 
 require("lspconfig").cssls.setup({

@@ -2,10 +2,11 @@ local conform = require("conform")
 conform.setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
-		javascript = { { "eslint_d", "standardjs" } },
+		javascript = { "eslint_d" },
+		javascriptreact = { "prettier" },
 		go = { "gofmt" },
 		rust = { "rustfmt" },
-		css = { "prettier" },
+		python = { "autopep8" },
 		["_"] = { "trim_whitespace" },
 	},
 })

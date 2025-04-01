@@ -47,7 +47,7 @@ map("n", "<leader>sh", ":Hexplore <CR>")
 
 -- Git
 map("n", "<leader>gg", ":Git <CR>")
-map("n", "<leader>gd", ":Gvdiffsplit <CR>")
+map("n", "<leader>gd", ":Gvdiffsplit! <CR>")
 map("n", "<leader>gp", ":Git -c push.default=current push <CR>")
 map("n", "<leader>gl", ":Git log -n 20 --decorate <CR>")
 map("n", "<leader>gb", ":Git blame <CR>")
