@@ -50,7 +50,7 @@ require("lspconfig")["ts_ls"].setup({
 require("lspconfig")["tailwindcss"].setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
-	filetypes = { "templ", "astro", "javascript", "typescript", "react", "javascriptreact" },
+	filetypes = { "templ", "astro", "javascript", "typescript", "react", "javascriptreact"},
 	init_options = { userLanguages = { templ = "html" } },
 })
 

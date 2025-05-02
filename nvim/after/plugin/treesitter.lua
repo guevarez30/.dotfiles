@@ -1,5 +1,5 @@
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "python", "bash", "javascript", "go", "http", "json", "rust", "vim", "glimmer" },
+	ensure_installed = { "python", "bash", "javascript", "go", "http", "json", "rust", "vim", "glimmer", "typescript", "tsx" },
 	sync_install = false,
 	highlight = {
 		enable = true,
