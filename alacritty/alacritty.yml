@@ -15,45 +15,37 @@ font:
   size: 16.0
 
 colors:
-  # Default colors
-  primary:
-    background: '0x1a212e'
-    foreground: '0xabb2bf'
-    bright_foreground: '0xe6efff'
+  indexed_colors:
+    - index: 16
+      color: "0xffbd5e"
+    - index: 17
+      color: "0xff6e5e"
 
-  # Normal colors
-  normal:
-    black:   '0x1e2127'
-    red:     '0xe06c75'
-    green:   '0x98c379'
-    yellow:  '0xd19a66'
-    blue:    '0x61afef'
-    magenta: '0xc678dd'
-    cyan:    '0x56b6c2'
-    white:   '0x828791'
-
-  # Bright colors
   bright:
-    black:   '0x5c6370'
-    red:     '0xe06c75'
-    green:   '0x98c379'
-    yellow:  '0xd19a66'
-    blue:    '0x61afef'
-    magenta: '0xc678dd'
-    cyan:    '0x56b6c2'
-    white:   '0xe6efff'
+    black:   "0x3c4048"
+    red:     "0xff6e5e"
+    green:   "0x5eff6c"
+    yellow:  "0xf1ff5e"
+    blue:    "0x5ea1ff"
+    magenta: "0xbd5eff"
+    cyan:    "0x5ef1ff"
+    white:   "0xffffff"
 
-  # Dim colors
-  #
-  # If the dim colors are not set, they will be calculated automatically based
-  # on the `normal` colors.
-  dim:
-    black:   '0x1e2127'
-    red:     '0xe06c75'
-    green:   '0x98c379'
-    yellow:  '0xd19a66'
-    blue:    '0x61afef'
-    magenta: '0xc678dd'
-    cyan:    '0x56b6c2'
-    white:   '0x828791'
+  normal:
+    black:   "0x16181a"
+    red:     "0xff6e5e"
+    green:   "0x5eff6c"
+    yellow:  "0xf1ff5e"
+    blue:    "0x5ea1ff"
+    magenta: "0xbd5eff"
+    cyan:    "0x5ef1ff"
+    white:   "0xffffff"
+
+  primary:
+    background: "0x16181a"
+    foreground: "0xffffff"
+
+  selection:
+    background: "0x3c4048"
+    foreground: "0xffffff"
 

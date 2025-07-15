@@ -73,4 +73,6 @@ return require("packer").startup(function()
 
 	use("mustache/vim-mustache-handlebars")
 
+	use ("scottmckendry/cyberdream.nvim")
+
 end)

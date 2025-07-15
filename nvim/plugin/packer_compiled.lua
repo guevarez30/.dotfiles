@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/conform.nvim",
     url = "https://github.com/stevearc/conform.nvim"
   },
+  ["cyberdream.nvim"] = {
+    loaded = true,
+    path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/cyberdream.nvim",
+    url = "https://github.com/scottmckendry/cyberdream.nvim"
+  },
   harpoon = {
     loaded = true,
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/harpoon",
