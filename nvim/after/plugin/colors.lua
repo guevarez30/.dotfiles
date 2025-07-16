@@ -3,5 +3,4 @@
 -- })
 -- require("onedark").load()
 
-vim.cmd("colorscheme cyberdream")
-
+vim.cmd("colorscheme dracula")
