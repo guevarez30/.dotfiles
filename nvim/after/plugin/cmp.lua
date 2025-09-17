@@ -47,6 +47,13 @@ cmp.setup({
 	},
 })
 
+cmp.setup.filetype({ "sql" }, {
+	sources = {
+		{name = "vim-dadbod-completion"},
+		{ name = "buffer"}
+	}
+})
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 	underline = false,
 	virtual_text = true,

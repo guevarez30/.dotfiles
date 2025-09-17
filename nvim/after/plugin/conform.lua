@@ -1,13 +1,22 @@
 local conform = require("conform")
+
 conform.setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
+		typescript = {"eslint_d", "prettier" },
 		javascript = { "eslint_d" },
 		javascriptreact = { "prettier" },
+		json = { "prettier" },
 		go = { "gofmt" },
 		rust = { "rustfmt" },
 		python = { "autopep8" },
 		["_"] = { "trim_whitespace" },
+	},
+	-- custom formatter configs
+	formatters = {
+		stylua = {
+			prepend_args = {} 
+		},
 	},
 })
 
@@ -27,3 +36,4 @@ local templ_format = function()
 	})
 end
 vim.api.nvim_create_autocmd({ "BufWritePre" }, { pattern = { "*.templ" }, callback = templ_format })
+

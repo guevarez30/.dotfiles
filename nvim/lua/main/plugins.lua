@@ -5,30 +5,22 @@ return require("packer").startup(function()
 	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
 
-	-- Theme
-	use("navarasu/onedark.nvim")
-
-	-- Harpoon
 	use("ThePrimeagen/harpoon")
 
-	-- Lua line
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	})
 
-	-- LSP
 	use({
 		"neovim/nvim-lspconfig",
 		"williamboman/mason.nvim",
 	})
 
-	-- Tree sitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
-
 	use("nvim-treesitter/nvim-treesitter-context")
 
 	-- CMP
@@ -43,6 +35,7 @@ return require("packer").startup(function()
 			require("nvim-autopairs").setup({})
 		end,
 	})
+
 	-- Go
 	use({ "fatih/vim-go", run = ":GoUpdateBinaries" })
 
@@ -64,16 +57,23 @@ return require("packer").startup(function()
 		tag = "0.1.4",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
+
 	-- Coloroizer
 	use("norcalli/nvim-colorizer.lua")
+
 	-- Tmux Integration
 	use("christoomey/vim-tmux-navigator")
+
 	-- Autoformatter
 	use("stevearc/conform.nvim")
 
 	use("mustache/vim-mustache-handlebars")
 
-	use ("scottmckendry/cyberdream.nvim")
 	use 'Mofiqul/dracula.nvim'
+
+
+	use 'tpope/vim-dadbod'
+	use 'kristijanhusak/vim-dadbod-ui'
+	use 'kristijanhusak/vim-dadbod-completion'
 
 end)
