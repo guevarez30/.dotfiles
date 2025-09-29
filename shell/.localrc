@@ -9,6 +9,10 @@ count(){
 	ls $@ -1 | wc -l
 }
 
+gitExclude() {
+	echo $@ >> ~/.git/info/exclude
+}
+
 ###################################################################################
 # TMUX
 ###################################################################################
@@ -169,8 +173,6 @@ note () {
 }
 alias notes='note'
 
-source ~/.shift4rc
-
 # Add a blank line after ps1
 precmd() { print "" }
 
@@ -193,3 +195,5 @@ softReset() {
   # squash all commits into one (keeps changes staged)
   git reset --soft "$base" || return 1
 }
+
+source ~/.shift4rc

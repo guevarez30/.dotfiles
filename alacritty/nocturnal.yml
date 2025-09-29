@@ -1,20 +1,3 @@
-# Configuration for Alacritty, the GPU enhanced terminal emulator.
-env:
-  TERM: xterm-256color
-
-window:
-  opacity: 0.98
-  dimensions:
-    columns: 100
-    lines: 50
-
-# Font configuration
-font:
-  normal:
-    family: "Hack Nerd Font Mono"
-  size: 18.0
-
-
 colors:
   primary:
     background: "#0d0d17"   # background from palette
@@ -72,3 +55,4 @@ colors:
     end:
       foreground: "#f5f17a"
       background: "#0d0d17"
+
