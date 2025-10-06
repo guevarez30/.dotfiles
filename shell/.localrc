@@ -60,7 +60,7 @@ ts() {
             echo "Creating new session '$session_name' with VIM and server windows..."
             tmux new-session -d -s "$session_name" -n "VIM" "nvim ."
             tmux new-window -t "$session_name" -n "server"
-            tmux new-window -t "$session_name" -n "cursor"
+            tmux new-window -t "$session_name" -n "claude"
             tmux select-window -t "$session_name:1"
             tmux attach-session -t "$session_name"
         fi
@@ -196,4 +196,38 @@ softReset() {
   git reset --soft "$base" || return 1
 }
 
+#####################################################################################
+# Notes
+#####################################################################################
+work-tree() {
+  if [ -z "$1" ]; then
+    echo "Error: Please provide a feature name"
+    echo "Usage: create-feature <feature-name>"
+    return 1
+  fi
+
+  local feature_name="$1"
+  local branch_name="feature/${feature_name}"
+  local repo_name=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")")
+  local worktree_dir="../${repo_name}-${feature_name}"
+
+  echo "Creating worktree for ${branch_name}..."
+  git worktree add "${worktree_dir}" -b "${branch_name}" develop
+
+  if [ $? -eq 0 ]; then
+    echo "Linking node_modules..."
+    cd "${worktree_dir}"
+    ln -s ../${repo_name}-develop/node_modules node_modules
+    echo "✅ Feature worktree created at ${worktree_dir}"
+    echo "📦 node_modules linked to ${repo_name}-develop"
+    echo ""
+    echo "To start working: cd ${worktree_dir}"
+  else
+    echo "❌ Failed to create worktree"
+    return 1
+  fi
+}
+alias worktree='work-tree'
+
 source ~/.shift4rc
+

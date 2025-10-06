@@ -76,3 +76,32 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/13/bin
+
+# Git worktree helper function
+create-feature() {
+  if [ -z "$1" ]; then
+    echo "Error: Please provide a feature name"
+    echo "Usage: create-feature <feature-name>"
+    return 1
+  fi
+
+  local feature_name="$1"
+  local branch_name="feature/${feature_name}"
+  local worktree_dir="../boiler-plate-${feature_name}"
+
+  echo "Creating worktree for ${branch_name}..."
+  git worktree add "${worktree_dir}" -b "${branch_name}" develop
+
+  if [ $? -eq 0 ]; then
+    echo "Linking node_modules..."
+    cd "${worktree_dir}"
+    ln -s ../boiler-plate-develop/node_modules node_modules
+    echo "✅ Feature worktree created at ${worktree_dir}"
+    echo "📦 node_modules linked to boiler-plate-develop"
+    echo ""
+    echo "To start working: cd ${worktree_dir}"
+  else
+    echo "❌ Failed to create worktree"
+    return 1
+  fi
+}

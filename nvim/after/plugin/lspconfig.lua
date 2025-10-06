@@ -36,25 +36,31 @@ vim.filetype.add({ extension = { templ = "templ" } })
 
 require("mason").setup()
 
-require("lspconfig")["pyright"].setup({
-	on_attach = on_attach,
-	flags = lsp_flags,
+vim.lsp.config("pyright", {
+	cmd = { "pyright-langserver", "--stdio" },
 	filetypes = { "python" },
-})
-
-require("lspconfig")["ts_ls"].setup({
 	on_attach = on_attach,
 	flags = lsp_flags,
 })
 
-require("lspconfig")["tailwindcss"].setup({
+vim.lsp.config("ts_ls", {
+	cmd = { "typescript-language-server", "--stdio" },
+	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+	on_attach = on_attach,
+	flags = lsp_flags,
+})
+
+vim.lsp.config("tailwindcss", {
+	cmd = { "tailwindcss-language-server", "--stdio" },
+	filetypes = { "templ", "astro", "javascript", "typescript", "react", "javascriptreact" },
+	init_options = { userLanguages = { templ = "html" } },
 	on_attach = on_attach,
 	capabilities = capabilities,
-	filetypes = { "templ", "astro", "javascript", "typescript", "react", "javascriptreact"},
-	init_options = { userLanguages = { templ = "html" } },
 })
 
-require("lspconfig")["rust_analyzer"].setup({
+vim.lsp.config("rust_analyzer", {
+	cmd = { "rust-analyzer" },
+	filetypes = { "rust" },
 	on_attach = on_attach,
 	flags = lsp_flags,
 	settings = {
@@ -69,25 +75,31 @@ require("lspconfig")["rust_analyzer"].setup({
 	},
 })
 
-require("lspconfig")["templ"].setup({
+vim.lsp.config("templ", {
+	cmd = { "templ", "lsp" },
+	filetypes = { "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,
 })
 
-require("lspconfig")["gopls"].setup({
+vim.lsp.config("gopls", {
+	cmd = { "gopls" },
+	filetypes = { "go", "templ" },
 	on_attach = on_attach,
 	flags = lsp_flags,
-	filetypes = { "go", "templ" },
 })
 
 -- Ember Set Up
-require("lspconfig")["ember"].setup({
+vim.lsp.config("ember", {
+	cmd = { "ember-language-server", "--stdio" },
+	filetypes = { "handlebars", "html.handlebars" },
 	on_attach = on_attach,
 	flags = lsp_flags,
-	filetypes = { "handlebars", "html.handlebars" },
 })
 
-require("lspconfig").eslint.setup({
+vim.lsp.config("eslint", {
+	cmd = { "vscode-eslint-language-server", "--stdio" },
+	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue", "svelte", "astro" },
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
@@ -98,18 +110,22 @@ require("lspconfig").eslint.setup({
 	},
 })
 
-require("lspconfig").html.setup({
+vim.lsp.config("html", {
+	cmd = { "vscode-html-language-server", "--stdio" },
+	filetypes = { "html", "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,
-	filetypes = { "html", "templ" },
 })
 
-require("lspconfig").htmx.setup({
+vim.lsp.config("htmx", {
+	cmd = { "htmx-lsp" },
+	filetypes = { "html", "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,
-	filetypes = { "html", "templ" },
 })
 
-require("lspconfig").cssls.setup({
+vim.lsp.config("cssls", {
+	cmd = { "vscode-css-language-server", "--stdio" },
+	filetypes = { "css", "scss", "less" },
 	capabilities = capabilities,
 })
