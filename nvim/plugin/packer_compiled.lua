@@ -104,12 +104,6 @@ _G.packer_plugins = {
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
   },
-  ["image.nvim"] = {
-    config = { "\27LJ\2\n™\4\0\0\4\0\f\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0006\3\4\0009\3\5\3=\3\6\0026\3\4\0009\3\5\3=\3\a\0025\3\b\0=\3\t\0025\3\n\0=\3\v\2B\0\2\1K\0\1\0\25hijack_file_patterns\1\b\0\0\n*.png\n*.jpg\v*.jpeg\n*.gif\v*.webp\v*.avif\n*.svg#window_overlap_clear_ft_ignore\1\4\0\0\rcmp_menu\rcmp_docs\5 max_width_window_percentage!max_height_window_percentage\thuge\tmath\1\0\n!max_height_window_percentage\0\15max_height\3\f\14max_width\3d\fbackend\nkitty\25hijack_file_patterns\0$tmux_show_only_in_active_window\1$editor_only_render_when_focused\1#window_overlap_clear_ft_ignore\0!window_overlap_clear_enabled\2 max_width_window_percentage\0\nsetup\nimage\frequire\0" },
-    loaded = true,
-    path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/image.nvim",
-    url = "https://github.com/3rd/image.nvim"
-  },
   ["lspkind-nvim"] = {
     loaded = true,
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
@@ -119,11 +113,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
-  },
-  ["luarocks.nvim"] = {
-    loaded = true,
-    path = "/Users/TaylorGuevarez/.local/share/nvim/site/pack/packer/start/luarocks.nvim",
-    url = "https://github.com/vhyrro/luarocks.nvim"
   },
   ["mason.nvim"] = {
     loaded = true,
@@ -235,10 +224,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: image.nvim
-time([[Config for image.nvim]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\4\0\f\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0006\3\4\0009\3\5\3=\3\6\0026\3\4\0009\3\5\3=\3\a\0025\3\b\0=\3\t\0025\3\n\0=\3\v\2B\0\2\1K\0\1\0\25hijack_file_patterns\1\b\0\0\n*.png\n*.jpg\v*.jpeg\n*.gif\v*.webp\v*.avif\n*.svg#window_overlap_clear_ft_ignore\1\4\0\0\rcmp_menu\rcmp_docs\5 max_width_window_percentage!max_height_window_percentage\thuge\tmath\1\0\n!max_height_window_percentage\0\15max_height\3\f\14max_width\3d\fbackend\nkitty\25hijack_file_patterns\0$tmux_show_only_in_active_window\1$editor_only_render_when_focused\1#window_overlap_clear_ft_ignore\0!window_overlap_clear_enabled\2 max_width_window_percentage\0\nsetup\nimage\frequire\0", "config", "image.nvim")
-time([[Config for image.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
