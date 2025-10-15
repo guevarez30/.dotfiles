@@ -8,7 +8,7 @@ conform.setup({
 		javascriptreact = { "prettier" },
 		json = { "prettier" },
 		go = { "gofmt" },
-		rust = { "rustfmt" },
+	 	rust = { "rustfmt" },
 		python = { "autopep8" },
 		["_"] = { "trim_whitespace" },
 	},

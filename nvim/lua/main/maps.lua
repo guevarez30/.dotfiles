@@ -70,16 +70,3 @@ vim.keymap.set("n", "<Leader>ee", function()
 		return vim.cmd.normal("3k")
 	end
 end)
-
--- Image viewing
-vim.keymap.set('n', '<leader>it', function()
-	if require('image').is_enabled() then
-		require('image').disable()
-	else
-		require('image').enable()
-	end
-end, { desc = 'Toggle image/edit mode' })
-
-vim.keymap.set('n', '<leader>ic', function()
-	require('image').clear()
-end, { desc = 'Clear images' })

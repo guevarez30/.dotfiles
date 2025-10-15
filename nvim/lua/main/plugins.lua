@@ -1,79 +1,77 @@
--- Only required if you have packer configured as `opt`
-vim.cmd("packadd packer.nvim")
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+end
+vim.opt.rtp:prepend(lazypath)
 
-return require("packer").startup(function()
-	-- Packer can manage itself
-	use("wbthomason/packer.nvim")
+-- Setup lazy.nvim
+require("lazy").setup({
+	"ThePrimeagen/harpoon",
 
-	use("ThePrimeagen/harpoon")
-
-	use({
+	{
 		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-	})
+		dependencies = { "kyazdani42/nvim-web-devicons" },
+	},
 
-	use({
-		"neovim/nvim-lspconfig",
-		"williamboman/mason.nvim",
-	})
+	"williamboman/mason.nvim",
 
-	use({
+	{
 		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
-	})
-	use("nvim-treesitter/nvim-treesitter-context")
+		build = ":TSUpdate",
+	},
+	"nvim-treesitter/nvim-treesitter-context",
 
 	-- CMP
-	use("hrsh7th/nvim-cmp")
-	use("hrsh7th/cmp-nvim-lsp")
-	use("L3MON4D3/LuaSnip")
-	use("saadparwaiz1/cmp_luasnip")
-	use("onsails/lspkind-nvim")
-	use({
+	"hrsh7th/nvim-cmp",
+	"hrsh7th/cmp-nvim-lsp",
+	"L3MON4D3/LuaSnip",
+	"saadparwaiz1/cmp_luasnip",
+	"onsails/lspkind-nvim",
+	{
 		"windwp/nvim-autopairs",
 		config = function()
 			require("nvim-autopairs").setup({})
 		end,
-	})
+	},
 
 	-- Go
-	use({ "fatih/vim-go", run = ":GoUpdateBinaries" })
+	{ "fatih/vim-go", build = ":GoUpdateBinaries" },
 
 	-- VIM Vinegar
-	use("tpope/vim-vinegar")
+	"tpope/vim-vinegar",
 
 	-- VIM surround
-	use("tpope/vim-surround")
+	"tpope/vim-surround",
 
 	-- Fugitive
-	use("tpope/vim-fugitive")
+	"tpope/vim-fugitive",
 
 	-- Git gutter
-	use("mhinz/vim-signify")
+	"mhinz/vim-signify",
 
 	-- telescope
-	use({
+	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.4",
-		requires = { { "nvim-lua/plenary.nvim" } },
-	})
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
 
 	-- Coloroizer
-	use("norcalli/nvim-colorizer.lua")
+	"norcalli/nvim-colorizer.lua",
 
 	-- Tmux Integration
-	use("christoomey/vim-tmux-navigator")
+	"christoomey/vim-tmux-navigator",
 
 	-- Autoformatter
-	use("stevearc/conform.nvim")
+	"stevearc/conform.nvim",
 
-	use("mustache/vim-mustache-handlebars")
+	"mustache/vim-mustache-handlebars",
 
-	use 'Mofiqul/dracula.nvim'
+	"Mofiqul/dracula.nvim",
 
-
-	use 'tpope/vim-dadbod'
-	use 'kristijanhusak/vim-dadbod-ui'
-	use 'kristijanhusak/vim-dadbod-completion'
-
-end)
+	"tpope/vim-dadbod",
+	"kristijanhusak/vim-dadbod-ui",
+	"kristijanhusak/vim-dadbod-completion",
+})
