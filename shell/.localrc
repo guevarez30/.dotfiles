@@ -14,6 +14,46 @@ gitExclude() {
 }
 
 ###################################################################################
+# Theme Switcher
+###################################################################################
+theme() {
+    if [ -z "$1" ]; then
+        local current=$(cat ~/.dotfiles/themes/current-theme 2>/dev/null || echo "unknown")
+        echo "Current theme: $current"
+        echo ""
+        echo "Available themes:"
+        ls ~/.dotfiles/themes/*.lua 2>/dev/null | xargs -n 1 basename | sed 's/.lua$//' | sed 's/^/  - /'
+        echo ""
+        echo "Usage: theme <theme-name>"
+        return 0
+    fi
+
+    local theme_name="$1"
+    local theme_file="$HOME/.dotfiles/themes/${theme_name}.lua"
+
+    if [ ! -f "$theme_file" ]; then
+        echo "❌ Theme '$theme_name' not found"
+        echo "Available themes:"
+        ls ~/.dotfiles/themes/*.lua 2>/dev/null | xargs -n 1 basename | sed 's/.lua$//' | sed 's/^/  - /'
+        return 1
+    fi
+
+    echo "$theme_name" > ~/.dotfiles/themes/current-theme
+
+    # Reload tmux if running
+    if command -v tmux &> /dev/null && tmux info &> /dev/null 2>&1; then
+        # Reload config for current session
+        tmux source-file ~/.tmux.conf 2>/dev/null
+        # Run the theme loader directly to ensure colors apply
+        ~/.dotfiles/themes/load-tmux-theme.sh 2>/dev/null
+        echo "✅ tmux theme reloaded"
+    fi
+
+    echo "✅ Theme switched to: $theme_name"
+    echo "💡 Restart Neovim to apply changes"
+}
+
+###################################################################################
 # TMUX
 ###################################################################################
 ts() {

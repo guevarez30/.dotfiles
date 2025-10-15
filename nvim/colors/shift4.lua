@@ -1,36 +1,15 @@
 -- shift4.lua - Custom Neovim colorscheme based on provided palette
 -- Author: TaylorGuevarez
+-- Loads theme definition from ~/.dotfiles/themes/shift4.lua
 
 local M = {}
 
--- Core palette (16 terminal colors)
-local term = {
-  "#4d4d4d", -- 0
-  "#f12d52", -- 1
-  "#09cd7e", -- 2
-  "#f5f17a", -- 3
-  "#3182e0", -- 4
-  "#ff2b6d", -- 5
-  "#09c87a", -- 6
-  "#fcfcfc", -- 7
-  "#808080", -- 8
-  "#f16d86", -- 9
-  "#0ae78d", -- 10
-  "#fffc67", -- 11
-  "#6096ff", -- 12
-  "#ff78a2", -- 13
-  "#0ae78d", -- 14
-  "#ffffff", -- 15
-}
+-- Load theme from themes directory
+local theme_path = vim.fn.expand("~/.dotfiles/themes/shift4.lua")
+local theme = dofile(theme_path)
 
-local ui = {
-  bg = "#0d0d17",
-  fg = "#e6e5e5",
-  cursor = "#e6e5e5",
-  cursor_text = "#ffffff",
-  sel_bg = "#adbdd0",
-  sel_fg = "#000000",
-}
+local term = theme.term
+local ui = theme.ui
 
 -- Convenience named colors from the palette
 local c = {
@@ -72,13 +51,13 @@ function M.load()
   if vim.fn.has("termguicolors") == 1 then
     vim.o.termguicolors = true
   end
-  vim.o.background = "dark"
+  vim.o.background = theme.background
 
   vim.cmd("highlight clear")
   if vim.fn.exists("syntax_on") == 1 then
     vim.cmd("syntax reset")
   end
-  vim.g.colors_name = "shift4"
+  vim.g.colors_name = theme.name
 
   set_terminal_colors()
 
