@@ -79,7 +79,5 @@ require("lazy").setup({
 	"kristijanhusak/vim-dadbod-ui",
 	"kristijanhusak/vim-dadbod-completion",
 
-    "vimpostor/vim-tpipeline",
-
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 }
 })
