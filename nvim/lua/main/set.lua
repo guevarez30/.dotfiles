@@ -26,6 +26,7 @@ set.expandtab = false -- Use actual tab characters
 set.copyindent = true
 set.preserveindent = true
 set.scrolloff = 8
+set.laststatus = 2
 
 -- Prevent automatic comment continuation
 set.formatoptions:remove("o")

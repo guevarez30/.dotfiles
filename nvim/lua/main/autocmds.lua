@@ -36,3 +36,5 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.expandtab = false -- Ensure tabs, not spaces
 	end,
 })
+
+vim.cmd.colorscheme "catppuccin-macchiato"

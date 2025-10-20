@@ -57,6 +57,10 @@ require("lazy").setup({
 		tag = "0.1.4",
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
+	{
+		"nvim-telescope/telescope-fzf-native.nvim",
+		build = "make",
+	},
 
 	-- Coloroizer
 	"norcalli/nvim-colorizer.lua",
@@ -74,4 +78,8 @@ require("lazy").setup({
 	"tpope/vim-dadbod",
 	"kristijanhusak/vim-dadbod-ui",
 	"kristijanhusak/vim-dadbod-completion",
+
+    "vimpostor/vim-tpipeline",
+
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 }
 })
