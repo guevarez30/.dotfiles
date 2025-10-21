@@ -1,63 +1,62 @@
 vim.g.mapleader = " "
-
-function map(mode, lhs, rhs, opts)
-	local options = { noremap = true }
-	if opts then
-		options = vim.tbl_extend("force", options, opts)
-	end
-	vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
+vim.keymap.set("v", "<Space>", "<Nop>", { noremap = true })
 
 -- Add empty lines
-map("n", "<Leader>o", "o<Esc>")
-map("n", "<Leader>O", "O<Esc>")
+vim.keymap.set("n", "<Leader>o", "o<Esc>", { noremap = true })
+vim.keymap.set("n", "<Leader>O", "O<Esc>", { noremap = true })
 
 -- Move HighLighted Lines
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { noremap = true })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { noremap = true })
 
 -- Make J not suck by keeping cursor in place
-map("n", "J", "mzJ`z")
+vim.keymap.set("n", "J", "mzJ`z", { noremap = true })
 
 -- Vertical Page Movements
-map("n", "<C-d>", "<C-d>zz")
-map("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
 
 -- Move across line
-map("n", "gh", "_")
-map("n", "gl", "$")
+vim.keymap.set("n", "gh", "_", { noremap = true })
+vim.keymap.set("n", "gl", "$", { noremap = true })
 
 -- Search terms in middle
-map("n", "n", "nzzzv")
-map("n", "N", "Nzzzv")
-map("n", "*", "*zzzv")
+vim.keymap.set("n", "n", "nzzzv", { noremap = true })
+vim.keymap.set("n", "N", "Nzzzv", { noremap = true })
+vim.keymap.set("n", "*", "*zzzv", { noremap = true })
 
 -- Telescope
-map("n", "<leader>p", ":Telescope find_files <CR>")
-map("n", "<leader>f", ":Telescope live_grep <CR>")
+vim.keymap.set("n", "<leader>p", ":Telescope find_files <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>f", ":Telescope live_grep <CR>", { noremap = true })
+
+-- Visual mode telescope grep
+vim.keymap.set("v", "<leader>f", function()
+	local text = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() })
+	require("telescope.builtin").grep_string({ search = table.concat(text, "\n") })
+end, { noremap = true, desc = "Grep visual selection" })
 
 -- QuickFix
-map("n", "cn", ":cnext <CR>")
-map("n", "cp", ":cprevious <CR>")
-map("n", "co", ":copen <CR>")
+vim.keymap.set("n", "cn", ":cnext <CR>", { noremap = true })
+vim.keymap.set("n", "cp", ":cprevious <CR>", { noremap = true })
+vim.keymap.set("n", "co", ":copen <CR>", { noremap = true })
 
 -- Split
-map("n", "<leader>sv", ":Vexplore <CR>")
-map("n", "<leader>sh", ":Hexplore <CR>")
+vim.keymap.set("n", "<leader>sv", ":Vexplore <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>sh", ":Hexplore <CR>", { noremap = true })
 
 -- Git
-map("n", "<leader>gg", ":Git <CR>")
-map("n", "<leader>gd", ":Gvdiffsplit! <CR>")
-map("n", "<leader>gp", ":Git -c push.default=current push <CR>")
-map("n", "<leader>gl", ":Git log -n 20 --decorate <CR>")
-map("n", "<leader>gb", ":Git blame <CR>")
+vim.keymap.set("n", "<leader>gg", ":Git <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>gd", ":Gvdiffsplit! <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>gp", ":Git -c push.default=current push <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>gl", ":Git log -n 20 --decorate <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>gb", ":Git blame <CR>", { noremap = true })
 
 -- Remap Esc in Terminal mode
-map("t", "<Esc>", "<C-\\><C-n>")
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 
 -- Harpoon
-map("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>")
-map("n", "<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>")
+vim.keymap.set("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>", { noremap = true })
 
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
