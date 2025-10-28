@@ -79,5 +79,12 @@ require("lazy").setup({
 	"kristijanhusak/vim-dadbod-ui",
 	"kristijanhusak/vim-dadbod-completion",
 
+	{
+		"oysandvik94/curl.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		cmd = { "CurlOpen" },
+		config = true
+	},
+
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 }
 })
