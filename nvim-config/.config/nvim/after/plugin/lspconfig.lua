@@ -23,7 +23,7 @@ local on_attach = function(client, bufnr)
 end
 
 --Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local lsp_flags = {
@@ -139,3 +139,18 @@ vim.lsp.config.cssls = {
 	filetypes = { "css", "scss", "less" },
 	capabilities = capabilities,
 }
+
+-- Enable all configured language servers
+vim.lsp.enable({
+	"pyright",
+	"ts_ls",
+	"tailwindcss",
+	"rust_analyzer",
+	"templ",
+	"gopls",
+	"ember",
+	"eslint",
+	"html",
+	"htmx",
+	"cssls",
+})
