@@ -12,6 +12,11 @@ This repository contains personal dotfiles and configuration files for a consist
 
 ```
 ~/.dotfiles/
+├── Brewfile                # Homebrew package definitions (macOS)
+├── install.sh              # Main installation orchestrator
+├── scripts/                # Installation scripts
+│   ├── install-macos.sh    # macOS-specific installation
+│   └── install-linux.sh    # Linux-specific installation
 ├── alacritty-config/       # Alacritty terminal emulator
 │   └── .config/
 │       └── alacritty/
@@ -99,75 +104,109 @@ Documentation and resources for the Slides CLI presentation tool:
 
 ---
 
-## Installation
+## Quick Setup (New Machines)
 
-### Prerequisites
-- macOS (Darwin)
-- Homebrew (recommended)
-- Git
+### Automated Installation
 
-### Step 1: Install GNU Stow
+The fastest way to set up a new machine:
+
 ```bash
-brew install stow
+# 1. Clone the repository
+git clone <your-repo-url> ~/.dotfiles
+cd ~/.dotfiles
+
+# 2. Run the installation script
+./install.sh
 ```
 
-### Step 2: Clone Repository
+**That's it!** The script will:
+- ✅ Detect your OS (macOS or Linux)
+- ✅ Install all required packages
+- ✅ Set up programming languages (Go, Node.js, Python)
+- ✅ Install CLI tools (ripgrep, fd, bat, tree, jq)
+- ✅ Install development tools (Neovim, tmux, slides)
+- ✅ Install terminal emulator (Ghostty/Alacritty)
+- ✅ Set up Zsh with oh-my-zsh and plugins
+- ✅ Install tmux plugin manager
+- ✅ Stow all dotfile packages
+
+### What Gets Installed
+
+**Programming Languages:**
+- Go
+- Node.js (via nvm - Node Version Manager)
+- Python 3
+
+**CLI Tools:**
+- ripgrep (modern grep)
+- fd (modern find)
+- bat (cat with syntax highlighting)
+- tree (directory visualization)
+- jq (JSON processor)
+- GNU Stow (dotfile manager)
+
+**Development Tools:**
+- Neovim (text editor)
+- tmux (terminal multiplexer)
+- Git
+- slides (terminal presentation tool)
+
+**Terminal Emulators:**
+- Ghostty (macOS)
+- Alacritty (macOS/Linux)
+
+**Shell:**
+- Zsh with oh-my-zsh
+- zsh-syntax-highlighting plugin
+- zsh-autosuggestions plugin
+
+---
+
+## Manual Installation
+
+If you prefer to install manually or customize the process:
+
+### Prerequisites
+- macOS or Linux (Ubuntu/Debian/Arch)
+- Git
+
+### Step 1: Clone Repository
 ```bash
 git clone <your-repo-url> ~/.dotfiles
 cd ~/.dotfiles
 ```
 
-### Step 3: Stow Packages
-Install individual packages or all at once:
+### Step 2: Run OS-Specific Script
 
+**macOS:**
 ```bash
-# Install all packages
-stow */
-
-# Or install individually
-stow alacritty-config
-stow ghostty-config
-stow git-config
-stow nvim-config
-stow zsh
-stow tmux
+./scripts/install-macos.sh
 ```
 
-### Step 4: Manual Dependencies
-
-**Oh-My-Zsh:**
+**Linux:**
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+./scripts/install-linux.sh
 ```
 
-**Zsh Plugin Dependencies:**
+### Step 3: Post-Install Actions
+
+After running the installation script:
+
+**1. Restart your terminal** or source the new configuration:
 ```bash
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+source ~/.zshrc
 ```
 
-**Tmux Plugin Manager:**
+**2. Install tmux plugins:**
+Open tmux and press `Ctrl+a` + `I` to install plugins
+
+**3. Open Neovim:**
 ```bash
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+nvim
 ```
-Then inside tmux: `Ctrl+a` + `I` to install plugins
+lazy.nvim will automatically install configured plugins on first launch
 
-**Neovim Plugins:**
-Open Neovim and lazy.nvim will automatically install configured plugins
-
-**Recommended Tools:**
-```bash
-# Modern alternatives to Unix tools (already aliased in .localrc)
-brew install ripgrep fd      # grep='rg', find='fd'
-brew install jq              # JSON processor
-brew install neovim          # Neovim editor
-brew install tmux            # Terminal multiplexer
-brew install alacritty       # GPU-accelerated terminal
-
-# Optional: Runtime managers
-brew install rustup          # Rust toolchain
-brew install nvm             # Node Version Manager
-```
+**4. (Linux only) Log out and back in** if zsh was just installed to apply shell change
 
 ### Uninstalling Packages
 To remove symlinks for a package:
@@ -185,6 +224,71 @@ stow -R zsh              # Restow zsh package
 # or restow everything
 stow -R */
 ```
+
+---
+
+## Package Management with Brewfile (macOS)
+
+The repository includes a `Brewfile` for declarative package management on macOS using Homebrew Bundle.
+
+### Using the Brewfile
+
+**Install all packages from Brewfile:**
+```bash
+cd ~/.dotfiles
+brew bundle install
+```
+
+**Update Brewfile with currently installed packages:**
+```bash
+cd ~/.dotfiles
+brew bundle dump --force
+```
+
+**Remove packages not in Brewfile:**
+```bash
+cd ~/.dotfiles
+brew bundle cleanup
+```
+
+**Check what would be installed:**
+```bash
+cd ~/.dotfiles
+brew bundle check
+```
+
+### Adding Packages
+
+Edit the `Brewfile` directly:
+
+```ruby
+# For command-line tools
+brew "package-name"
+
+# For GUI applications
+cask "application-name"
+
+# For additional taps
+tap "user/repository"
+```
+
+Then run `brew bundle install` to install the new packages.
+
+### Brewfile Structure
+
+The Brewfile is organized into sections:
+- **Programming Languages**: Go, Python
+- **CLI Tools**: ripgrep, fd, bat, tree, jq, stow
+- **Development Tools**: neovim, tmux, git
+- **Terminal Emulators**: ghostty, alacritty
+- **Additional Tools**: Notes for items installed via scripts
+
+### Best Practices
+
+1. **Keep Brewfile in sync**: Run `brew bundle dump --force` periodically to keep it updated
+2. **Commit changes**: Add and commit Brewfile changes to track package additions/removals
+3. **Document special cases**: Use comments for packages with special installation requirements
+4. **Test on clean system**: Verify your Brewfile works on a fresh installation
 
 ---
 
@@ -326,23 +430,39 @@ export EDITOR='nvim'  # Both local and SSH sessions
 
 ### Initial Setup on New Machine
 1. Clone this repository to `~/.dotfiles`
-2. Run `install.sh`
-3. Install oh-my-zsh and plugins manually
-4. Install tmux plugin manager
-5. Create machine-specific customizations in `~/.localrc`
-6. Source the new configuration: `source ~/.zshrc`
+2. Run `./install.sh`
+3. That's it! The script handles everything automatically
+
+The installation script will:
+- Install all packages (languages, tools, terminals)
+- Set up Zsh with oh-my-zsh and plugins
+- Install tmux plugin manager
+- Stow all dotfile packages
+- Create `.localrc` for machine-specific config
 
 ### Updating Configurations
 **On any machine:**
 ```bash
 cd ~/.dotfiles
 git pull
-source ~/.zshrc  # Reload shell config
+
+# If packages were added to Brewfile (macOS only)
+brew bundle install
+
+# Restow any changed packages
+stow -R */
+
+# Reload shell config
+source ~/.zshrc
 ```
 
 **After making changes:**
 ```bash
 cd ~/.dotfiles
+
+# Update Brewfile with new packages (macOS only)
+brew bundle dump --force  # Optional: if you installed new packages
+
 git add -A
 git commit -m "Description of changes"
 git push
@@ -364,11 +484,69 @@ Use `.localrc` for:
 
 ## Troubleshooting
 
+### Installation script fails on macOS
+**Issue**: Homebrew installation fails or commands not found
+
+**Solution**:
+```bash
+# For Apple Silicon Macs, manually add Homebrew to PATH
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+source ~/.zprofile
+
+# Then re-run the installation
+cd ~/.dotfiles && ./install.sh
+```
+
+### Installation script fails on Linux
+**Issue**: Package manager errors or permission denied
+
+**Solution**:
+```bash
+# Update package lists first
+sudo apt update  # Ubuntu/Debian
+# or
+sudo pacman -Sy  # Arch
+
+# Ensure you have sudo privileges
+# Then re-run the installation
+cd ~/.dotfiles && ./scripts/install-linux.sh
+```
+
+### Brewfile installation fails
+**Issue**: `brew bundle` command not found or fails
+
+**Solution**:
+```bash
+# Install Homebrew Bundle tap
+brew tap homebrew/bundle
+
+# Then try again
+cd ~/.dotfiles && brew bundle install
+```
+
+### nvm or Node.js not working after installation
+**Issue**: `nvm: command not found` or `node: command not found`
+
+**Solution**:
+```bash
+# Restart your terminal or source the configuration
+source ~/.zshrc
+
+# If still not working, manually load nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Then install Node.js
+nvm install --lts
+nvm use --lts
+```
+
 ### Zsh plugins not working
 Ensure oh-my-zsh is installed and plugins are available:
 ```bash
 ls ~/.oh-my-zsh/custom/plugins/
-# Install missing plugins (see installation section above)
+# If missing, re-run the installation script
+cd ~/.dotfiles && ./install.sh
 ```
 
 ### Tmux plugins not loading
@@ -382,10 +560,8 @@ tmux source ~/.tmux.conf
 ### Neovim LSP not working
 Ensure language servers are installed:
 ```bash
-# Rust
-rustup component add rust-analyzer
-
-# Check if Mason is managing other LSPs in Neovim
+# Check if Mason is managing LSPs in Neovim
+nvim
 :Mason
 ```
 
@@ -405,6 +581,15 @@ Ensure TERM is set correctly:
 echo $TERM  # Should show xterm-256color
 ```
 Check that your terminal emulator supports 256 colors or true color.
+
+### Linux: fd or bat command not found
+On Ubuntu/Debian, the commands are named differently:
+```bash
+# Use the aliases from .localrc, or create symlinks manually
+sudo ln -s $(which fdfind) /usr/local/bin/fd
+sudo ln -s $(which batcat) /usr/local/bin/bat
+```
+The installation script should handle this automatically.
 
 ---
 
