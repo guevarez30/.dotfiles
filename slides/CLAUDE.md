@@ -7,6 +7,7 @@
 **Repository:** https://github.com/maaslalani/slides
 
 ### Key Capabilities
+
 - Create presentations using standard Markdown
 - Live file watching and auto-reload during presentations
 - Execute code blocks interactively (ctrl+e)
@@ -21,26 +22,31 @@
 ## Installation
 
 ### Homebrew (macOS/Linux)
+
 ```bash
 brew install slides
 ```
 
 ### Arch Linux
+
 ```bash
 yay -S slides
 ```
 
 ### Snap (Linux)
+
 ```bash
 sudo snap install slides
 ```
 
 ### Go Install
+
 ```bash
 go install github.com/maaslalani/slides@latest
 ```
 
 ### From Source
+
 ```bash
 git clone https://github.com/maaslalani/slides.git
 cd slides
@@ -54,8 +60,10 @@ go install
 Slides uses standard Markdown with `---` as the slide separator.
 
 ### Simple Example
+
 ```markdown
 # Welcome to My Presentation
+
 ## Subtitle here
 
 This is the first slide
@@ -64,9 +72,9 @@ This is the first slide
 
 ## Second Slide
 
-* Bullet point 1
-* Bullet point 2
-* Bullet point 3
+- Bullet point 1
+- Bullet point 2
+- Bullet point 3
 
 ---
 
@@ -76,6 +84,7 @@ Some content here
 ```
 
 ### Running a Presentation
+
 ```bash
 slides presentation.md
 ```
@@ -87,25 +96,33 @@ The presentation will open in your terminal with full navigation controls.
 ## Markdown Elements Supported
 
 ### Headers
+
 ```markdown
 # H1 Header
+
 ## H2 Header
+
 ### H3 Header
+
 #### H4 Header
+
 ##### H5 Header
+
 ###### H6 Header
 ```
 
 ### Lists
 
 **Bulleted:**
+
 ```markdown
-* Item 1
-* Item 2
-* Item 3
+- Item 1
+- Item 2
+- Item 3
 ```
 
 **Numbered:**
+
 ```markdown
 1. First item
 2. Second item
@@ -113,6 +130,7 @@ The presentation will open in your terminal with full navigation controls.
 ```
 
 ### Code Blocks
+
 ````markdown
 ```python
 def hello():
@@ -121,6 +139,7 @@ def hello():
 ````
 
 ### Tables
+
 ```markdown
 | Column 1 | Column 2 | Column 3 |
 | -------- | -------- | -------- |
@@ -129,8 +148,9 @@ def hello():
 ```
 
 ### Emphasis
+
 ```markdown
-*italic text*
+_italic text_
 **bold text**
 ~~strikethrough~~
 `inline code`
@@ -151,19 +171,21 @@ paging: Slide %d / %d
 ---
 
 # First Slide
+
 Content here...
 ```
 
 ### Metadata Options
 
-| Option | Description | Example |
-|--------|-------------|---------|
-| `theme` | Path to theme file (local or remote) | `./mytheme.json` |
-| `author` | Author name displayed in footer | `John Doe` |
-| `date` | Date shown in footer | `May 22, 2024` |
-| `paging` | Page number format | `Page %d of %d` |
+| Option   | Description                          | Example          |
+| -------- | ------------------------------------ | ---------------- |
+| `theme`  | Path to theme file (local or remote) | `./mytheme.json` |
+| `author` | Author name displayed in footer      | `John Doe`       |
+| `date`   | Date shown in footer                 | `May 22, 2024`   |
+| `paging` | Page number format                   | `Page %d of %d`  |
 
 ### Date Format Tokens
+
 - `YYYY` - Full year (2024)
 - `YY` - Two-digit year (24)
 - `MMMM` - Full month name (January)
@@ -172,7 +194,9 @@ Content here...
 - `DD` - Two-digit day (05)
 
 ### Hide Footer
+
 To hide the footer bar entirely:
+
 ```markdown
 ---
 author: ""
@@ -188,18 +212,21 @@ paging: ""
 One of the most powerful features: execute code blocks directly during your presentation!
 
 ### How It Works
+
 1. Create a code block with a supported language
 2. During presentation, navigate to that slide
 3. Press `ctrl+e` to execute the code
 4. Output appears as virtual text below the code block
 
 ### Supported Languages
+
 - Shell: bash, zsh, fish
 - Scripting: python, ruby, perl, javascript
 - Compiled: go, rust, java, cpp, swift
 - Other: elixir, dart, v, julia, scala
 
 ### Example
+
 ````markdown
 ---
 
@@ -214,6 +241,7 @@ Press ctrl+e to execute!
 ````
 
 ### Advanced: Hidden Code Lines
+
 Use `///` to hide verbose imports/boilerplate:
 
 ````markdown
@@ -229,6 +257,7 @@ func main() {
 The `///` lines won't display but will be included during execution.
 
 ### Copy Code
+
 Press `y` to copy the code block to clipboard.
 
 ---
@@ -238,52 +267,58 @@ Press `y` to copy the code block to clipboard.
 Pre-process slides to dynamically generate content before the presentation.
 
 ### How It Works
+
 1. Use three tildes (`~~~`) instead of backticks
 2. Specify a command
 3. Make the file executable: `chmod +x presentation.md`
 4. The command output replaces the code block
 
 ### Example: Import External Files
+
 ```markdown
 ---
 
 ## Code Import
 
-~~~bash
+```bash
 cat examples/hello.py
-~~~
+```
 ```
 
 The file content will be displayed in place of the command.
 
 ### Example: Generate Diagrams
+
 ```markdown
 ---
 
 ## Architecture Diagram
 
-~~~graph-easy
+```graph-easy
 [Frontend] -> [API] -> [Database]
 [API] -> [Cache]
-~~~
+```
 ```
 
 ### Example: PlantUML Diagrams
+
 ```markdown
 ---
 
 ## Sequence Diagram
 
-~~~bash
+```bash
 echo '@startuml
 Alice -> Bob: Hello
 Bob -> Alice: Hi!
 @enduml' | plantuml -pipe -tutxt
-~~~
+```
 ```
 
 ### Security Note
+
 Preprocessing requires executable permissions to prevent accidental code execution:
+
 ```bash
 chmod +x your-presentation.md
 ```
@@ -293,22 +328,24 @@ chmod +x your-presentation.md
 ## Keyboard Shortcuts
 
 ### Navigation
-| Key(s) | Action |
-|--------|--------|
-| `Space`, `→`, `↓`, `Enter`, `n`, `j`, `l` | Next slide |
-| `←`, `↑`, `p`, `h`, `k` | Previous slide |
-| `g g` | First slide |
-| `G` | Last slide |
-| `<number>G` | Go to specific slide (e.g., `5G` → slide 5) |
+
+| Key(s)                                    | Action                                      |
+| ----------------------------------------- | ------------------------------------------- |
+| `Space`, `→`, `↓`, `Enter`, `n`, `j`, `l` | Next slide                                  |
+| `←`, `↑`, `p`, `h`, `k`                   | Previous slide                              |
+| `g g`                                     | First slide                                 |
+| `G`                                       | Last slide                                  |
+| `<number>G`                               | Go to specific slide (e.g., `5G` → slide 5) |
 
 ### Other Actions
-| Key(s) | Action |
-|--------|--------|
-| `/` | Search within presentation |
-| `ctrl+n` | Next search result |
-| `ctrl+e` | Execute code block |
-| `y` | Copy code block |
-| `q` | Quit presentation |
+
+| Key(s)   | Action                     |
+| -------- | -------------------------- |
+| `/`      | Search within presentation |
+| `ctrl+n` | Next search result         |
+| `ctrl+e` | Execute code block         |
+| `y`      | Copy code block            |
+| `q`      | Quit presentation          |
 
 ---
 
@@ -317,6 +354,7 @@ chmod +x your-presentation.md
 Themes are defined in JSON files based on [glamour themes](https://github.com/charmbracelet/glamour/tree/master/styles).
 
 ### Using a Theme
+
 ```markdown
 ---
 theme: ./mytheme.json
@@ -324,6 +362,7 @@ theme: ./mytheme.json
 ```
 
 Or use a remote theme:
+
 ```markdown
 ---
 theme: https://example.com/theme.json
@@ -331,6 +370,7 @@ theme: https://example.com/theme.json
 ```
 
 ### Theme Structure
+
 ```json
 {
   "document": {
@@ -369,6 +409,7 @@ theme: https://example.com/theme.json
 ```
 
 ### Theme Elements You Can Customize
+
 - Document: colors, margins, prefixes
 - Headings: H1-H6 styles, colors, prefixes
 - Text: emphasis (italic), strong (bold), strikethrough
@@ -383,23 +424,29 @@ theme: https://example.com/theme.json
 ## Advanced Features
 
 ### Live File Watching
+
 While presenting, save changes to your markdown file and the presentation auto-reloads. Perfect for:
+
 - Live editing during demos
 - Real-time collaboration
 - Iterative content refinement
 
 ### SSH Presentations
+
 Share presentations over SSH:
+
 ```bash
 ssh user@host "slides presentation.md"
 ```
 
 ### Stdin Input
+
 ```bash
 cat presentation.md | slides
 ```
 
 ### Search Functionality
+
 1. Press `/` during presentation
 2. Type search term
 3. Press `ctrl+n` to cycle through results
@@ -409,50 +456,69 @@ cat presentation.md | slides
 ## Best Practices
 
 ### 1. Keep Slides Simple
+
 - One main idea per slide
 - Use plenty of whitespace
 - Short bullet points (5-7 words max)
 
 ### 2. Leverage Code Execution
+
 - Demo live code instead of screenshots
 - Show real-time results
 - Build trust with working examples
 
 ### 3. Use Preprocessing for Dynamic Content
+
 - Import real code files (always up-to-date)
 - Generate diagrams automatically
 - Show actual system information
 
 ### 4. Structure Your Presentation
+
 ```markdown
 ---
 # Title Slide
 ---
+
 ## Agenda
+
 ---
+
 ## Content Section 1
+
 ---
+
 ## Demo
+
 ---
+
 ## Summary
+
 ---
+
 ## Questions?
 ```
 
 ### 5. Test Before Presenting
+
 - Run through the entire presentation
 - Test all code executions (`ctrl+e`)
 - Verify preprocessing works (`chmod +x` required)
 - Check terminal size (resize if needed)
 
 ### 6. Use Clear Transitions
+
 ```markdown
 ---
 ## Previous Topic
 ---
+
 ## Transition Slide
+
 > Moving on to...
+
 ---
+
 ## Next Topic
 ```
 
@@ -461,6 +527,7 @@ cat presentation.md | slides
 ## Example Templates
 
 ### Basic Presentation
+
 ````markdown
 ---
 author: Your Name
@@ -469,6 +536,7 @@ paging: Slide %d / %d
 ---
 
 # Presentation Title
+
 ## Subtitle
 
 Your Name
@@ -477,10 +545,10 @@ Your Name
 
 ## Agenda
 
-* Introduction
-* Main Content
-* Demo
-* Conclusion
+- Introduction
+- Main Content
+- Demo
+- Conclusion
 
 ---
 
@@ -506,9 +574,9 @@ print("Hello, world!")
 
 ## Conclusion
 
-* Key takeaway 1
-* Key takeaway 2
-* Key takeaway 3
+- Key takeaway 1
+- Key takeaway 2
+- Key takeaway 3
 
 ---
 
@@ -518,6 +586,7 @@ Questions?
 ````
 
 ### Technical Presentation with Code
+
 ````markdown
 ---
 author: Developer Name
@@ -532,9 +601,10 @@ theme: ./tech-theme.json
 ## What We'll Build
 
 A RESTful API with:
-* User authentication
-* CRUD operations
-* Real-time data
+
+- User authentication
+- CRUD operations
+- Real-time data
 
 ---
 
@@ -587,6 +657,7 @@ When creating slideshows:
 10. **Remember shortcuts**: Design for keyboard-only navigation
 
 ### Common Pitfalls to Avoid
+
 - ❌ Too much text on one slide
 - ❌ Forgetting `---` slide separators
 - ❌ Using unsupported markdown (HTML usually won't work)
@@ -595,6 +666,7 @@ When creating slideshows:
 - ❌ Making slides too wide for standard terminals
 
 ### Quality Checklist
+
 - [ ] Every slide has clear purpose
 - [ ] Code blocks have language specified
 - [ ] Metadata configured appropriately
@@ -617,6 +689,7 @@ When creating slideshows:
 ## Quick Reference
 
 ### Create a Presentation
+
 ```bash
 # Create markdown file
 vim presentation.md
@@ -629,6 +702,7 @@ slides --watch presentation.md
 ```
 
 ### Essential Shortcuts
+
 - `Space` → next slide
 - `←` → previous slide
 - `/` → search
@@ -638,6 +712,7 @@ slides --watch presentation.md
 - `q` → quit
 
 ### File Structure
+
 ```markdown
 ---
 author: Name

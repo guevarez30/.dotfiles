@@ -10,6 +10,8 @@ conform.setup({
 		go = { "gofmt" },
 	 	rust = { "rustfmt" },
 		python = { "autopep8" },
+		yaml = { "prettier" },
+		markdown = { "prettier" },
 		["_"] = { "trim_whitespace" },
 	},
 	-- custom formatter configs
