@@ -28,6 +28,11 @@ set.preserveindent = true
 set.scrolloff = 8
 set.laststatus = 2
 
+-- Split behavior: always vertical, always on the right
+set.splitright = true
+set.splitbelow = false
+set.equalalways = false  -- Don't automatically equalize window sizes
+
 -- Prevent automatic comment continuation
 set.formatoptions:remove("o")
 set.formatoptions:remove("r")
