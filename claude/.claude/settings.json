@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/TaylorGuevarez/**)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(cat:*)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "alwaysThinkingEnabled": false
+}

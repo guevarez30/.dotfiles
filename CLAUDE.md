@@ -22,6 +22,14 @@ This repository contains personal dotfiles and configuration files for a consist
 │       └── alacritty/
 │           ├── alacritty.yml
 │           └── [themes].yml
+├── claude/                 # Claude Code configuration
+│   └── .claude/
+│       ├── settings.json
+│       ├── plugins/
+│       │   └── config.json
+│       └── skills/
+│           └── slides-cli/
+│               └── SKILL.md
 ├── ghostty-config/         # Ghostty terminal emulator
 │   └── .config/
 │       └── (config files)
@@ -41,9 +49,6 @@ This repository contains personal dotfiles and configuration files for a consist
 │   └── .localrc
 ├── tmux/                   # Tmux multiplexer
 │   └── .tmux.conf
-├── slides/                 # Slides CLI documentation
-│   ├── CLAUDE.md
-│   └── skills/
 ├── .tmux/                  # Tmux plugins
 │   └── plugins/
 │       ├── catppuccin-tmux
@@ -59,6 +64,13 @@ Alacritty terminal emulator configuration (stowed to `~/.config/alacritty/`):
 - **Main config**: `alacritty.yml` - GPU-accelerated terminal with Hack Nerd Font
 - **Themes**: nocturnal.yml, dracula.yml, onedark.yml, cyberdream.yml, nightfox.yml, mocha.yml
 - **Settings**: 98% opacity, 100x50 default dimensions, custom color palette
+
+#### `claude/`
+Claude Code global configuration (stowed to `~/.claude/`):
+- **settings.json** - Global permissions and preferences (alwaysThinkingEnabled, tool permissions)
+- **plugins/config.json** - Plugin repository configuration
+- **skills/slides-cli/SKILL.md** - Terminal presentation skill for creating slideshows with Slides CLI
+- **Note**: Skills are model-invoked and activate automatically based on context
 
 #### `ghostty-config/`
 Ghostty terminal emulator configuration (stowed to `~/.config/ghostty/`):
@@ -96,11 +108,6 @@ Tmux terminal multiplexer configuration (stowed to `~/`):
   - vim-tmux-navigator - Seamless navigation between vim and tmux panes
   - catppuccin-tmux - Catppuccin Macchiato theme
 - **Layout**: Status bar on top, centered window list
-
-#### `slides/`
-Documentation and resources for the Slides CLI presentation tool:
-- **`CLAUDE.md`**: Complete reference guide for creating terminal-based presentations
-- **`skills/`**: Directory for storing presentation skill templates (currently empty)
 
 ---
 
@@ -665,6 +672,14 @@ This repository follows the proper Stow conventions:
 │       └── alacritty/
 │           ├── alacritty.yml
 │           └── *.yml (themes)
+├── claude/                 # → ~/.claude/
+│   └── .claude/
+│       ├── settings.json
+│       ├── plugins/
+│       │   └── config.json
+│       └── skills/
+│           └── slides-cli/
+│               └── SKILL.md
 ├── ghostty-config/         # → ~/.config/ghostty/
 │   └── .config/
 ├── git-config/             # → ~/
@@ -838,7 +853,7 @@ bash/
 - Each package can be independently installed/uninstalled
 - Keep machine-specific config in separate files (e.g., `.localrc` in the `zsh` package)
 - The `.tmux/plugins/` directory is tracked but plugins are managed by TPM, not Stow
-- Slides documentation is kept in the repository but not stowed (reference only)
+- Claude Code skills are automatically invoked by the model based on context
 
 ---
 
@@ -862,7 +877,8 @@ bash/
 - **ripgrep (rg)**: https://github.com/BurntSushi/ripgrep
 - **fd**: https://github.com/sharkdp/fd
 - **jq**: https://stedolan.github.io/jq/
-- **Slides CLI**: https://github.com/maaslalani/slides - See `slides/CLAUDE.md` for complete documentation
+- **Slides CLI**: https://github.com/maaslalani/slides - Skill available via `claude` package
+- **Claude Code**: https://docs.claude.com/en/docs/claude-code - Skills documentation at https://docs.claude.com/en/docs/claude-code/skills.md
 
 ### Related Reading
 - **GNU Stow Tutorial**: https://www.gnu.org/software/stow/manual/stow.html

@@ -1,3 +1,8 @@
+---
+name: slides-cli
+description: Expert guidance for creating terminal-based presentations using the Slides CLI tool. Helps with markdown syntax, code execution, preprocessing, themes, and best practices for developer presentations.
+---
+
 # Terminal Slideshows with Slides CLI
 
 ## Overview

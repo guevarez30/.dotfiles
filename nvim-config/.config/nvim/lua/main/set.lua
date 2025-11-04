@@ -13,7 +13,6 @@ set.backup = false
 set.undofile = true
 set.showmode = false
 set.showmatch = true
-set.ruler = true
 set.smarttab = true
 set.autoread = true
 set.cursorline = true
@@ -26,7 +25,6 @@ set.expandtab = false -- Use actual tab characters
 set.copyindent = true
 set.preserveindent = true
 set.scrolloff = 8
-set.laststatus = 2
 
 -- Split behavior: always vertical, always on the right
 set.splitright = true

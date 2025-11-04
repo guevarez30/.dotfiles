@@ -7,10 +7,23 @@ Personal configuration files managed with [GNU Stow](https://www.gnu.org/softwar
 Each directory represents a "package" that can be independently installed:
 
 - `alacritty-config/` - Alacritty terminal emulator configuration
+- `claude/` - Claude Code global configuration (settings, skills, plugins)
 - `git-config/` - Git prompt and global gitignore
 - `nvim-config/` - Neovim configuration
 - `tmux/` - Tmux configuration
 - `zsh/` - Zsh shell configuration and local rc file
+
+### Naming Convention
+
+This repository follows a consistent naming pattern for stow packages:
+
+- **Packages with `-config` suffix** → Symlink to `~/.config/` or other config directories
+  - Examples: `alacritty-config/` → `~/.config/alacritty/`, `nvim-config/` → `~/.config/nvim/`
+
+- **Packages without suffix** → Symlink directly to `~/`
+  - Examples: `zsh/` → `~/`, `tmux/` → `~/`, `claude/` → `~/.claude/`
+
+- **Exception: `git-config/`** has the `-config` suffix but symlinks to `~/` (kept for clarity since it contains git configuration utilities)
 
 ## Installation
 
@@ -40,6 +53,7 @@ cd ~/.dotfiles
 stow zsh
 stow nvim-config
 stow alacritty-config
+stow claude
 stow git-config
 stow tmux
 
@@ -70,8 +84,12 @@ stow -R zsh  # or whichever package you updated
 ## Notes
 
 - The `.localrc` file in the zsh package is for machine-specific configuration
-- Alacritty and Neovim configs are placed in `~/.config/`
+- Alacritty, Neovim, and Claude configs are placed in `~/.config/` and `~/.claude/`
 - Git files are symlinked directly to home directory
+- Claude config includes:
+  - Global settings (permissions, preferences)
+  - Skills (terminal presentation tool documentation via slides-cli)
+  - Plugin repository configuration
 
 # Slack Themes
 

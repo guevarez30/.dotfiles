@@ -40,9 +40,6 @@ require("lazy").setup({
 		end,
 	},
 
-	-- Go
-	{ "fatih/vim-go", build = ":GoUpdateBinaries" },
-
 	-- VIM Vinegar
 	"tpope/vim-vinegar",
 

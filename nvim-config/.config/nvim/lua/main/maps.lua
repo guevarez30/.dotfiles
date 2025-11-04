@@ -17,8 +17,8 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
 
 -- Move across line
-vim.keymap.set("n", "gh", "_", { noremap = true })
-vim.keymap.set("n", "gl", "$", { noremap = true })
+-- vim.keymap.set("n", "gh", "_", { noremap = true })
+-- vim.keymap.set("n", "gl", "$", { noremap = true })
 
 -- Search terms in middle
 vim.keymap.set("n", "n", "nzzzv", { noremap = true })
@@ -51,7 +51,6 @@ vim.keymap.set("n", "<leader>gd", ":Gvdiffsplit! <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>gp", ":Git -c push.default=current push <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>gl", ":Git log -n 20 --decorate <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>gb", ":Git blame <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gq", function()
 	local files = vim.fn.systemlist("git diff --name-only")
 	local qf_list = {}
 	for _, file in ipairs(files) do
@@ -84,7 +83,6 @@ vim.keymap.set("n", "<Leader>ee", function()
 	end
 end)
 
--- Send highlighted text to Claude Code in new tmux pane
 vim.keymap.set("v", "<Leader>cc", function()
 	-- Get the line range
 	local start_line = vim.fn.getpos("v")[2]
