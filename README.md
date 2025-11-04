@@ -14,28 +14,17 @@
 
 ## 📦 Package Structure
 
-<table>
-<tr>
-<td width="50%">
-
 ### Terminal & Shell
 
 - <img src="https://cdn.simpleicons.org/alacritty/F46D01" height="16" alt="alacritty"/> **`alacritty-config/`** - GPU-accelerated terminal
 - <img src="https://cdn.simpleicons.org/zsh/F15A24" height="16" alt="zsh"/> **`zsh/`** - Shell with oh-my-zsh
 - <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tmux/tmux-original.svg" height="16" alt="tmux"/> **`tmux/`** - Terminal multiplexer
 
-</td>
-<td width="50%">
-
 ### Editors & Tools
 
 - <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neovim/neovim-original.svg" height="16" alt="neovim"/> **`nvim-config/`** - Neovim IDE setup
 - <img src="https://cdn.simpleicons.org/anthropic/191919" height="16" alt="claude"/> **`claude/`** - Claude Code AI assistant
 - <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="16" alt="git"/> **`git-config/`** - Git utilities
-
-</td>
-</tr>
-</table>
 
 ### 📝 Naming Convention
 
@@ -54,46 +43,77 @@ git-config/        →  ~/  (exception: contains git utilities)
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### macOS Installation
 
 <div align="left">
 
 ![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?style=flat-square&logo=homebrew&logoColor=black)
+
+</div>
+
+**1. Install Homebrew** (if not already installed):
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+**2. Install all packages from Brewfile**:
+
+```bash
+cd ~/.dotfiles
+brew bundle install
+```
+
+This will install:
+
+- 🔧 Development tools (Go, Python, Git, Neovim, Tmux)
+- 📦 CLI utilities (ripgrep, fd, bat, tree, jq, stow)
+- 🖥️ Terminal emulators (Ghostty, Alacritty)
+
+**3. Stow your dotfiles**:
+
+```bash
+stow zsh nvim-config alacritty-config claude git-config tmux
+```
+
+> 💡 **Tip:** Run `brew bundle dump --force` to update the Brewfile with newly installed packages
+
+---
+
+### Linux Installation
+
+<div align="left">
+
 ![APT](https://img.shields.io/badge/APT-A81D33?style=flat-square&logo=debian&logoColor=white)
 ![Pacman](https://img.shields.io/badge/Pacman-1793D1?style=flat-square&logo=arch-linux&logoColor=white)
 
 </div>
 
+**Ubuntu/Debian:**
+
 ```bash
-# macOS
-brew install stow
-
-# Ubuntu/Debian
-sudo apt install stow
-
-# Arch Linux
-sudo pacman -S stow
+sudo apt update
+sudo apt install -y stow git neovim tmux ripgrep fd-find bat tree jq \
+                    golang-go python3 python3-pip alacritty
 ```
 
-### Installation
+**Arch Linux:**
+
+```bash
+sudo pacman -S stow git neovim tmux ripgrep fd bat tree jq \
+               go python python-pip alacritty
+```
+
+**Then stow your dotfiles:**
 
 ```bash
 cd ~/.dotfiles
-
-# Install individual packages
 stow zsh nvim-config alacritty-config claude git-config tmux
-
-# Or install everything at once
-stow */
 ```
 
-> 💡 **Tip:** Stow creates symlinks from `~/` to files in this repository
+> 💡 **Note:** On Ubuntu/Debian, `fd` is installed as `fdfind` and `bat` as `batcat`. Aliases in `.localrc` handle this.
 
 ### Management
-
-<table>
-<tr>
-<td width="33%">
 
 **🗑️ Uninstall**
 
@@ -101,27 +121,17 @@ stow */
 stow -D zsh
 ```
 
-</td>
-<td width="33%">
-
 **🔄 Restow**
 
 ```bash
 stow -R zsh
 ```
 
-</td>
-<td width="33%">
-
 **👀 Preview**
 
 ```bash
 stow -n -v zsh
 ```
-
-</td>
-</tr>
-</table>
 
 ---
 
