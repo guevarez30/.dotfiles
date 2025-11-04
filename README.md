@@ -70,8 +70,20 @@ This will install:
 - 📦 CLI utilities (ripgrep, fd, bat, tree, jq, stow)
 - 🖥️ Terminal emulators (Ghostty, Alacritty)
 
-**3. Stow your dotfiles**:
+**3. Install Node.js via nvm**:
+```bash
+# Install nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
+# Restart terminal or source profile
+source ~/.zshrc
+
+# Install latest LTS version
+nvm install --lts
+nvm use --lts
+```
+
+**4. Stow your dotfiles**:
 ```bash
 stow zsh nvim-config alacritty-config claude git-config tmux
 ```
@@ -90,7 +102,6 @@ stow zsh nvim-config alacritty-config claude git-config tmux
 </div>
 
 **Ubuntu/Debian:**
-
 ```bash
 sudo apt update
 sudo apt install -y stow git neovim tmux ripgrep fd-find bat tree jq \
@@ -98,14 +109,23 @@ sudo apt install -y stow git neovim tmux ripgrep fd-find bat tree jq \
 ```
 
 **Arch Linux:**
-
 ```bash
 sudo pacman -S stow git neovim tmux ripgrep fd bat tree jq \
                go python python-pip alacritty
 ```
 
-**Then stow your dotfiles:**
+**Install Node.js via nvm:**
+```bash
+# Install nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+source ~/.zshrc
 
+# Install latest LTS version
+nvm install --lts
+nvm use --lts
+```
+
+**Stow your dotfiles:**
 ```bash
 cd ~/.dotfiles
 stow zsh nvim-config alacritty-config claude git-config tmux

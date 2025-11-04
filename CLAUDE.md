@@ -13,10 +13,8 @@ This repository contains personal dotfiles and configuration files for a consist
 ```
 ~/.dotfiles/
 ├── Brewfile                # Homebrew package definitions (macOS)
-├── install.sh              # Main installation orchestrator
-├── scripts/                # Installation scripts
-│   ├── install-macos.sh    # macOS-specific installation
-│   └── install-linux.sh    # Linux-specific installation
+├── README.md               # Quick reference guide
+├── CLAUDE.md               # Complete documentation
 ├── alacritty-config/       # Alacritty terminal emulator
 │   └── .config/
 │       └── alacritty/
@@ -113,36 +111,63 @@ Tmux terminal multiplexer configuration (stowed to `~/`):
 
 ## Quick Setup (New Machines)
 
-### Automated Installation
+### Installation
 
-The fastest way to set up a new machine:
-
+**1. Clone the repository:**
 ```bash
-# 1. Clone the repository
 git clone <your-repo-url> ~/.dotfiles
 cd ~/.dotfiles
-
-# 2. Run the installation script
-./install.sh
 ```
 
-**That's it!** The script will:
-- ✅ Detect your OS (macOS or Linux)
-- ✅ Install all required packages
-- ✅ Set up programming languages (Go, Node.js, Python)
-- ✅ Install CLI tools (ripgrep, fd, bat, tree, jq)
-- ✅ Install development tools (Neovim, tmux, slides)
-- ✅ Install terminal emulator (Ghostty/Alacritty)
-- ✅ Set up Zsh with oh-my-zsh and plugins
-- ✅ Install tmux plugin manager
-- ✅ Stow all dotfile packages
+**2. Install packages:**
+
+**macOS:**
+```bash
+# Install all tools via Homebrew
+brew bundle install
+```
+
+**Linux (Ubuntu/Debian):**
+```bash
+sudo apt update
+sudo apt install -y stow git neovim tmux ripgrep fd-find bat tree jq \
+                    golang-go python3 python3-pip alacritty
+```
+
+**Linux (Arch):**
+```bash
+sudo pacman -S stow git neovim tmux ripgrep fd bat tree jq \
+               go python python-pip alacritty
+```
+
+**3. Install Node.js via nvm:**
+```bash
+# Install nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+source ~/.zshrc
+
+# Install latest LTS version
+nvm install --lts
+nvm use --lts
+```
+
+**4. Stow dotfiles:**
+```bash
+stow zsh nvim-config alacritty-config claude git-config tmux
+```
+
+**5. Install additional components:**
+- **oh-my-zsh**: `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
+- **zsh-syntax-highlighting**: `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting`
+- **zsh-autosuggestions**: `git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions`
+- **tmux plugins**: Open tmux and press `Ctrl+a` + `I`
 
 ### What Gets Installed
 
 **Programming Languages:**
-- Go
-- Node.js (via nvm - Node Version Manager)
-- Python 3
+- **Go** - Installed via Brewfile (macOS) or package manager (Linux)
+- **Node.js** - Managed via nvm (Node Version Manager)
+- **Python 3** - Installed via Brewfile (macOS) or package manager (Linux)
 
 **CLI Tools:**
 - ripgrep (modern grep)
@@ -169,35 +194,9 @@ cd ~/.dotfiles
 
 ---
 
-## Manual Installation
+## Post-Installation Setup
 
-If you prefer to install manually or customize the process:
-
-### Prerequisites
-- macOS or Linux (Ubuntu/Debian/Arch)
-- Git
-
-### Step 1: Clone Repository
-```bash
-git clone <your-repo-url> ~/.dotfiles
-cd ~/.dotfiles
-```
-
-### Step 2: Run OS-Specific Script
-
-**macOS:**
-```bash
-./scripts/install-macos.sh
-```
-
-**Linux:**
-```bash
-./scripts/install-linux.sh
-```
-
-### Step 3: Post-Install Actions
-
-After running the installation script:
+After stowing your dotfiles:
 
 **1. Restart your terminal** or source the new configuration:
 ```bash
@@ -437,15 +436,11 @@ export EDITOR='nvim'  # Both local and SSH sessions
 
 ### Initial Setup on New Machine
 1. Clone this repository to `~/.dotfiles`
-2. Run `./install.sh`
-3. That's it! The script handles everything automatically
-
-The installation script will:
-- Install all packages (languages, tools, terminals)
-- Set up Zsh with oh-my-zsh and plugins
-- Install tmux plugin manager
-- Stow all dotfile packages
-- Create `.localrc` for machine-specific config
+2. Install packages via Brewfile (macOS) or package manager (Linux)
+3. Run `stow */` to symlink all configurations
+4. Install oh-my-zsh and plugins
+5. Install tmux plugins with `Ctrl+a` + `I`
+6. Open Neovim to trigger lazy.nvim plugin installation
 
 ### Updating Configurations
 **On any machine:**
