@@ -64,8 +64,12 @@ end, { noremap = true, desc = "Modified files to quickfix" })
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 
 -- Harpoon
-vim.keymap.set("n", "<leader>h", ":lua require('harpoon.mark').add_file() <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>hl", ":lua require('harpoon.ui').toggle_quick_menu() <CR>", { noremap = true })
+local harpoon = require("harpoon")
+
+harpoon:setup()
+
+vim.keymap.set("n", "<leader>h", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>hl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
