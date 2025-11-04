@@ -1,35 +1,66 @@
-# Dotfiles
+<div align="center">
 
-Personal configuration files managed with [GNU Stow](https://www.gnu.org/software/stow/).
+# 🏠 Dotfiles
 
-## Structure
+**Modern development environment • Consistent across machines • Powered by GNU Stow**
 
-Each directory represents a "package" that can be independently installed:
+[![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://www.linux.org/)
+[![GNU Stow](https://img.shields.io/badge/GNU%20Stow-A42E2B?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/software/stow/)
 
-- `alacritty-config/` - Alacritty terminal emulator configuration
-- `claude/` - Claude Code global configuration (settings, skills, plugins)
-- `git-config/` - Git prompt and global gitignore
-- `nvim-config/` - Neovim configuration
-- `tmux/` - Tmux configuration
-- `zsh/` - Zsh shell configuration and local rc file
+</div>
 
-### Naming Convention
+---
 
-This repository follows a consistent naming pattern for stow packages:
+## 📦 Package Structure
 
-- **Packages with `-config` suffix** → Symlink to `~/.config/` or other config directories
-  - Examples: `alacritty-config/` → `~/.config/alacritty/`, `nvim-config/` → `~/.config/nvim/`
+<table>
+<tr>
+<td width="50%">
 
-- **Packages without suffix** → Symlink directly to `~/`
-  - Examples: `zsh/` → `~/`, `tmux/` → `~/`, `claude/` → `~/.claude/`
+### Terminal & Shell
+- <img src="https://cdn.simpleicons.org/alacritty/F46D01" height="16" alt="alacritty"/> **`alacritty-config/`** - GPU-accelerated terminal
+- <img src="https://cdn.simpleicons.org/zsh/F15A24" height="16" alt="zsh"/> **`zsh/`** - Shell with oh-my-zsh
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tmux/tmux-original.svg" height="16" alt="tmux"/> **`tmux/`** - Terminal multiplexer
 
-- **Exception: `git-config/`** has the `-config` suffix but symlinks to `~/` (kept for clarity since it contains git configuration utilities)
+</td>
+<td width="50%">
 
-## Installation
+### Editors & Tools
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neovim/neovim-original.svg" height="16" alt="neovim"/> **`nvim-config/`** - Neovim IDE setup
+- <img src="https://cdn.simpleicons.org/anthropic/191919" height="16" alt="claude"/> **`claude/`** - Claude Code AI assistant
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="16" alt="git"/> **`git-config/`** - Git utilities
+
+</td>
+</tr>
+</table>
+
+### 📝 Naming Convention
+
+> **Pattern:** `-config` suffix indicates XDG config directory, no suffix means home directory
+
+```
+alacritty-config/  →  ~/.config/alacritty/
+nvim-config/       →  ~/.config/nvim/
+ghostty-config/    →  ~/.config/ghostty/
+
+zsh/               →  ~/
+tmux/              →  ~/
+claude/            →  ~/.claude/
+git-config/        →  ~/  (exception: contains git utilities)
+```
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-Install GNU Stow:
+<div align="left">
+
+![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?style=flat-square&logo=homebrew&logoColor=black)
+![APT](https://img.shields.io/badge/APT-A81D33?style=flat-square&logo=debian&logoColor=white)
+![Pacman](https://img.shields.io/badge/Pacman-1793D1?style=flat-square&logo=arch-linux&logoColor=white)
+
+</div>
 
 ```bash
 # macOS
@@ -42,65 +73,140 @@ sudo apt install stow
 sudo pacman -S stow
 ```
 
-### Using Stow
-
-From the dotfiles directory, stow individual packages:
+### Installation
 
 ```bash
 cd ~/.dotfiles
 
 # Install individual packages
-stow zsh
-stow nvim-config
-stow alacritty-config
-stow claude
-stow git-config
-stow tmux
+stow zsh nvim-config alacritty-config claude git-config tmux
 
 # Or install everything at once
 stow */
 ```
 
-This creates symlinks from your home directory to the files in this repository.
+> 💡 **Tip:** Stow creates symlinks from `~/` to files in this repository
 
-### Uninstalling
+### Management
 
-To remove symlinks for a package:
+<table>
+<tr>
+<td width="33%">
 
+**🗑️ Uninstall**
 ```bash
-cd ~/.dotfiles
 stow -D zsh
 ```
 
-### Restow (useful after updating)
+</td>
+<td width="33%">
 
-To update symlinks after pulling changes:
-
+**🔄 Restow**
 ```bash
-cd ~/.dotfiles
-stow -R zsh  # or whichever package you updated
+stow -R zsh
 ```
 
-## Notes
+</td>
+<td width="33%">
 
-- The `.localrc` file in the zsh package is for machine-specific configuration
-- Alacritty, Neovim, and Claude configs are placed in `~/.config/` and `~/.claude/`
-- Git files are symlinked directly to home directory
-- Claude config includes:
-  - Global settings (permissions, preferences)
-  - Skills (terminal presentation tool documentation via slides-cli)
-  - Plugin repository configuration
+**👀 Preview**
+```bash
+stow -n -v zsh
+```
 
-# Slack Themes
+</td>
+</tr>
+</table>
 
-# Rose Pine
-`#191724,#191724,#2a2837,#9ccfd8,#211f2d,#e0def4,#f6c177,#31748f,#191724,#c4a7e7"`
+---
 
-# Minimal
-`#1A1B1F,#44475A,#272932,#7EB7E6,#272932,#FFFFFF,#94DD8E,#E85A84,#44475A,#FFFFFF`
+## 🛠️ What's Included
 
-# Cat Mocha
-`#1E1E2E,#F8F8FA,#A6E3A1,#1E1E2E,#11111B,#CDD6F4,#A6E3A1,#EBA0AC,#1E1E2E,#CDD6F4`
+<details>
+<summary><b><img src="https://cdn.simpleicons.org/zsh/F15A24" height="16" alt="zsh"/> Zsh Configuration</b></summary>
 
-# Carbon Fox
-`#161616,#F8F8FA,#08BDBA,#161616,#282828,#DFE0EA,#08BDBA,#EE5396,#161616,#DFE0EA`
+- oh-my-zsh framework with robbyrussell theme
+- Plugins: git, web-search, sudo, syntax-highlighting, autosuggestions
+- Custom functions: tmux session management, git helpers, docker shortcuts
+- Machine-specific config via `.localrc`
+
+</details>
+
+<details>
+<summary><b><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neovim/neovim-original.svg" height="16" alt="neovim"/> Neovim Setup</b></summary>
+
+- lazy.nvim plugin manager
+- LSP support with Mason
+- Modular Lua configuration
+- Custom keybindings and color schemes
+
+</details>
+
+<details>
+<summary><b><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tmux/tmux-original.svg" height="16" alt="tmux"/> Tmux Configuration</b></summary>
+
+- Catppuccin Macchiato theme
+- Custom prefix: `Ctrl+a`
+- vim-tmux-navigator integration
+- Plugin management via TPM
+
+</details>
+
+<details>
+<summary><b><img src="https://cdn.simpleicons.org/anthropic/191919" height="16" alt="claude"/> Claude Code</b></summary>
+
+- Global permissions & preferences
+- Custom skills (Slides CLI presentation tool)
+- Plugin repository configuration
+
+</details>
+
+<details>
+<summary><b><img src="https://cdn.simpleicons.org/alacritty/F46D01" height="16" alt="alacritty"/> Terminal Emulators</b></summary>
+
+- **Alacritty:** GPU-accelerated, multiple themes, Hack Nerd Font
+- **Ghostty:** Placeholder for future configuration
+
+</details>
+
+---
+
+## 🎨 Tech Stack
+
+<div align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neovim/neovim-original.svg" height="40" alt="neovim logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tmux/tmux-original.svg" height="40" alt="tmux logo"  />
+  <img width="12" />
+  <img src="https://cdn.simpleicons.org/gnubash/4EAA25" height="40" alt="bash logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="40" alt="git logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" height="40" alt="go logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="40" alt="nodejs logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="python logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg" height="40" alt="rust logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height="40" alt="docker logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="40" alt="postgresql logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" height="40" alt="mongodb logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" height="40" alt="redis logo"  />
+</div>
+
+---
+
+<div align="center">
+
+### 📚 Documentation
+
+For detailed configuration information, custom functions, and troubleshooting, see [CLAUDE.md](CLAUDE.md)
+
+**Made with ❤️ and ☕**
+
+</div>

@@ -51,6 +51,7 @@ vim.keymap.set("n", "<leader>gd", ":Gvdiffsplit! <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>gp", ":Git -c push.default=current push <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>gl", ":Git log -n 20 --decorate <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>gb", ":Git blame <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>gm", function()
 	local files = vim.fn.systemlist("git diff --name-only")
 	local qf_list = {}
 	for _, file in ipairs(files) do
