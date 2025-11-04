@@ -95,14 +95,6 @@ vim.lsp.config.gopls = {
 	flags = lsp_flags,
 }
 
--- Ember
-vim.lsp.config.ember = {
-	cmd = { "ember-language-server", "--stdio" },
-	filetypes = { "handlebars", "html.handlebars" },
-	on_attach = on_attach,
-	flags = lsp_flags,
-}
-
 -- ESLint
 vim.lsp.config.eslint = {
 	cmd = { "vscode-eslint-language-server", "--stdio" },
@@ -148,7 +140,6 @@ vim.lsp.enable({
 	"rust_analyzer",
 	"templ",
 	"gopls",
-	"ember",
 	"eslint",
 	"html",
 	"htmx",

@@ -75,8 +75,6 @@ require("lazy").setup({
 	-- Autoformatter
 	"stevearc/conform.nvim",
 
-	"mustache/vim-mustache-handlebars",
-
 	"Mofiqul/dracula.nvim",
 
 	"tpope/vim-dadbod",

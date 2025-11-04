@@ -3,8 +3,8 @@ local conform = require("conform")
 conform.setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
-		typescript = {"eslint_d", "prettier" },
-		javascript = { "eslint_d" },
+		typescript = { "prettier" },
+		javascript = { "prettier" },
 		javascriptreact = { "prettier" },
 		json = { "prettier" },
 		go = { "gofmt" },

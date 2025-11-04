@@ -28,6 +28,7 @@ vim.keymap.set("n", "*", "*zzzv", { noremap = true })
 -- Telescope
 vim.keymap.set("n", "<leader>p", ":Telescope find_files <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>f", ":Telescope live_grep <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>b", ":Telescope git_status <CR>", { noremap = true })
 
 -- Visual mode telescope grep
 vim.keymap.set("v", "<leader>f", function()
