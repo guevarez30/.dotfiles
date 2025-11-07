@@ -70,4 +70,4 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 	end,
 })
 
-vim.cmd.colorscheme "catppuccin-macchiato"
+vim.cmd.colorscheme("catppuccin")

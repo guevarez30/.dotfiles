@@ -82,8 +82,8 @@ require("lazy").setup({
 		"oysandvik94/curl.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		cmd = { "CurlOpen" },
-		config = true
+		config = true,
 	},
 
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 }
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 })
