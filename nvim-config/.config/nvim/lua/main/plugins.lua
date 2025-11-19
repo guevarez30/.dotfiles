@@ -92,5 +92,25 @@ require("lazy").setup({
 		config = true,
 	},
 
-	{ "catppuccin/nvim", name = "catppuccin-macchiato", priority = 1000 },
+	{
+		"catppuccin/nvim",
+		name = "catppuccin-macchiato",
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				transparent_background = true,
+				integrations = {
+					cmp = true,
+					gitsigns = true,
+					nvimtree = true,
+					treesitter = true,
+					telescope = {
+						enabled = true,
+					},
+					harpoon = true,
+					mason = true,
+				},
+			})
+		end,
+	},
 })
