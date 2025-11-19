@@ -4,7 +4,8 @@
       "Bash(tree:*)",
       "WebSearch",
       "Bash(nvim --version:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []

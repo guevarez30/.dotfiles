@@ -27,6 +27,13 @@ require("lazy").setup({
 	},
 	"nvim-treesitter/nvim-treesitter-context",
 
+
+    {
+      "neovim/nvim-lspconfig",
+      cmd = "LspInfo", -- Make LspInfo command available immediately
+      -- other configurations
+    },
+
 	-- CMP
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",
@@ -85,5 +92,5 @@ require("lazy").setup({
 		config = true,
 	},
 
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{ "catppuccin/nvim", name = "catppuccin-macchiato", priority = 1000 },
 })
