@@ -119,7 +119,7 @@ alias ckear='clear'
 alias ipconfig='ifconfig'
 alias dot='cd ~/.dotfiles'
 alias grep='rg'
-alias find='fd'
+alias find='fdfind'
 alias lt='du -sh * | sort -h'
 alias loads='cd ~/loads'
 alias src='source ~/.zshrc'
@@ -144,7 +144,6 @@ alias py-env="source .venv/bin/activate"
 #####################################################################################
 #Include Scripts to Path and Custom Functions
 #####################################################################################
-export PATH="$PATH:/usr/local/go/src"
 export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/13/bin"
 
 # bun
@@ -161,7 +160,8 @@ export NVM_DIR="$HOME/.nvm"
 #####################################################################################
 # Go
 #####################################################################################
-export PATH="$PATH:$HOME/go/bin"
+export GOPATH="$HOME/go"
+export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 
 #####################################################################################
 # Notes

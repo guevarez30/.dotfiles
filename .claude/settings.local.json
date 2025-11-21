@@ -5,7 +5,9 @@
       "WebSearch",
       "Bash(nvim --version:*)",
       "Bash(rm:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(/usr/bin/find:*)",
+      "Bash(nvim:*)"
     ],
     "deny": [],
     "ask": []

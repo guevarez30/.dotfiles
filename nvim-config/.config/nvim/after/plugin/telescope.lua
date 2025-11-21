@@ -3,7 +3,7 @@ local telescope = require("telescope")
 telescope.setup({
 	defaults = {
 		vimgrep_arguments = {
-			"rg",
+			"/usr/bin/rg",
 			"-L",
 			"--color=never",
 			"--no-heading",
