@@ -1,0 +1,2123 @@
+{
+	"info": {
+		"_postman_id": "df-catalog-api-collection",
+		"name": "DF Catalog API",
+		"description": "REST API collection for the Raft Data Platform (RDP) Catalog service. Provides endpoints for managing datasources, enablements, datasets, storages, and related resources.\n\nThis collection includes both TOP-LEVEL routes (preferred) and NESTED routes (deprecated but still functional).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "auth",
+			"value": "Basic YWRtaW46ek00cUhEZlp0WW43eEd4N2M1RVcwd0RQ",
+			"type": "string"
+		},
+		{
+			"key": "datasource_id",
+			"value": "f39f9db2-21cb-4f0a-a0a6-ca0befbafd1b",
+			"type": "string"
+		},
+		{
+			"key": "enablement_id",
+			"value": "a5042245-de53-44bd-afbd-a93d8843eb68",
+			"type": "string"
+		},
+		{
+			"key": "dataset_id",
+			"value": "480452c9-baf6-44ca-b05e-bf2dec2576f2",
+			"type": "string"
+		},
+		{
+			"key": "storage_id",
+			"value": "babde90f-3492-4e77-a325-c6c0efe8e551",
+			"type": "string"
+		},
+		{
+			"key": "filter_id",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Datasources",
+			"description": "Endpoints for managing data sources",
+			"item": [
+				{
+					"name": "Get All Datasources",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources"]
+						}
+					}
+				},
+				{
+					"name": "Get Datasource by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Count Datasources",
+					"request": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources"]
+						}
+					}
+				},
+				{
+					"name": "Create Datasource",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"New Datasource\",\n  \"acronym\": \"NDS\",\n  \"description\": \"A new data source\",\n  \"stewardOrganization\": \"Engineering\",\n  \"stewardName\": \"John Doe\",\n  \"stewardEmail\": \"john.doe@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources"]
+						}
+					}
+				},
+				{
+					"name": "Update Datasource",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{datasource_id}}\",\n  \"name\": \"Updated Datasource\",\n  \"acronym\": \"UDS\",\n  \"description\": \"An updated data source\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Patch Datasource",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Patched description\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Datasource",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Enablements (Top-Level)",
+			"description": "Top-level endpoints for managing datasource enablements. PREFERRED over nested routes.",
+			"item": [
+				{
+					"name": "Get All Enablements",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/enablements",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements"]
+						}
+					}
+				},
+				{
+					"name": "Get Enablements by Datasource",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/enablements?dataSourceId={{datasource_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements"],
+							"query": [
+								{
+									"key": "dataSourceId",
+									"value": "{{datasource_id}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Enablements by Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/enablements?name=production",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements"],
+							"query": [
+								{
+									"key": "name",
+									"value": "production"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Enablements by Group",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/enablements?group=public",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements"],
+							"query": [
+								{
+									"key": "group",
+									"value": "public"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Count Enablements",
+					"request": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/enablements",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements"]
+						}
+					}
+				},
+				{
+					"name": "Get Enablement by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/enablements/{{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements", "{{enablement_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Enablement",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dataSourceId\": \"{{datasource_id}}\",\n  \"name\": \"New Enablement\",\n  \"groups\": [\"public\"],\n  \"enablementValues\": {}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/enablements",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements"]
+						}
+					}
+				},
+				{
+					"name": "Update Enablement",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{enablement_id}}\",\n  \"dataSourceId\": \"{{datasource_id}}\",\n  \"name\": \"Updated Enablement\",\n  \"groups\": [\"public\", \"admin\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/enablements/{{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements", "{{enablement_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Patch Enablement",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"groups\": [\"public\", \"admin\", \"users\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/enablements/{{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements", "{{enablement_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Enablement",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/enablements/{{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements", "{{enablement_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete All Enablements by Datasource",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/enablements?dataSourceId={{datasource_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["enablements"],
+							"query": [
+								{
+									"key": "dataSourceId",
+									"value": "{{datasource_id}}"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Enablements (Nested - Deprecated)",
+			"description": "Nested endpoints under /datasources/{id}/enablements. DEPRECATED - use top-level /enablements instead.",
+			"item": [
+				{
+					"name": "Get Enablements (Nested)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements"]
+						}
+					}
+				},
+				{
+					"name": "Count Enablements (Nested)",
+					"request": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements"]
+						}
+					}
+				},
+				{
+					"name": "Get Enablement by ID (Nested)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Enablement (Nested)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"New Enablement\",\n  \"groups\": [\"public\"],\n  \"enablementValues\": {}\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements"]
+						}
+					}
+				},
+				{
+					"name": "Update Enablement (Nested)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{enablement_id}}\",\n  \"name\": \"Updated Enablement\",\n  \"groups\": [\"public\", \"admin\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Patch Enablement (Nested)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"groups\": [\"public\", \"admin\", \"users\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Enablement (Nested)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete All Enablements (Nested)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Datasets (Top-Level)",
+			"description": "Top-level endpoints for managing datasets. PREFERRED over nested routes.",
+			"item": [
+				{
+					"name": "Get All Datasets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets"]
+						}
+					}
+				},
+				{
+					"name": "Get Datasets by Enablement",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets?enablementId={{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets"],
+							"query": [
+								{
+									"key": "enablementId",
+									"value": "{{enablement_id}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Datasets by Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets?name=streaming",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets"],
+							"query": [
+								{
+									"key": "name",
+									"value": "streaming"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Count Datasets",
+					"request": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets"]
+						}
+					}
+				},
+				{
+					"name": "Get Dataset by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Dataset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dataSourceEnablementId\": \"{{enablement_id}}\",\n  \"name\": \"Streaming-Dataset\",\n  \"acronym\": \"STR\",\n  \"description\": \"Dataset with Kafka storage for filtering\",\n  \"type\": \"streaming\",\n  \"labels\": [\"streaming\", \"filterable\"],\n  \"storage\": [\n    {\n      \"name\": \"kafka-storage\",\n      \"tiers\": [\"HOT\"],\n      \"kafka\": {\n        \"topic\": \"my-topic\",\n        \"dlq\": \"my-topic.dlq\"\n      }\n    }\n  ],\n  \"maxClassification\": \"UNCLASSIFIED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets"]
+						}
+					}
+				},
+				{
+					"name": "Update Dataset",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{dataset_id}}\",\n  \"dataSourceEnablementId\": \"{{enablement_id}}\",\n  \"name\": \"Updated Dataset\",\n  \"description\": \"Updated description\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Patch Dataset",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Patched description\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Dataset",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Datasets by Enablement",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets?enablementId={{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets"],
+							"query": [
+								{
+									"key": "enablementId",
+									"value": "{{enablement_id}}"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Datasets (Nested - Deprecated)",
+			"description": "Nested endpoints under /datasources/{id}/enablements/{eid}/datasets. DEPRECATED - use top-level /datasets instead.",
+			"item": [
+				{
+					"name": "Get Datasets (Nested)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets"]
+						}
+					}
+				},
+				{
+					"name": "Count Datasets (Nested)",
+					"request": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets"]
+						}
+					}
+				},
+				{
+					"name": "Get Dataset by ID (Nested)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Dataset (Nested)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Streaming-Dataset\",\n  \"acronym\": \"STR\",\n  \"description\": \"Dataset with Kafka storage for filtering\",\n  \"type\": \"streaming\",\n  \"labels\": [\"streaming\", \"filterable\"],\n  \"storage\": [\n    {\n      \"name\": \"kafka-storage\",\n      \"tiers\": [\"HOT\"],\n      \"kafka\": {\n        \"topic\": \"my-topic\",\n        \"dlq\": \"my-topic.dlq\"\n      }\n    }\n  ],\n  \"maxClassification\": \"UNCLASSIFIED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets"]
+						}
+					}
+				},
+				{
+					"name": "Update Dataset (Nested)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{dataset_id}}\",\n  \"name\": \"Updated Dataset\",\n  \"description\": \"Updated description\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Patch Dataset (Nested)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Patched description\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Dataset (Nested)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete All Datasets (Nested)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Dataset Labels",
+			"description": "Endpoints for managing dataset labels",
+			"item": [
+				{
+					"name": "Get Dataset Labels",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/labels",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "labels"]
+						}
+					}
+				},
+				{
+					"name": "Count Dataset Labels",
+					"request": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/labels",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "labels"]
+						}
+					}
+				},
+				{
+					"name": "Add Dataset Labels",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\"new-label-1\", \"new-label-2\"]"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/labels",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "labels"]
+						}
+					}
+				},
+				{
+					"name": "Replace Dataset Labels",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\"label-a\", \"label-b\", \"label-c\"]"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/labels",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "labels"]
+						}
+					}
+				},
+				{
+					"name": "Delete Dataset Labels",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\"label-c\"]"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/labels",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "labels"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Ingestion",
+			"description": "Endpoints for managing dataset ingestion",
+			"item": [
+				{
+					"name": "Get Ingestion Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/ingestion",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "ingestion"]
+						}
+					}
+				},
+				{
+					"name": "Start Ingestion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"state\": \"RUNNING\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/ingestion",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "ingestion"]
+						}
+					}
+				},
+				{
+					"name": "Stop Ingestion",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/ingestion",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "ingestion"]
+						}
+					}
+				},
+				{
+					"name": "Start Ingestion (Nested)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"state\": \"RUNNING\"}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}/ingestion",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}", "ingestion"]
+						}
+					}
+				},
+				{
+					"name": "Stop Ingestion (Nested)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}/ingestion",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}", "ingestion"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Schema",
+			"description": "Endpoints for managing dataset schemas",
+			"item": [
+				{
+					"name": "Get Dataset Schema",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/schema",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "schema"]
+						}
+					}
+				},
+				{
+					"name": "Get Raw Schema",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/schema?raw=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "schema"],
+							"query": [
+								{
+									"key": "raw",
+									"value": "true"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Dataset Schema",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"record\",\n  \"name\": \"TestRecord\",\n  \"namespace\": \"com.example\",\n  \"fields\": [\n    {\"name\": \"status\", \"type\": \"string\"},\n    {\"name\": \"speed\", \"type\": \"int\"},\n    {\"name\": \"vehicle_type\", \"type\": \"string\"},\n    {\"name\": \"fuel_level\", \"type\": \"int\"}\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/schema",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "schema"]
+						}
+					}
+				},
+				{
+					"name": "Count Schema Hints",
+					"request": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/schema/hints",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "schema", "hints"]
+						}
+					}
+				},
+				{
+					"name": "Get Schema Hints",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/schema/hints",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "schema", "hints"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Filters",
+			"description": "Endpoints for managing dataset filters (requires Kafka storage)",
+			"item": [
+				{
+					"name": "Get Dataset Filters",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/filters",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "filters"]
+						}
+					}
+				},
+				{
+					"name": "Get Filter by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/filters/{{filter_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "filters", "{{filter_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Filter (Structured)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"High Speed Vehicles\",\n  \"acronym\": \"HSV\",\n  \"description\": \"Vehicles exceeding speed limits\",\n  \"labels\": [\"monitoring\", \"traffic\"],\n  \"filter\": {\n    \"operator\": \"AND\",\n    \"filters\": [\n      { \"field\": \"speed\", \"operator\": \"GREATER_THAN\", \"value\": 65 },\n      { \"field\": \"vehicle_type\", \"operator\": \"IN\", \"values\": [\"TRUCK\", \"BUS\"] }\n    ]\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/filters",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "filters"]
+						}
+					}
+				},
+				{
+					"name": "Create Filter (KSQL)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Custom KSQL Filter\",\n  \"acronym\": \"CKF\",\n  \"description\": \"Advanced filtering with custom KSQL\",\n  \"labels\": [\"custom\"],\n  \"ksqlQuery\": \"SELECT * FROM source_stream WHERE speed > 65 AND fuel_level < 20\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/filters",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "filters"]
+						}
+					}
+				},
+				{
+					"name": "Delete Filter",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/filters/{{filter_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "filters", "{{filter_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Pipelines",
+			"description": "Endpoints for managing dataset pipelines",
+			"item": [
+				{
+					"name": "Get Dataset Pipelines",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasets/{{dataset_id}}/pipelines",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasets", "{{dataset_id}}", "pipelines"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Storages (Top-Level)",
+			"description": "Top-level endpoints for managing dataset storages. PREFERRED over nested routes.",
+			"item": [
+				{
+					"name": "Get All Storages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/storages",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages"]
+						}
+					}
+				},
+				{
+					"name": "Get Storages by Dataset",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/storages?datasetId={{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages"],
+							"query": [
+								{
+									"key": "datasetId",
+									"value": "{{dataset_id}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Storages by Enablement",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/storages?enablementId={{enablement_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages"],
+							"query": [
+								{
+									"key": "enablementId",
+									"value": "{{enablement_id}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Storages by Datasource",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/storages?datasourceId={{datasource_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages"],
+							"query": [
+								{
+									"key": "datasourceId",
+									"value": "{{datasource_id}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Count Storages",
+					"request": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/storages",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages"]
+						}
+					}
+				},
+				{
+					"name": "Get Storage by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/storages/{{storage_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages", "{{storage_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Storage (Kafka)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"datasetId\": \"{{dataset_id}}\",\n  \"name\": \"tracks-kafka\",\n  \"tiers\": [\"HOT\"],\n  \"kafka\": {\n    \"topic\": \"tracks.events\",\n    \"dlq\": \"tracks.events.dlq\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/storages",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages"]
+						}
+					}
+				},
+				{
+					"name": "Create Storage (Iceberg)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"datasetId\": \"{{dataset_id}}\",\n  \"name\": \"tracks-iceberg\",\n  \"tiers\": [\"COLD\"],\n  \"iceberg\": {\n    \"namespace\": \"tracks\",\n    \"table\": \"events\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/storages",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages"]
+						}
+					}
+				},
+				{
+					"name": "Create Storage (S3)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"datasetId\": \"{{dataset_id}}\",\n  \"name\": \"tracks-s3\",\n  \"tiers\": [\"ARCHIVE\"],\n  \"s3\": {\n    \"bucket\": \"my-bucket\",\n    \"prefix\": \"tracks/\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/storages",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages"]
+						}
+					}
+				},
+				{
+					"name": "Patch Storage",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"updated-storage-name\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/storages/{{storage_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages", "{{storage_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Storage by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/storages/{{storage_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages", "{{storage_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Storages by Dataset",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/storages?datasetId={{dataset_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["storages"],
+							"query": [
+								{
+									"key": "datasetId",
+									"value": "{{dataset_id}}"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Storages (Nested - Deprecated)",
+			"description": "Nested endpoints under /datasources/{id}/enablements/{eid}/datasets/{did}/storages. DEPRECATED - use top-level /storages instead.",
+			"item": [
+				{
+					"name": "Get Storages (Nested)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}/storages",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}", "storages"]
+						}
+					}
+				},
+				{
+					"name": "Get Storage by ID (Nested)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}/storages/{{storage_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}", "storages", "{{storage_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Storage (Nested)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"tracks-kafka\",\n  \"tiers\": [\"HOT\"],\n  \"kafka\": {\n    \"topic\": \"tracks.events\",\n    \"dlq\": \"tracks.events.dlq\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}/storages",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}", "storages"]
+						}
+					}
+				},
+				{
+					"name": "Patch Storage (Nested)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"updated-storage-name\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}/storages/{{storage_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}", "storages", "{{storage_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Storage (Nested)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}/storages/{{storage_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}", "storages", "{{storage_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete All Storages (Nested)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/datasources/{{datasource_id}}/enablements/{{enablement_id}}/datasets/{{dataset_id}}/storages",
+							"host": ["{{baseUrl}}"],
+							"path": ["datasources", "{{datasource_id}}", "enablements", "{{enablement_id}}", "datasets", "{{dataset_id}}", "storages"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"description": "Cross-catalog search endpoints",
+			"item": [
+				{
+					"name": "Search Catalog",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/search?q=streaming",
+							"host": ["{{baseUrl}}"],
+							"path": ["search"],
+							"query": [
+								{
+									"key": "q",
+									"value": "streaming"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}

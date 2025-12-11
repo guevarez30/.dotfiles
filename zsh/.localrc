@@ -58,8 +58,8 @@ ts() {
         else
             # Session does not exist, create it and attach
             echo "Creating new session '$session_name' with VIM and server windows..."
-            tmux new-session -d -s "$session_name" -n "VIM" "nvim ."
-            tmux new-window -t "$session_name" -n "server"
+            tmux new-session -d -s "$session_name" -n "nvim" "nvim ."
+            tmux new-window -t "$session_name" -n "term"
             tmux new-window -t "$session_name" -n "claude"
             tmux select-window -t "$session_name:1"
             tmux attach-session -t "$session_name"
@@ -111,6 +111,7 @@ alias vim='nvim'
 alias v='nvim'
 alias mv='mv -i'
 alias clc='clear'
+alias vlear='clear'
 alias cls='clear'
 alias clera='clear'
 alias celar='clear'

@@ -43,7 +43,12 @@ require("lazy").setup({
 	{
 		"windwp/nvim-autopairs",
 		config = function()
-			require("nvim-autopairs").setup({})
+			local autopairs = require("nvim-autopairs")
+			autopairs.setup({})
+			-- Disable autopairs for ( and [
+			local Rule = require("nvim-autopairs.rule")
+			autopairs.remove_rule("(")
+			autopairs.remove_rule("[")
 		end,
 	},
 
@@ -88,8 +93,23 @@ require("lazy").setup({
 	{
 		"oysandvik94/curl.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		cmd = { "CurlOpen" },
-		config = true,
+		config = function()
+			require("curl").setup({
+				open_with = "buffer",
+				default_flags = { "-i", "-S" },
+			})
+
+			-- Auto-execute curl on save (runs command under cursor)
+			vim.api.nvim_create_autocmd("BufWritePost", {
+				pattern = "*.curl",
+				callback = function()
+					local line = vim.api.nvim_get_current_line()
+					if line:match("^curl%s") then
+						pcall(require("curl.api").execute_curl)
+					end
+				end,
+			})
+		end,
 	},
 
 	{
@@ -113,4 +133,5 @@ require("lazy").setup({
 			})
 		end,
 	},
+
 })

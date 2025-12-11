@@ -4,6 +4,7 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "E", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -146,3 +147,13 @@ vim.lsp.config('cssls', {
 	capabilities = capabilities,
 })
 vim.lsp.enable('cssls')
+
+-- Java
+vim.lsp.config('jdtls', {
+	cmd = { "jdtls" },
+	filetypes = { "java" },
+	on_attach = on_attach,
+	flags = lsp_flags,
+	capabilities = capabilities,
+})
+vim.lsp.enable('jdtls')
