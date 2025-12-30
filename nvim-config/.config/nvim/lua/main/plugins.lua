@@ -134,4 +134,27 @@ require("lazy").setup({
 		end,
 	},
 
+	-- SonarQube LSP
+	{
+		"iamkarasik/sonarqube.nvim",
+		config = function()
+			local rules = require("main.sonarqube-rules")
+			local mason_path = vim.fn.stdpath("data") .. "/mason/packages/sonarlint-language-server/extension"
+			require("sonarqube").setup({
+				rules = rules,
+				lsp = {
+					cmd = {
+						"java",
+						"-jar",
+						mason_path .. "/server/sonarlint-ls.jar",
+						"-stdio",
+						"-analyzers",
+						mason_path .. "/analyzers/sonarjava.jar",
+						mason_path .. "/analyzers/sonargo.jar",
+					},
+				},
+			})
+		end,
+	},
+
 })

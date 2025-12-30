@@ -34,3 +34,11 @@ set.equalalways = false  -- Don't automatically equalize window sizes
 -- Prevent automatic comment continuation
 set.formatoptions:remove("o")
 set.formatoptions:remove("r")
+
+-- Diagnostic display
+vim.diagnostic.config({
+	virtual_text = true,
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+})

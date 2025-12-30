@@ -2,7 +2,12 @@
 # Functions
 ###################################################################################
 killport() {
-	kill -9 $(lsof -ti:$@)
+    local pid=$(ss -tlnp 2>/dev/null | command grep ":$1 " | sed -n 's/.*pid=\([0-9]*\).*/\1/p' | head -1)
+    if [[ -n "$pid" ]]; then
+        kill -9 $pid && echo "Killed process $pid on port $1"
+    else
+        echo "No process found on port $1"
+    fi
 }
 
 count(){
@@ -122,7 +127,7 @@ alias dot='cd ~/.dotfiles'
 alias grep='rg'
 alias find='fdfind'
 alias lt='du -sh * | sort -h'
-alias loads='cd ~/loads'
+alias loads='cd ~/raft-tech'
 alias src='source ~/.zshrc'
 alias diff='nvim -d'
 alias dif='diff'
@@ -172,9 +177,21 @@ note () {
 }
 alias notes='note'
 
-# Add a blank line after ps1
-precmd() { print "" }
+# Terminal title
+CUSTOM_TITLE=""
 
+title() {
+  CUSTOM_TITLE="$1"
+  print -Pn "\e]0;$1\a"
+}
+
+# Add a blank line after ps1
+precmd() {
+  print ""
+  if [[ -n "$CUSTOM_TITLE" ]]; then
+    print -Pn "\e]0;$CUSTOM_TITLE\a"
+  fi
+}
 
 softReset() {
   if [ -z "$1" ]; then

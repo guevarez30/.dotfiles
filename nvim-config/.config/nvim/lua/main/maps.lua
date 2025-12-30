@@ -29,6 +29,7 @@ vim.keymap.set("n", "*", "*zzzv", { noremap = true })
 vim.keymap.set("n", "<leader>p", ":Telescope find_files <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>f", ":Telescope live_grep <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>b", ":Telescope git_status <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>d", ":Telescope diagnostics<CR>", { noremap = true })
 
 -- Visual mode telescope grep
 vim.keymap.set("v", "<leader>f", function()
@@ -134,28 +135,9 @@ vim.keymap.set("n", "<Leader>ee", function()
 	elseif filetype == "javascript" or filetype == "typescript" then
 		vim.cmd.normal("itry {\n\n} catch(err) {\n  console.error(err)\n}")
 		return vim.cmd.normal("3k")
+	elseif filetype == "java" then
+		vim.cmd.normal("itry {\n\n} catch (Exception e) {\n  e.printStackTrace();\n}")
+		return vim.cmd.normal("3k")
 	end
 end)
 
-vim.keymap.set("v", "<Leader>cc", function()
-	-- Get the line range
-	local start_line = vim.fn.getpos("v")[2]
-	local end_line = vim.fn.getpos(".")[2]
-	if start_line > end_line then
-		start_line, end_line = end_line, start_line
-	end
-
-	-- Get the current filename
-	local filename = vim.fn.expand("%:p")
-
-	-- Create the file reference with line range
-	local file_ref = string.format("@%s:%d-%d ", filename, start_line, end_line)
-
-	-- Create a new tmux pane (33% width) and send the file reference without submitting
-	local tmux_cmd = string.format(
-		"tmux split-window -h -l 33%% \"claude\" \\; send-keys %s",
-		vim.fn.shellescape(file_ref)
-	)
-
-	vim.fn.system(tmux_cmd)
-end, { noremap = true, desc = "Send selection to Claude Code" })

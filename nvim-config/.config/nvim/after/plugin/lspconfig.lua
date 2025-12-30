@@ -155,5 +155,16 @@ vim.lsp.config('jdtls', {
 	on_attach = on_attach,
 	flags = lsp_flags,
 	capabilities = capabilities,
+	settings = {
+		java = {
+			format = {
+				enabled = true,
+				settings = {
+					url = "file://" .. vim.fn.stdpath("config") .. "/formatter/intellij-java-style.xml",
+					profile = "Default",
+				},
+			},
+		},
+	},
 })
 vim.lsp.enable('jdtls')

@@ -8,8 +8,9 @@ conform.setup({
 		javascriptreact = { "prettier" },
 		json = { "prettier" },
 		go = { "gofmt" },
-		--java = { "google-java-format" },
-	 	rust = { "rustfmt" },
+		-- java disabled - jdtls formatter doesn't match IntelliJ style
+		-- java = { lsp_format = "prefer" },
+		rust = { "rustfmt" },
 		python = { "autopep8" },
 		-- yaml = { "prettier" },
 		markdown = { "prettier" },

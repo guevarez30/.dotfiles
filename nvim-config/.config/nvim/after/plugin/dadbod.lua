@@ -19,11 +19,8 @@ vim.api.nvim_create_user_command("DBUIClear", function()
   end
 end, { desc = "Clear vim-dadbod-ui connection history" })
 
-
-
-
 local dbs = {
-  staging = vim.env.STAGING_DB,
+  catalog_api = "postgresql://postgres:ygvItMgXEY@localhost:15432/rdp_catalog_api",
 }
 vim.g.dbs = dbs
-vim.g.db = dbs.staging
+vim.g.db = dbs.catalog_api
