@@ -20,6 +20,8 @@ require("lazy").setup({
 	},
 
 	"williamboman/mason.nvim",
+	"williamboman/mason-lspconfig.nvim",
+	"WhoIsSethDaniel/mason-tool-installer.nvim",
 
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -132,6 +134,17 @@ require("lazy").setup({
 				},
 			})
 		end,
+	},
+
+	{
+		"guevarez30/no-go.nvim",
+		branch = "fix/treesitter-query-statement-list",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		ft = "go",
+		opts = {
+			identifiers = { "err", "error" },
+			prefix = " ",
+		},
 	},
 
 	-- SonarQube LSP

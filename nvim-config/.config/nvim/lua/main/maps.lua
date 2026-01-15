@@ -16,6 +16,9 @@ vim.keymap.set("n", "J", "mzJ`z", { noremap = true })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
 
+vim.keymap.set("n", "gh", "_", { noremap = true })
+vim.keymap.set("n", "gl", "$", { noremap = true })
+
 -- Move across line
 -- vim.keymap.set("n", "gh", "_", { noremap = true })
 -- vim.keymap.set("n", "gl", "$", { noremap = true })

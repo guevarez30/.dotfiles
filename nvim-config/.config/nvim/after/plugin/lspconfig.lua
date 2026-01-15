@@ -37,7 +37,22 @@ vim.filetype.add({ extension = { templ = "templ" } })
 
 require("mason").setup()
 
--- Python
+-- Auto-install LSP servers
+require("mason-lspconfig").setup({
+	ensure_installed = {
+		"pyright",
+		"ruff",
+	},
+})
+
+-- Auto-install formatters and other tools
+require("mason-tool-installer").setup({
+	ensure_installed = {
+		"isort",
+	},
+})
+
+-- Python (Pyright for type checking)
 vim.lsp.config('pyright', {
 	cmd = { "pyright-langserver", "--stdio" },
 	filetypes = { "python" },
@@ -46,6 +61,15 @@ vim.lsp.config('pyright', {
 	capabilities = capabilities,
 })
 vim.lsp.enable('pyright')
+
+-- Python (Ruff for linting)
+vim.lsp.config('ruff', {
+	cmd = { "ruff", "server" },
+	filetypes = { "python" },
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
+vim.lsp.enable('ruff')
 
 -- TypeScript
 vim.lsp.config('ts_ls', {

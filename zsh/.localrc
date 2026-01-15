@@ -49,10 +49,14 @@ ts() {
                  echo "Already attached to session: $session_name"
             fi
         else
-            # Session does not exist - Instruct user to exit first
-            echo "Session '$session_name' does not exist."
-            echo "To create a new session, please detach from your current tmux session first."
-            return 1
+            # Session does not exist - create it in background and switch
+            echo "Creating new session '$session_name' and switching..."
+            tmux new-session -d -s "$session_name" -n "nvim" -c "$PWD"
+            tmux send-keys -t "$session_name:nvim" "nvim ." Enter
+            tmux new-window -t "$session_name" -n "term" -c "$PWD"
+            tmux new-window -t "$session_name" -n "claude" -c "$PWD"
+            tmux select-window -t "$session_name:1"
+            tmux switch-client -t "$session_name"
         fi
     else
         # --- Running Outside Tmux ---
@@ -213,31 +217,72 @@ softReset() {
 }
 
 #####################################################################################
-# Notes
+# Git Worktree
 #####################################################################################
 work-tree() {
-  if [ -z "$1" ]; then
-    echo "Error: Please provide a feature name"
-    echo "Usage: create-feature <feature-name>"
+  local name=""
+  local base_branch="dev"
+  local prefix=""
+
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -b|--base)
+        base_branch="$2"
+        shift 2
+        ;;
+      -p|--prefix)
+        prefix="$2"
+        shift 2
+        ;;
+      -h|--help)
+        echo "Usage: work-tree <name> [-b <base-branch>] [-p <prefix>]"
+        echo ""
+        echo "Options:"
+        echo "  -b, --base    Base branch (default: dev)"
+        echo "  -p, --prefix  Branch prefix (e.g., feature, bugfix)"
+        echo ""
+        echo "Examples:"
+        echo "  work-tree auth-service              # branch: auth-service"
+        echo "  work-tree auth-service -p feature   # branch: feature/auth-service"
+        echo "  work-tree hotfix -b main            # from main branch"
+        return 0
+        ;;
+      -*)
+        echo "Unknown option: $1"
+        return 1
+        ;;
+      *)
+        name="$1"
+        shift
+        ;;
+    esac
+  done
+
+  if [[ -z "$name" ]]; then
+    echo "Error: Please provide a branch name"
+    echo "Usage: work-tree <name> [-b <base-branch>] [-p <prefix>]"
     return 1
   fi
 
-  local feature_name="$1"
-  local branch_name="feature/${feature_name}"
+  local branch_name
+  if [[ -n "$prefix" ]]; then
+    branch_name="${prefix}/${name}"
+  else
+    branch_name="$name"
+  fi
+
   local repo_name=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")")
-  local worktree_dir="../${repo_name}-${feature_name}"
+  local worktree_dir="../${repo_name}-${name}"
 
-  echo "Creating worktree for ${branch_name}..."
-  git worktree add "${worktree_dir}" -b "${branch_name}" develop
+  echo "Creating worktree for ${branch_name} from ${base_branch}..."
+  git worktree add "${worktree_dir}" -b "${branch_name}" "${base_branch}"
 
-  if [ $? -eq 0 ]; then
-    echo "Linking node_modules..."
+  if [[ $? -eq 0 ]]; then
+    echo "✅ Worktree created at ${worktree_dir}"
+    echo "📂 Branch: ${branch_name}"
     cd "${worktree_dir}"
-    ln -s ../${repo_name}-develop/node_modules node_modules
-    echo "✅ Feature worktree created at ${worktree_dir}"
-    echo "📦 node_modules linked to ${repo_name}-develop"
-    echo ""
-    echo "To start working: cd ${worktree_dir}"
+    ts "${name}"
   else
     echo "❌ Failed to create worktree"
     return 1

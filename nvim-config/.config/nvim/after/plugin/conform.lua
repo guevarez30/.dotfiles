@@ -11,7 +11,7 @@ conform.setup({
 		-- java disabled - jdtls formatter doesn't match IntelliJ style
 		-- java = { lsp_format = "prefer" },
 		rust = { "rustfmt" },
-		python = { "autopep8" },
+		python = { "isort", "ruff_format" },
 		-- yaml = { "prettier" },
 		markdown = { "prettier" },
 		["_"] = { "trim_whitespace" },
