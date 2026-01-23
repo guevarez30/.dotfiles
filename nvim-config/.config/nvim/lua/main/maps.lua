@@ -29,8 +29,32 @@ vim.keymap.set("n", "N", "Nzzzv", { noremap = true })
 vim.keymap.set("n", "*", "*zzzv", { noremap = true })
 
 -- Telescope
-vim.keymap.set("n", "<leader>p", ":Telescope find_files <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>f", ":Telescope live_grep <CR>", { noremap = true })
+local telescope_builtin = require("telescope.builtin")
+
+-- Find files: exclude *_test.go
+vim.keymap.set("n", "<leader>p", function()
+	telescope_builtin.find_files({
+		find_command = { "rg", "--files", "--glob", "!*_test.go" },
+	})
+end, { noremap = true, desc = "Find files (no Go tests)" })
+
+-- Find files: include all
+vim.keymap.set("n", "<leader>P", function()
+	telescope_builtin.find_files()
+end, { noremap = true, desc = "Find files (with Go tests)" })
+
+-- Live grep: exclude *_test.go
+vim.keymap.set("n", "<leader>f", function()
+	telescope_builtin.live_grep({
+		additional_args = { "--glob", "!*_test.go" },
+	})
+end, { noremap = true, desc = "Live grep (no Go tests)" })
+
+-- Live grep: include all
+vim.keymap.set("n", "<leader>F", function()
+	telescope_builtin.live_grep()
+end, { noremap = true, desc = "Live grep (with Go tests)" })
+
 vim.keymap.set("n", "<leader>b", ":Telescope git_status <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>d", ":Telescope diagnostics<CR>", { noremap = true })
 

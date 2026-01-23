@@ -35,6 +35,15 @@ local lsp_flags = {
 -- Add templ file type
 vim.filetype.add({ extension = { templ = "templ" } })
 
+-- Add helm file type detection for files in chart directories
+vim.filetype.add({
+	pattern = {
+		[".*/templates/.*%.yaml"] = "helm",
+		[".*/templates/.*%.tpl"] = "helm",
+		["helmfile.*%.yaml"] = "helm",
+	},
+})
+
 require("mason").setup()
 
 -- Auto-install LSP servers
@@ -42,6 +51,8 @@ require("mason-lspconfig").setup({
 	ensure_installed = {
 		"pyright",
 		"ruff",
+		"yamlls",
+		"helm_ls",
 	},
 })
 
@@ -192,3 +203,31 @@ vim.lsp.config('jdtls', {
 	},
 })
 vim.lsp.enable('jdtls')
+
+-- YAML Language Server
+vim.lsp.config('yamlls', {
+	cmd = { "yaml-language-server", "--stdio" },
+	filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		yaml = {
+			schemas = {
+				kubernetes = "*.yaml",
+			},
+			schemaStore = {
+				enable = true,
+			},
+		},
+	},
+})
+vim.lsp.enable('yamlls')
+
+-- Helm Language Server
+vim.lsp.config('helm_ls', {
+	cmd = { "helm_ls", "serve" },
+	filetypes = { "helm" },
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
+vim.lsp.enable('helm_ls')
