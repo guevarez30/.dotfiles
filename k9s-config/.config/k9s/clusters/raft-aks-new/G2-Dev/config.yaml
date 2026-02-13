@@ -1,0 +1,15 @@
+k9s:
+  cluster: raft-aks-new
+  namespace:
+    active: all
+    lockFavorites: false
+    favorites:
+      - all
+      - argocd
+      - data-fabric
+      - default
+  view:
+    active: contexts
+  featureGates:
+    nodeShell: false
+  proxy: null

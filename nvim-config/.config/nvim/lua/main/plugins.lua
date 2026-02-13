@@ -21,13 +21,6 @@ require("lazy").setup({
 
 	"williamboman/mason.nvim",
 
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-	},
-	"nvim-treesitter/nvim-treesitter-context",
-
-
     {
       "neovim/nvim-lspconfig",
       cmd = "LspInfo", -- Make LspInfo command available immediately
@@ -43,12 +36,7 @@ require("lazy").setup({
 	{
 		"windwp/nvim-autopairs",
 		config = function()
-			local autopairs = require("nvim-autopairs")
-			autopairs.setup({})
-			-- Disable autopairs for ( and [
-			local Rule = require("nvim-autopairs.rule")
-			autopairs.remove_rule("(")
-			autopairs.remove_rule("[")
+			require("nvim-autopairs").setup({})
 		end,
 	},
 
@@ -93,37 +81,22 @@ require("lazy").setup({
 	{
 		"oysandvik94/curl.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("curl").setup({
-				open_with = "buffer",
-				default_flags = { "-i", "-S" },
-			})
-
-			-- Auto-execute curl on save (runs command under cursor)
-			vim.api.nvim_create_autocmd("BufWritePost", {
-				pattern = "*.curl",
-				callback = function()
-					local line = vim.api.nvim_get_current_line()
-					if line:match("^curl%s") then
-						pcall(require("curl.api").execute_curl)
-					end
-				end,
-			})
-		end,
+		cmd = { "CurlOpen" },
+		config = true,
 	},
 
 	{
 		"catppuccin/nvim",
-		name = "catppuccin-macchiato",
+		name = "catppuccin",
 		priority = 1000,
 		config = function()
 			require("catppuccin").setup({
+				flavour = "macchiato",
 				transparent_background = true,
 				integrations = {
 					cmp = true,
 					gitsigns = true,
 					nvimtree = true,
-					treesitter = true,
 					telescope = {
 						enabled = true,
 					},
@@ -131,7 +104,7 @@ require("lazy").setup({
 					mason = true,
 				},
 			})
+			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
-
 })

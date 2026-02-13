@@ -4,7 +4,6 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "E", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -38,42 +37,36 @@ vim.filetype.add({ extension = { templ = "templ" } })
 require("mason").setup()
 
 -- Python
-vim.lsp.config('pyright', {
+vim.lsp.config.pyright = {
 	cmd = { "pyright-langserver", "--stdio" },
 	filetypes = { "python" },
 	on_attach = on_attach,
 	flags = lsp_flags,
-	capabilities = capabilities,
-})
-vim.lsp.enable('pyright')
+}
 
 -- TypeScript
-vim.lsp.config('ts_ls', {
+vim.lsp.config.ts_ls = {
 	cmd = { "typescript-language-server", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
 	on_attach = on_attach,
 	flags = lsp_flags,
-	capabilities = capabilities,
-})
-vim.lsp.enable('ts_ls')
+}
 
 -- Tailwind CSS
-vim.lsp.config('tailwindcss', {
+vim.lsp.config.tailwindcss = {
 	cmd = { "tailwindcss-language-server", "--stdio" },
 	filetypes = { "templ", "astro", "javascript", "typescript", "react", "javascriptreact" },
 	init_options = { userLanguages = { templ = "html" } },
 	on_attach = on_attach,
 	capabilities = capabilities,
-})
-vim.lsp.enable('tailwindcss')
+}
 
 -- Rust
-vim.lsp.config('rust_analyzer', {
+vim.lsp.config.rust_analyzer = {
 	cmd = { "rust-analyzer" },
 	filetypes = { "rust" },
 	on_attach = on_attach,
 	flags = lsp_flags,
-	capabilities = capabilities,
 	settings = {
 		["rust-analyzer"] = {
 			diagnostics = {
@@ -84,30 +77,26 @@ vim.lsp.config('rust_analyzer', {
 			},
 		},
 	},
-})
-vim.lsp.enable('rust_analyzer')
+}
 
 -- Templ
-vim.lsp.config('templ', {
+vim.lsp.config.templ = {
 	cmd = { "templ", "lsp" },
 	filetypes = { "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,
-})
-vim.lsp.enable('templ')
+}
 
 -- Go
-vim.lsp.config('gopls', {
+vim.lsp.config.gopls = {
 	cmd = { "gopls" },
 	filetypes = { "go", "templ" },
 	on_attach = on_attach,
 	flags = lsp_flags,
-	capabilities = capabilities,
-})
-vim.lsp.enable('gopls')
+}
 
 -- ESLint
-vim.lsp.config('eslint', {
+vim.lsp.config.eslint = {
 	cmd = { "vscode-eslint-language-server", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue", "svelte", "astro" },
 	on_attach = on_attach,
@@ -118,42 +107,41 @@ vim.lsp.config('eslint', {
 			mode = "all",
 		},
 	},
-})
-vim.lsp.enable('eslint')
+}
 
 -- HTML
-vim.lsp.config('html', {
+vim.lsp.config.html = {
 	cmd = { "vscode-html-language-server", "--stdio" },
 	filetypes = { "html", "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,
-})
-vim.lsp.enable('html')
+}
 
 -- HTMX
-vim.lsp.config('htmx', {
+vim.lsp.config.htmx = {
 	cmd = { "htmx-lsp" },
 	filetypes = { "html", "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,
-})
-vim.lsp.enable('htmx')
+}
 
 -- CSS
-vim.lsp.config('cssls', {
+vim.lsp.config.cssls = {
 	cmd = { "vscode-css-language-server", "--stdio" },
 	filetypes = { "css", "scss", "less" },
-	on_attach = on_attach,
 	capabilities = capabilities,
-})
-vim.lsp.enable('cssls')
+}
 
--- Java
-vim.lsp.config('jdtls', {
-	cmd = { "jdtls" },
-	filetypes = { "java" },
-	on_attach = on_attach,
-	flags = lsp_flags,
-	capabilities = capabilities,
+-- Enable all configured language servers
+vim.lsp.enable({
+	"pyright",
+	"ts_ls",
+	"tailwindcss",
+	"rust_analyzer",
+	"templ",
+	"gopls",
+	"eslint",
+	"html",
+	"htmx",
+	"cssls",
 })
-vim.lsp.enable('jdtls')

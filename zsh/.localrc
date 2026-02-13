@@ -122,7 +122,7 @@ alias dot='cd ~/.dotfiles'
 alias grep='rg'
 alias find='fdfind'
 alias lt='du -sh * | sort -h'
-alias loads='cd ~/loads'
+alias loads='cd ~/raft-tech'
 alias src='source ~/.zshrc'
 alias diff='nvim -d'
 alias dif='diff'
@@ -145,7 +145,7 @@ alias py-env="source .venv/bin/activate"
 #####################################################################################
 #Include Scripts to Path and Custom Functions
 #####################################################################################
-export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/13/bin"
+export PATH="$PATH:/opt/homebrew/opt/libpq/bin"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -172,8 +172,13 @@ note () {
 }
 alias notes='note'
 
-# Add a blank line after ps1
-precmd() { print "" }
+# Add a blank line after ps1 and reset mouse tracking
+# The printf disables mouse tracking modes that TUI apps may leave enabled
+# Prevents garbage like "[<34;95;28M" when apps crash or don't clean up
+precmd() {
+  print ""
+  printf '\e[?1000l\e[?1002l\e[?1003l\e[?1006l'
+}
 
 
 softReset() {
@@ -227,5 +232,10 @@ work-tree() {
   fi
 }
 alias worktree='work-tree'
+
+#####################################################################################
+# Kubernetes
+#####################################################################################
+alias df-db='kubectl port-forward svc/rdp-postgres 15432:5432 -n data-fabric --context kind-rdp'
 
 source ~/.raftrc

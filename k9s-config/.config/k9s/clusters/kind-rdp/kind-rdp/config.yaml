@@ -1,0 +1,14 @@
+k9s:
+  cluster: kind-rdp
+  namespace:
+    active: data-fabric
+    lockFavorites: false
+    favorites:
+      - all
+      - data-fabric
+      - default
+  view:
+    active: v1/pods data-fabric
+  featureGates:
+    nodeShell: false
+  proxy: null

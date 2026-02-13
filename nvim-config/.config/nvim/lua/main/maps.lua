@@ -64,63 +64,10 @@ end, { noremap = true, desc = "Modified files to quickfix" })
 -- Remap Esc in Terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 
--- Curl
-vim.keymap.set("n", "<leader>cu", function()
-	local pickers = require("telescope.pickers")
-	local finders = require("telescope.finders")
-	local conf = require("telescope.config").values
-	local actions = require("telescope.actions")
-	local action_state = require("telescope.actions.state")
-
-	local curl_dir = vim.fn.stdpath("data") .. "/curl_cache/custom"
-	local files = vim.fn.globpath(curl_dir, "*.curl", false, true)
-	local collections = {}
-
-	for i = 1, #files do
-		local name = vim.fn.fnamemodify(files[i], ":t:r")
-		collections[#collections + 1] = name
-	end
-
-	pickers.new({}, {
-		prompt_title = "Curl Collections",
-		finder = finders.new_table({
-			results = collections,
-		}),
-		sorter = conf.generic_sorter({}),
-		attach_mappings = function(prompt_bufnr)
-			actions.select_default:replace(function()
-				actions.close(prompt_bufnr)
-				local selection = action_state.get_selected_entry()
-				if selection then
-					require("curl.api").open_global_collection(selection[1])
-				end
-			end)
-			return true
-		end,
-	}):find()
-end, { noremap = true, desc = "Pick global curl collection" })
-
 -- Harpoon
 local harpoon = require("harpoon")
 
-harpoon:setup({
-	settings = {
-		save_on_toggle = true,
-	},
-	default = {
-		display = function(list_item)
-			-- Abbreviate path: src/components/ui/Button.tsx -> ../ui/Button.tsx
-			local path = list_item.value
-			local parts = vim.split(path, "/")
-			if #parts <= 2 then
-				return path
-			end
-			-- Keep last 2 parts, replace rest with ..
-			local last_two = table.concat({ parts[#parts - 1], parts[#parts] }, "/")
-			return "../" .. last_two
-		end,
-	},
-})
+harpoon:setup()
 
 vim.keymap.set("n", "<leader>h", function() harpoon:list():add() end)
 vim.keymap.set("n", "<leader>hl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
