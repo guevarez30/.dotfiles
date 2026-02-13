@@ -9,7 +9,13 @@
       "Bash(/usr/bin/find:*)",
       "Bash(nvim:*)",
       "Bash(ls:*)",
-      "WebFetch(domain:api.github.com)"
+      "WebFetch(domain:api.github.com)",
+      "Bash(git stash:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git ls-tree:*)",
+      "mcp__acp__Write",
+      "Bash(git rebase:*)"
     ],
     "deny": [],
     "ask": []

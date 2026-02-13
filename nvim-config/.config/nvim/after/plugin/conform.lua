@@ -12,7 +12,7 @@ conform.setup({
 		-- java = { lsp_format = "prefer" },
 		rust = { "rustfmt" },
 		python = { "isort", "ruff_format" },
-		-- yaml = { "prettier" },
+		yaml = { "prettier" },
 		markdown = { "prettier" },
 		["_"] = { "trim_whitespace" },
 	},
@@ -40,4 +40,3 @@ local templ_format = function()
 	})
 end
 vim.api.nvim_create_autocmd({ "BufWritePre" }, { pattern = { "*.templ" }, callback = templ_format })
-

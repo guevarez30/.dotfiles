@@ -31,4 +31,43 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Force all splits to open vertically on the right at 33% width
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	pattern = "*",
+	callback = function()
+		local filetype = vim.bo.filetype
+		local buftype = vim.bo.buftype
+
+		-- Handle quickfix and location lists
+		if buftype == "quickfix" then
+			-- Move window to the right if it's not already there
+			vim.schedule(function()
+				local win_width = vim.fn.winwidth(0)
+				local total_width = vim.o.columns
+				-- If quickfix is full width (horizontal), move it to vertical right
+				if win_width == total_width then
+					vim.cmd("wincmd L")
+					-- Set width to 33% of total columns
+					local target_width = math.floor(total_width * 0.33)
+					vim.cmd("vertical resize " .. target_width)
+				end
+			end)
+			return
+		end
+
+		-- Handle Fugitive windows
+		if filetype == "fugitive" or filetype == "git" then
+			-- Only move if not already in a vertical split on the right
+			local win_width = vim.fn.winwidth(0)
+			local total_width = vim.o.columns
+			if win_width == total_width then
+				vim.cmd("wincmd L")
+				-- Set width to 33% of total columns
+				local target_width = math.floor(total_width * 0.33)
+				vim.cmd("vertical resize " .. target_width)
+			end
+		end
+	end,
+})
+
 vim.cmd.colorscheme("catppuccin")

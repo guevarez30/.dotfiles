@@ -1,7 +1,7 @@
 k9s:
   liveViewAutoRefresh: false
   gpuVendors: {}
-  screenDumpDir: /home/raftdev/.local/state/k9s/screen-dumps
+  screenDumpDir: /Users/tguevarez/.local/state/k9s/screen-dumps
   refreshRate: 2
   apiServerTimeout: 2m0s
   maxConnRetry: 5
@@ -9,6 +9,8 @@ k9s:
   noExitOnCtrlC: false
   portForwardAddress: localhost
   ui:
+    skin: catppuccin-macchiato
+    transparency: true
     enableMouse: false
     headless: false
     logoless: false
