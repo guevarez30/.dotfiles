@@ -31,43 +31,39 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Force all splits to open vertically on the right at 33% width
-vim.api.nvim_create_autocmd("BufWinEnter", {
-	pattern = "*",
+-- Detect Helm chart templates as gotmpl for proper syntax highlighting
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*/templates/*.yaml", "*/templates/*.yml", "*/templates/*.tpl", "*.gotmpl" },
 	callback = function()
-		local filetype = vim.bo.filetype
-		local buftype = vim.bo.buftype
-
-		-- Handle quickfix and location lists
-		if buftype == "quickfix" then
-			-- Move window to the right if it's not already there
-			vim.schedule(function()
-				local win_width = vim.fn.winwidth(0)
-				local total_width = vim.o.columns
-				-- If quickfix is full width (horizontal), move it to vertical right
-				if win_width == total_width then
-					vim.cmd("wincmd L")
-					-- Set width to 33% of total columns
-					local target_width = math.floor(total_width * 0.33)
-					vim.cmd("vertical resize " .. target_width)
-				end
-			end)
-			return
-		end
-
-		-- Handle Fugitive windows
-		if filetype == "fugitive" or filetype == "git" then
-			-- Only move if not already in a vertical split on the right
-			local win_width = vim.fn.winwidth(0)
-			local total_width = vim.o.columns
-			if win_width == total_width then
-				vim.cmd("wincmd L")
-				-- Set width to 33% of total columns
-				local target_width = math.floor(total_width * 0.33)
-				vim.cmd("vertical resize " .. target_width)
-			end
-		end
+		vim.bo.filetype = "gotmpl"
 	end,
 })
+
+-- :F / :P - show path and copy to clipboard
+vim.api.nvim_create_user_command("F", function()
+	local path = vim.fn.expand("%:p")
+	vim.fn.setreg("+", path)
+	vim.notify(path .. " (copied)")
+end, {})
+
+vim.api.nvim_create_user_command("P", function()
+	local cwd = vim.uv.cwd()
+	vim.fn.setreg("+", cwd)
+	vim.notify(cwd .. " (copied)")
+end, {})
+
+-- Abbreviate :f -> :F and :p -> :P in command mode
+vim.cmd([[cab f F]])
+vim.cmd([[cab p P]])
+
+-- Close stale floating windows with <Esc>
+vim.keymap.set("n", "<Esc>", function()
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		local config = vim.api.nvim_win_get_config(win)
+		if config.relative ~= "" then
+			pcall(vim.api.nvim_win_close, win, false)
+		end
+	end
+end, { desc = "Close floating windows" })
 
 vim.cmd.colorscheme("catppuccin")

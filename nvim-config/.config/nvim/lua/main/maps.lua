@@ -20,8 +20,8 @@ vim.keymap.set("n", "gh", "_", { noremap = true })
 vim.keymap.set("n", "gl", "$", { noremap = true })
 
 -- Move across line
--- vim.keymap.set("n", "gh", "_", { noremap = true })
--- vim.keymap.set("n", "gl", "$", { noremap = true })
+vim.keymap.set("n", "gh", "_", { noremap = true })
+vim.keymap.set("n", "gl", "$", { noremap = true })
 
 -- Search terms in middle
 vim.keymap.set("n", "n", "nzzzv", { noremap = true })
