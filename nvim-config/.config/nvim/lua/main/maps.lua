@@ -17,8 +17,8 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
 
 -- Move across line
--- vim.keymap.set("n", "gh", "_", { noremap = true })
--- vim.keymap.set("n", "gl", "$", { noremap = true })
+vim.keymap.set("n", "gh", "_", { noremap = true })
+vim.keymap.set("n", "gl", "$", { noremap = true })
 
 -- Search terms in middle
 vim.keymap.set("n", "n", "nzzzv", { noremap = true })
@@ -84,25 +84,3 @@ vim.keymap.set("n", "<Leader>ee", function()
 	end
 end)
 
-vim.keymap.set("v", "<Leader>cc", function()
-	-- Get the line range
-	local start_line = vim.fn.getpos("v")[2]
-	local end_line = vim.fn.getpos(".")[2]
-	if start_line > end_line then
-		start_line, end_line = end_line, start_line
-	end
-
-	-- Get the current filename
-	local filename = vim.fn.expand("%:p")
-
-	-- Create the file reference with line range
-	local file_ref = string.format("@%s:%d-%d ", filename, start_line, end_line)
-
-	-- Create a new tmux pane (33% width) and send the file reference without submitting
-	local tmux_cmd = string.format(
-		"tmux split-window -h -l 33%% \"claude\" \\; send-keys %s",
-		vim.fn.shellescape(file_ref)
-	)
-
-	vim.fn.system(tmux_cmd)
-end, { noremap = true, desc = "Send selection to Claude Code" })

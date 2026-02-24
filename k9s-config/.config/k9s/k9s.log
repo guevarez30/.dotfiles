@@ -559,3 +559,88 @@
 [2m2026-02-12T10:03:16-05:00[0m [93mWRN[0m k9s latest rev fetch failed [2merror=[0m"Get \"https://api.github.com/repos/derailed/k9s/releases/latest\": context deadline exceeded"
 [2m2026-02-12T11:09:17-05:00[0m [93mWRN[0m k9s latest rev fetch failed [2merror=[0m"Get \"https://api.github.com/repos/derailed/k9s/releases/latest\": context deadline exceeded"
 [2m2026-02-12T11:09:35-05:00[0m [93mWRN[0m k9s latest rev fetch failed [2merror=[0m"Get \"https://api.github.com/repos/derailed/k9s/releases/latest\": context deadline exceeded"
+[2m2026-02-17T16:41:51-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:41:51-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:41:52-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:41:52-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:41:54-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:41:55-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:41:56-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:42:00-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:42:03-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:42:10-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:42:18-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:42:33-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:42:51-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:43:49-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-17T16:43:49-05:00[0m [93mWRN[0m Reconciler exited [2merror=[0m"failed to locate pod \"data-fabric/df-geoserver-main-64bf689555-jqxmw\": pods \"df-geoserver-main-64bf689555-jqxmw\" not found"
+[2m2026-02-17T16:43:49-05:00[0m [91mERR[0m Flash error [2merror=[0m"failed to locate pod \"data-fabric/df-geoserver-main-64bf689555-jqxmw\": pods \"df-geoserver-main-64bf689555-jqxmw\" not found"
+[2m2026-02-18T09:36:54-05:00[0m [93mWRN[0m No resources found for v1/secrets in "all" namespace
+[2m2026-02-18T09:37:57-05:00[0m [91mERR[0m Flash error [2merror=[0m"secrets \"keycloak-realm-init\" not found"
+[2m2026-02-18T10:20:18-05:00[0m [91mERR[0m Flash error [2merror=[0m"secrets \"geoserver-secret\" not found"
+[2m2026-02-18T11:29:30-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:29:31-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:29:32-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:29:32-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:29:33-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:29:35-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:29:39-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:29:43-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:09-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:09-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:10-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:10-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:11-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:13-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:15-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:21-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: image can't be pulled" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:22-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: image can't be pulled" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:23-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: image can't be pulled" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:23-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: image can't be pulled" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:24-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: image can't be pulled" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:26-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: image can't be pulled" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:30-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: image can't be pulled" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:36-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:43-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:40:50-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:41:00-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:41:22-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:41:30-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:41:43-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: image can't be pulled" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:42:01-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:42:23-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:42:31-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:42:50-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:43:06-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:43:21-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-2gdkz\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-2gdkz (geoserver-sync)"
+[2m2026-02-18T11:46:46-05:00[0m [93mWRN[0m Deleted portforward [2mcount=[0m0 [2mgvr=[0mdata-fabric/df-geoserver-main-f9d95599-nrh2s
+[2m2026-02-18T11:46:47-05:00[0m [93mWRN[0m Deleted portforward [2mcount=[0m0 [2mgvr=[0mdata-fabric/df-geoserver-main-66ff57d748-2gdkz
+[2m2026-02-18T11:46:52-05:00[0m [93mWRN[0m Deleted portforward [2mcount=[0m0 [2mgvr=[0mdata-fabric/df-geoserver-main-f9d95599-c5hmh
+[2m2026-02-18T12:14:00-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-x8z4n\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-x8z4n (geoserver-sync)"
+[2m2026-02-18T12:14:01-05:00[0m [91mERR[0m Stream logs failed [2merror=[0m"container \"geoserver-sync\" in pod \"df-geoserver-main-66ff57d748-x8z4n\" is waiting to start: trying and failing to pull image" [2mcontainer=[0m"data-fabric/df-geoserver-main-66ff57d748-x8z4n (geoserver-sync)"
+[2m2026-02-19T12:53:11-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:12-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:12-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:13-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:13-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:15-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:19-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:22-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:25-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:33-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:53:46-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:54:01-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:54:31-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:55:00-05:00[0m [91mERR[0m Refresh failed [2mgvr=[0mcontainers
+[2m2026-02-19T12:55:00-05:00[0m [93mWRN[0m Reconciler exited [2merror=[0m"failed to locate pod \"data-fabric/df-geoserver-main-66ff57d748-x8z4n\": pods \"df-geoserver-main-66ff57d748-x8z4n\" not found"
+[2m2026-02-19T12:55:00-05:00[0m [91mERR[0m Flash error [2merror=[0m"failed to locate pod \"data-fabric/df-geoserver-main-66ff57d748-x8z4n\": pods \"df-geoserver-main-66ff57d748-x8z4n\" not found"
+[2m2026-02-23T09:10:45-05:00[0m [93mWRN[0m No resources found for v1/secrets in "data-fabric" namespace
+[2m2026-02-23T13:12:47-05:00[0m [91mERR[0m Flash error [2merror=[0m"secrets \"geoserver-secret\" not found"
+[2m2026-02-23T13:23:26-05:00[0m [93mWRN[0m No resources found for v1/configmaps in "all" namespace
+[2m2026-02-23T13:51:13-05:00[0m [91mERR[0m Pipe Exec failed [2merror=[0m"command failed. Check k9s logs: exit status 1" [2mcmd=[0m"[/opt/homebrew/bin/kubectl exec --context G2-Dev -it -n data-fabric df-geoserver-main-57cbfd67c5-vjp7v --context G2-Dev -c df-geoserver -- sh -c command -v bash >/dev/null && exec bash || exec sh]"
+[2m2026-02-23T13:51:14-05:00[0m [91mERR[0m Flash error [2merror=[0m"command failed. Check k9s logs: exit status 1\n" [2mmessage=[0m"Exec failed \"/opt/homebrew/bin/kubectl exec --context G2-Dev -it -n data-fabric df-geoserver-main-57cbfd67c5-vjp7v --context G2-Dev -c df-geoserver -- sh -c command -v bash >/dev/null && exec bash || exec sh\": command failed. Check k9s logs: exit status 1\n"
+[2m2026-02-23T13:51:14-05:00[0m [91mERR[0m Flash error [2merror=[0m"command failed. Check k9s logs: exit status 1\n"
+[2m2026-02-23T13:51:14-05:00[0m [91mERR[0m Flash error [2merror=[0m"command failed. Check k9s logs: exit status 1\n" [2mmessage=[0m"Shell exec failed: command failed. Check k9s logs: exit status 1\n"
+[2m2026-02-23T14:35:43-05:00[0m [93mWRN[0m No resources found for v1/secrets in "all" namespace
+[2m2026-02-23T14:35:49-05:00[0m [91mERR[0m Flash error [2merror=[0m"secrets \"geoserver-secret\" not found"
+[2m2026-02-24T08:06:47-05:00[0m [93mWRN[0m k9s latest rev fetch failed [2merror=[0m"Get \"https://api.github.com/repos/derailed/k9s/releases/latest\": context deadline exceeded"
