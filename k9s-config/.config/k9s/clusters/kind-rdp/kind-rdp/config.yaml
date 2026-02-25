@@ -8,7 +8,7 @@ k9s:
       - data-fabric
       - default
   view:
-    active: v1/pods data-fabric
+    active: v1/pods
   featureGates:
     nodeShell: false
   proxy: null
