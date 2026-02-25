@@ -15,9 +15,15 @@
       "Bash(git add:*)",
       "Bash(git ls-tree:*)",
       "mcp__acp__Write",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "WebFetch(domain:codecompanion.olimorris.dev)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:nvim-mini.org)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [
+      "mcp__acp__Edit",
+      "mcp__acp__Write"
+    ]
   }
 }

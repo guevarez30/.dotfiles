@@ -177,12 +177,37 @@ require("lazy").setup({
 		config = true,
 	},
 
+	-- CodeCompanion History - Chat persistence
+	{
+		"ravitemer/codecompanion-history.nvim",
+		dependencies = {
+			"olimorris/codecompanion.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+		config = function()
+			require("codecompanion-history").setup({
+				auto_save = true, -- Automatically save all chats
+				expiration_days = 90, -- Delete chats older than 90 days
+				picker = "telescope", -- Use telescope for browsing history
+				delete_on_clearing_chat = false, -- Don't auto-delete when using 'gx'
+			})
+
+			-- Add custom command to clear all chat history
+			vim.api.nvim_create_user_command("CodeCompanionClearHistory", function()
+				local data_path = vim.fn.stdpath("data") .. "/codecompanion-history"
+				vim.fn.delete(data_path, "rf")
+				vim.notify("CodeCompanion history cleared!", vim.log.levels.INFO)
+			end, { desc = "Clear all CodeCompanion chat history" })
+		end,
+	},
+
 	-- CodeCompanion - AI assistant
 	{
 		"olimorris/codecompanion.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
+			"ravitemer/codecompanion-history.nvim",
 		},
 		config = function()
 			require("codecompanion").setup({
@@ -206,6 +231,28 @@ require("lazy").setup({
 					},
 					inline = {
 						adapter = "claude_code",
+					},
+				},
+				-- Enable diff approval workflow
+				diff = {
+					enabled = true,
+					provider = "inline", -- Shows changes in floating window (options: inline, split, mini_diff)
+				},
+				-- Tool approval settings
+				tools = {
+					["insert_edit_into_file"] = {
+						opts = {
+							require_approval_before = {
+								buffer = true, -- Require approval for buffer edits
+								file = true,   -- Require approval for file edits
+							},
+							require_confirmation_after = true,
+						},
+					},
+					["cmd_runner"] = {
+						opts = {
+							require_approval_before = true, -- Require approval for command execution
+						},
 					},
 				},
 				rules = {

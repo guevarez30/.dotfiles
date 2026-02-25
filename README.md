@@ -7,6 +7,7 @@
 [![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos/)
 [![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://www.linux.org/)
 [![GNU Stow](https://img.shields.io/badge/GNU%20Stow-A42E2B?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/software/stow/)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
 </div>
 
@@ -152,6 +153,12 @@ stow -R zsh
 ```bash
 stow -n -v zsh
 ```
+
+---
+
+## ✅ Code Review Workflow
+
+All file changes made by Claude Code require manual approval before being applied. This ensures you have full control over modifications to your dotfiles. Changes appear in a diff view within Neovim for easy review and acceptance.
 
 ---
 

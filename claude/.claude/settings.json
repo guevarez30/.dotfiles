@@ -6,7 +6,10 @@
       "Bash(cat:*)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [
+      "Edit(**)",
+      "Write(**)"
+    ]
   },
   "enabledPlugins": {},
   "alwaysThinkingEnabled": false
