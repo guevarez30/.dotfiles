@@ -296,6 +296,6 @@ alias worktree='work-tree'
 #####################################################################################
 # Kubernetes
 #####################################################################################
-alias df-db='kubectl port-forward svc/rdp-postgres 15432:5432 -n data-fabric --context kind-rdp'
+alias dbPortForward='kubectl port-forward svc/rdp-postgres 15432:5432 -n data-fabric --context kind-rdp > /dev/null 2>&1 &'
 
 source ~/.raftrc
