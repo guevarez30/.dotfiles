@@ -29,30 +29,21 @@ require("lazy").setup({
 		build = ":TSUpdate",
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
-			require("nvim-treesitter").setup({})
-			-- Install parsers
-			local parsers = {
-				"bash", "c", "css", "go", "gomod", "gosum", "gotmpl",
-				"html", "java", "javascript", "json", "lua",
-				"markdown", "markdown_inline", "python", "rust",
-				"typescript", "tsx", "vim", "vimdoc", "yaml",
-			}
-			local installed = require("nvim-treesitter.config").get_installed()
-			local to_install = vim.tbl_filter(function(p)
-				return not vim.list_contains(installed, p)
-			end, parsers)
-			if #to_install > 0 then
-				require("nvim-treesitter.install").install(to_install)
-			end
-
-			-- Enable treesitter highlighting
-			vim.api.nvim_create_autocmd("FileType", {
-				callback = function(args)
-					pcall(vim.treesitter.start, args.buf)
-				end,
+			require("nvim-treesitter.configs").setup({
+				ensure_installed = {
+					"bash", "c", "css", "go", "gomod", "gosum", "gotmpl",
+					"html", "java", "javascript", "json", "lua",
+					"markdown", "markdown_inline", "python", "rust",
+					"typescript", "tsx", "vim", "vimdoc", "yaml",
+				},
+				sync_install = false,
+				auto_install = true,
+				highlight = {
+					enable = true,
+					additional_vim_regex_highlighting = false,
+				},
+				indent = { enable = true },
 			})
-			-- Start on the current buffer (which triggered the load)
-			pcall(vim.treesitter.start)
 		end,
 	},
 	{

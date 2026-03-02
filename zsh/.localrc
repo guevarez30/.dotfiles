@@ -298,9 +298,4 @@ alias worktree='work-tree'
 #####################################################################################
 alias df-db='kubectl port-forward svc/rdp-postgres 15432:5432 -n data-fabric --context kind-rdp'
 
-#####################################################################################
-# Claude Code OAuth Token (for codecompanion.nvim ACP adapter)
-#####################################################################################
-export CLAUDE_CODE_OAUTH_TOKEN="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"
-
 source ~/.raftrc

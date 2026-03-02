@@ -19,7 +19,11 @@
       "Bash(git fetch:*)",
       "WebFetch(domain:codecompanion.olimorris.dev)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:nvim-mini.org)"
+      "WebFetch(domain:nvim-mini.org)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); oauth=d.get\\(''claudeAiOauth'',{}\\); [print\\(k,'':'', str\\(v\\)[:40]\\) for k,v in oauth.items\\(\\)]\")",
+      "Bash(stow:*)",
+      "Bash(k9s version:*)",
+      "Bash(k9s info:*)"
     ],
     "deny": [],
     "ask": [

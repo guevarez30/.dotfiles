@@ -10,7 +10,6 @@ k9s:
   portForwardAddress: localhost
   ui:
     skin: catppuccin-macchiato
-    transparency: true
     enableMouse: false
     headless: false
     logoless: false
