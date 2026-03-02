@@ -175,37 +175,12 @@ require("lazy").setup({
 		config = true,
 	},
 
-	-- CodeCompanion History - Chat persistence
-	{
-		"ravitemer/codecompanion-history.nvim",
-		dependencies = {
-			"olimorris/codecompanion.nvim",
-			"nvim-telescope/telescope.nvim",
-		},
-		config = function()
-			require("codecompanion-history").setup({
-				auto_save = true, -- Automatically save all chats
-				expiration_days = 90, -- Delete chats older than 90 days
-				picker = "telescope", -- Use telescope for browsing history
-				delete_on_clearing_chat = false, -- Don't auto-delete when using 'gx'
-			})
-
-			-- Add custom command to clear all chat history
-			vim.api.nvim_create_user_command("CodeCompanionClearHistory", function()
-				local data_path = vim.fn.stdpath("data") .. "/codecompanion-history"
-				vim.fn.delete(data_path, "rf")
-				vim.notify("CodeCompanion history cleared!", vim.log.levels.INFO)
-			end, { desc = "Clear all CodeCompanion chat history" })
-		end,
-	},
-
 	-- CodeCompanion - AI assistant
 	{
 		"olimorris/codecompanion.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
-			"ravitemer/codecompanion-history.nvim",
 		},
 		config = function()
 			require("codecompanion").setup({
