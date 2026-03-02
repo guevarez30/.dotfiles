@@ -16,6 +16,7 @@
       "Bash(git ls-tree:*)",
       "mcp__acp__Write",
       "Bash(git rebase:*)",
+      "Bash(git fetch:*)",
       "WebFetch(domain:codecompanion.olimorris.dev)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:nvim-mini.org)"
