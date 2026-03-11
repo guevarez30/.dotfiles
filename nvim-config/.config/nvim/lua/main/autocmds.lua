@@ -66,4 +66,4 @@ vim.keymap.set("n", "<Esc>", function()
 	end
 end, { desc = "Close floating windows" })
 
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("catppuccin-mocha")

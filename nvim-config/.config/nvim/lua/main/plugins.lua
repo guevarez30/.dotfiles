@@ -260,8 +260,16 @@ require("lazy").setup({
 		name = "catppuccin",
 		priority = 1000,
 		config = function()
+			-- Read theme from config file, default to mocha
+			local theme_file = io.open(vim.fn.expand("~/.config/theme"), "r")
+			local flavour = "mocha"
+			if theme_file then
+				flavour = theme_file:read("*l") or "mocha"
+				theme_file:close()
+			end
+			
 			require("catppuccin").setup({
-				flavour = "macchiato",
+				flavour = flavour,
 				transparent_background = true,
 				integrations = {
 					cmp = true,

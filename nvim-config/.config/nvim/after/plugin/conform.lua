@@ -7,7 +7,7 @@ conform.setup({
 		javascript = { "prettier" },
 		javascriptreact = { "prettier" },
 		json = { "prettier" },
-		go = { "gofmt" },
+		go = { "goimports", "gofmt" },
 	 	rust = { "rustfmt" },
 		python = { "autopep8" },
 		yaml = { "prettier" },

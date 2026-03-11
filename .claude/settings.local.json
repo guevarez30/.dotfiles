@@ -14,7 +14,13 @@
       "Bash(git ls-tree:*)",
       "WebFetch(domain:codecompanion.olimorris.dev)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:nvim-mini.org)"
+      "WebFetch(domain:nvim-mini.org)",
+      "Bash(test:*)",
+      "Bash(source:*)",
+      "Bash(theme_current)",
+      "Bash(tmux show-options:*)",
+      "Bash(tmux set:*)",
+      "Bash(tmux run-shell:*)"
     ],
     "deny": [],
     "ask": [

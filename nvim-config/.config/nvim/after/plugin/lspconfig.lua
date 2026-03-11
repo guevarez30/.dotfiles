@@ -91,8 +91,18 @@ vim.lsp.config.templ = {
 vim.lsp.config.gopls = {
 	cmd = { "gopls" },
 	filetypes = { "go", "templ" },
-	on_attach = on_attach,
+	on_attach = function(client, bufnr)
+		-- Disable gopls formatting in favor of conform.nvim
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentRangeFormattingProvider = false
+		on_attach(client, bufnr)
+	end,
 	flags = lsp_flags,
+	settings = {
+		gopls = {
+			gofumpt = true, -- Use gofumpt-style formatting when gopls does format
+		},
+	},
 }
 
 -- ESLint
