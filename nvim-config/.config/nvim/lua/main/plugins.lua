@@ -248,6 +248,99 @@ require("lazy").setup({
 		end,
 	},
 
+	-- CodeCompanion - AI assistant
+	{
+		"olimorris/codecompanion.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"ravitemer/codecompanion-history.nvim",
+		},
+		config = function()
+			require("codecompanion").setup({
+				adapters = {
+					acp = {
+						claude_code = function()
+							return require("codecompanion.adapters").extend("claude_code", {
+								env = {
+									CLAUDE_CODE_OAUTH_TOKEN = "CLAUDE_CODE_OAUTH_TOKEN",
+								},
+							})
+						end,
+					},
+				},
+				interactions = {
+					chat = {
+						adapter = "claude_code",
+						opts = {
+							system_prompt = "You are a senior software engineer. Be direct and concise. No filler, no preamble, no summaries. Code-only responses unless explanation is explicitly asked for.",
+						},
+					},
+					inline = {
+						adapter = "claude_code",
+					},
+				},
+				diff = {
+					enabled = true,
+					provider = "inline",
+				},
+				tools = {
+					["insert_edit_into_file"] = {
+						opts = {
+							require_approval_before = {
+								buffer = true,
+								file = true,
+							},
+							require_confirmation_after = true,
+						},
+					},
+					["cmd_runner"] = {
+						opts = {
+							require_approval_before = true,
+						},
+					},
+				},
+				rules = {
+					default = {
+						description = "Project rules auto-loaded into every chat",
+						files = {
+							{ path = "CLAUDE.md", parser = "claude" },
+							{ path = "CLAUDE.local.md", parser = "claude" },
+							"AGENT.md",
+							"AGENTS.md",
+							".cursorrules",
+						},
+					},
+					opts = {
+						chat = {
+							enabled = true,
+							autoload = "default",
+						},
+					},
+				},
+				extensions = {
+					history = {
+						enabled = true,
+						opts = {
+							keymap = "gh",
+							save_chat_keymap = "sc",
+							auto_save = true,
+							picker = "telescope",
+							auto_generate_title = true,
+							expiration_days = 0,
+						},
+					},
+				},
+			})
+
+			vim.keymap.set({ "n", "v" }, "<leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle chat" })
+			vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>CodeCompanionActions<cr>", { desc = "Actions palette" })
+			vim.keymap.set("v", "<leader>ci", "<cmd>CodeCompanionChat Add<cr>", { desc = "Add selection to chat" })
+			vim.keymap.set("n", "<leader>ch", "<cmd>CodeCompanionHistory<cr>", { desc = "CodeCompanion history" })
+			vim.cmd([[cab cc CodeCompanion]])
+		end,
+	},
+
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
