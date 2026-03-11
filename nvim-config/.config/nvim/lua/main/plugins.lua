@@ -181,6 +181,7 @@ require("lazy").setup({
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
+			"ravitemer/codecompanion-history.nvim",
 		},
 		config = function()
 			require("codecompanion").setup({
@@ -246,11 +247,25 @@ require("lazy").setup({
 						},
 					},
 				},
+				extensions = {
+					history = {
+						enabled = true,
+						opts = {
+							keymap = "gh",
+							save_chat_keymap = "sc",
+							auto_save = true,
+							picker = "telescope",
+							auto_generate_title = true,
+							expiration_days = 0,
+						},
+					},
+				},
 			})
 
 			vim.keymap.set({ "n", "v" }, "<leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle chat" })
 			vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>CodeCompanionActions<cr>", { desc = "Actions palette" })
 			vim.keymap.set("v", "<leader>ci", "<cmd>CodeCompanionChat Add<cr>", { desc = "Add selection to chat" })
+			vim.keymap.set("n", "<leader>ch", "<cmd>CodeCompanionHistory<cr>", { desc = "CodeCompanion history" })
 			vim.cmd([[cab cc CodeCompanion]])
 		end,
 	},
