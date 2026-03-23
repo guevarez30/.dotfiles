@@ -16,12 +16,20 @@ gitExclude() {
 ###################################################################################
 # TMUX
 ###################################################################################
-# Fuzzy attach to or create a tmux session
+# Fuzzy attach to or create a tmux session with Tab/Shift+Tab navigation
 t() {
     if [ $# -gt 0 ]; then
         tmux new-session -A -s "$1"
     else
-        sesh connect $(sesh list --tmux | fzf --height 40% --reverse --border --prompt '⚡ ' | tr -d '[:space:]')
+        sesh connect $(sesh list --tmux | fzf \
+            --height 40% \
+            --reverse \
+            --border \
+            --prompt '⚡ ' \
+            --bind 'tab:down,shift-tab:up' \
+            --bind 'ctrl-j:down,ctrl-k:up' \
+            --pointer '▶' \
+            --marker '✓' | tr -d '[:space:]')
     fi
 }
 
