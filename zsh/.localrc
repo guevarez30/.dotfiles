@@ -16,85 +16,18 @@ gitExclude() {
 ###################################################################################
 # TMUX
 ###################################################################################
-ts() {
-    local session_name
+# Fuzzy attach to or create a tmux session
+t() {
     if [ $# -gt 0 ]; then
-        session_name="$1"
+        tmux new-session -A -s "$1"
     else
-        session_name=$(basename "$PWD" | sed 's/[^a-zA-Z0-9_-]/_/g')
-         if [ -z "$session_name" ]; then
-             session_name="default"
-         fi
-    fi
-
-    if ! command -v tmux &> /dev/null; then
-        echo "Error: tmux command not found."
-        return 1
-    fi
-
-    # Check if running inside a tmux session
-    if [ -n "$TMUX" ]; then
-        if tmux has-session -t "$session_name" 2>/dev/null; then
-            # Session exists, switch the client to it
-            local current_session=$(tmux display-message -p '#S')
-            if [ "$current_session" != "$session_name" ]; then
-                 echo "Switching client to session: $session_name"
-                 tmux switch-client -t "$session_name"
-            else
-                 echo "Already attached to session: $session_name"
-            fi
-        else
-            # Session does not exist - Instruct user to exit first
-            echo "Session '$session_name' does not exist."
-            echo "To create a new session, please detach from your current tmux session first."
-            return 1
-        fi
-    else
-        # --- Running Outside Tmux ---
-        if tmux has-session -t "$session_name" 2>/dev/null; then
-            # Session exists, attach to it
-            echo "Attaching to existing tmux session: $session_name"
-            tmux attach-session -t "$session_name"
-        else
-            # Session does not exist, create it and attach
-            echo "Creating new session '$session_name' with VIM and server windows..."
-            tmux new-session -d -s "$session_name" -n "nvim" "nvim ."
-            tmux new-window -t "$session_name" -n "term"
-            tmux new-window -t "$session_name" -n "claude"
-            tmux select-window -t "$session_name:1"
-            tmux attach-session -t "$session_name"
-        fi
+        sesh connect $(sesh list --tmux | fzf --height 40% --reverse --border --prompt '⚡ ' | tr -d '[:space:]')
     fi
 }
-
-ta(){
-  tmux attach-session -t $@
-}
-
-tk(){
-  tmux kill-session -t  $@
-}
-
-tl(){
-  tmux ls
-}
-
-###################################################################################
-# Docker
-###################################################################################
-alias d='docker'
-alias dc='docker compose'
-alias drm='docker rm $(docker ps --all --quiet)'
-alias drmi='docker rmi $(docker images --quiet --filter "dangling=true")'
 
 ###################################################################################
 # Git
 ###################################################################################
-alias got='git'
-alias pull='git pull'
-alias fetch='git fetch'
-alias checkout='git checkout'
-alias branch='git branch'
 push(){
    git push --set-upstream origin $1
 }
@@ -110,7 +43,6 @@ remote_checkout(){
 alias vim='nvim'
 alias v='nvim'
 alias mv='mv -i'
-alias clc='clear'
 alias vlear='clear'
 alias cls='clear'
 alias clera='clear'
@@ -120,7 +52,7 @@ alias ckear='clear'
 alias ipconfig='ifconfig'
 alias dot='cd ~/.dotfiles'
 alias grep='rg'
-alias find='fdfind'
+alias find='fd'
 alias lt='du -sh * | sort -h'
 alias loads='cd ~/raft-tech'
 alias src='source ~/.zshrc'
@@ -165,6 +97,19 @@ export GOPATH="$HOME/go"
 export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 
 #####################################################################################
+# FZF - Fuzzy Finder
+#####################################################################################
+# Shell keybindings: Ctrl+R (history), Ctrl+T (files), Alt+C (cd)
+if command -v fzf &>/dev/null; then
+    source <(fzf --zsh)
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+    # Use fd for file finding (respects .gitignore)
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+fi
+
+#####################################################################################
 # Notes
 #####################################################################################
 note () {
@@ -179,7 +124,6 @@ precmd() {
   print ""
   printf '\e[?1000l\e[?1002l\e[?1003l\e[?1006l'
 }
-
 
 softReset() {
   if [ -z "$1" ]; then
@@ -200,42 +144,21 @@ softReset() {
   git reset --soft "$base" || return 1
 }
 
-#####################################################################################
-# Notes
-#####################################################################################
-work-tree() {
-  if [ -z "$1" ]; then
-    echo "Error: Please provide a feature name"
-    echo "Usage: create-feature <feature-name>"
-    return 1
-  fi
-
-  local feature_name="$1"
-  local branch_name="feature/${feature_name}"
-  local repo_name=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")")
-  local worktree_dir="../${repo_name}-${feature_name}"
-
-  echo "Creating worktree for ${branch_name}..."
-  git worktree add "${worktree_dir}" -b "${branch_name}" develop
-
-  if [ $? -eq 0 ]; then
-    echo "Linking node_modules..."
-    cd "${worktree_dir}"
-    ln -s ../${repo_name}-develop/node_modules node_modules
-    echo "✅ Feature worktree created at ${worktree_dir}"
-    echo "📦 node_modules linked to ${repo_name}-develop"
-    echo ""
-    echo "To start working: cd ${worktree_dir}"
-  else
-    echo "❌ Failed to create worktree"
-    return 1
-  fi
-}
-alias worktree='work-tree'
-
-#####################################################################################
-# Kubernetes
-#####################################################################################
-alias dbPortForward='kubectl port-forward svc/rdp-postgres 15432:5432 -n data-fabric --context kind-data-rdp > /dev/null 2>&1 &'
 
 source ~/.raftrc
+
+#####################################################################################
+# Carapace - Shell Completion
+#####################################################################################
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+
+# Carapace colors (uses Lip Gloss style syntax)
+export CARAPACE_STYLE_CARAPACE_DESCRIPTION="dim"
+export CARAPACE_STYLE_CARAPACE_VALUE="fg:#cba6f7"         # mauve (commands/values)
+export CARAPACE_STYLE_CARAPACE_KEYWORD="fg:#89b4fa,bold"  # blue (flags/keywords)
+export CARAPACE_STYLE_CARAPACE_SECTION="fg:#a6e3a1,bold"  # green (section headers)
+export CARAPACE_STYLE_CARAPACE_FLAG="fg:#f38ba8"          # red (flags)
+
+# Completion menu formatting
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)

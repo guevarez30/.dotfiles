@@ -3,14 +3,15 @@
     "allow": [
       "Read(//Users/TaylorGuevarez/**)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(cat:*)"
-    ],
-    "deny": [],
-    "ask": [
+      "Bash(cat:*)",
       "Edit(**)",
       "Write(**)"
-    ]
+    ],
+    "deny": [],
+    "ask": []
   },
-  "enabledPlugins": {},
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  },
   "alwaysThinkingEnabled": false
 }
