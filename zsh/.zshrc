@@ -55,7 +55,7 @@ ZSH_THEME="robbyrussell"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Which plugins would you like to load?
-plugins=(git web-search sudo zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git web-search sudo zsh-syntax-highlighting zsh-autosuggestions zsh-vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 

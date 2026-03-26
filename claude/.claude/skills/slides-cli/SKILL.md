@@ -650,6 +650,7 @@ Let's test the API...
 
 When creating slideshows:
 
+0. **Always save to `~/raft-tech/slides/`**: All slide files MUST be written to `/Users/tguevarez/raft-tech/slides/`. Never write slide files to the current working directory or any other location unless explicitly instructed otherwise.
 1. **Start with structure**: Create title → agenda → content → conclusion
 2. **Use metadata**: Always include author, date, and paging
 3. **Leverage code blocks**: Use syntax-appropriate language identifiers

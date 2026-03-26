@@ -17,6 +17,12 @@ gitExclude() {
 # TMUX
 ###################################################################################
 # Fuzzy attach to or create a tmux session with Tab/Shift+Tab navigation
+tn() {
+    local name
+    name=$(basename "$PWD" | tr '[:lower:]' '[:upper:]')
+    tmux new-session -s "$name" $@
+}
+
 t() {
     if [ $# -gt 0 ]; then
         tmux new-session -A -s "$1"
@@ -157,6 +163,29 @@ softReset() {
 
 
 source ~/.raftrc
+
+#####################################################################################
+# Vi Mode Indicator (prepended to PROMPT)
+#####################################################################################
+_ZVM_BASE_PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%} \$(git_prompt_info)"
+
+function _zvm_set_prompt() {
+  local indicator
+  case $ZVM_MODE in
+    $ZVM_MODE_NORMAL)      indicator="%F{#8aadf4}[NORMAL]%f " ;;
+    $ZVM_MODE_INSERT)      indicator="%F{#a6da95}[INSERT]%f " ;;
+    $ZVM_MODE_VISUAL)      indicator="%F{#ed8796}[VISUAL]%f " ;;
+    $ZVM_MODE_VISUAL_LINE) indicator="%F{#ed8796}[V-LINE]%f " ;;
+    $ZVM_MODE_REPLACE)     indicator="%F{#ed8796}[REPLACE]%f " ;;
+    *)                     indicator="%F{#a6da95}[INSERT]%f " ;;
+  esac
+  PROMPT="${indicator}${_ZVM_BASE_PROMPT}"
+}
+
+function zvm_after_select_vi_mode() { _zvm_set_prompt }
+function zvm_after_init() { _zvm_set_prompt }
+
+
 
 #####################################################################################
 # Carapace - Shell Completion

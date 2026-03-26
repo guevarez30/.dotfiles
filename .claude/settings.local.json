@@ -20,7 +20,13 @@
       "Bash(theme_current)",
       "Bash(tmux show-options:*)",
       "Bash(tmux set:*)",
-      "Bash(tmux run-shell:*)"
+      "Bash(tmux run-shell:*)",
+      "Bash(tmux list-sessions:*)",
+      "Bash(sesh list:*)",
+      "Bash(fzf:*)",
+      "WebFetch(domain:harlequin.sh)",
+      "Bash(uv tool:*)",
+      "Bash(pip3 uninstall:*)"
     ],
     "deny": [],
     "ask": [
