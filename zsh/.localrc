@@ -21,71 +21,26 @@ gitExclude() {
 ###################################################################################
 # TMUX
 ###################################################################################
-ts() {
-    local session_name
+tn() {
+    local name
+    name=$(basename "$PWD" | tr '[:lower:]' '[:upper:]')
+    tmux new-session -s "$name" $@
+}
+
+t() {
     if [ $# -gt 0 ]; then
-        session_name="$1"
+        tmux new-session -A -s "$1"
     else
-        session_name=$(basename "$PWD" | sed 's/[^a-zA-Z0-9_-]/_/g')
-         if [ -z "$session_name" ]; then
-             session_name="default"
-         fi
+        sesh connect $(sesh list --tmux | fzf \
+            --height 40% \
+            --reverse \
+            --border \
+            --prompt '⚡ ' \
+            --bind 'tab:down,shift-tab:up' \
+            --bind 'ctrl-j:down,ctrl-k:up' \
+            --pointer '▶' \
+            --marker '✓' | tr -d '[:space:]')
     fi
-
-    if ! command -v tmux &> /dev/null; then
-        echo "Error: tmux command not found."
-        return 1
-    fi
-
-    # Check if running inside a tmux session
-    if [ -n "$TMUX" ]; then
-        if tmux has-session -t "$session_name" 2>/dev/null; then
-            # Session exists, switch the client to it
-            local current_session=$(tmux display-message -p '#S')
-            if [ "$current_session" != "$session_name" ]; then
-                 echo "Switching client to session: $session_name"
-                 tmux switch-client -t "$session_name"
-            else
-                 echo "Already attached to session: $session_name"
-            fi
-        else
-            # Session does not exist - create it in background and switch
-            echo "Creating new session '$session_name' and switching..."
-            tmux new-session -d -s "$session_name" -n "nvim" -c "$PWD"
-            tmux send-keys -t "$session_name:nvim" "nvim ." Enter
-            tmux new-window -t "$session_name" -n "term" -c "$PWD"
-            tmux new-window -t "$session_name" -n "claude" -c "$PWD"
-            tmux select-window -t "$session_name:1"
-            tmux switch-client -t "$session_name"
-        fi
-    else
-        # --- Running Outside Tmux ---
-        if tmux has-session -t "$session_name" 2>/dev/null; then
-            # Session exists, attach to it
-            echo "Attaching to existing tmux session: $session_name"
-            tmux attach-session -t "$session_name"
-        else
-            # Session does not exist, create it and attach
-            echo "Creating new session '$session_name' with VIM and server windows..."
-            tmux new-session -d -s "$session_name" -n "nvim" "nvim ."
-            tmux new-window -t "$session_name" -n "term"
-            tmux new-window -t "$session_name" -n "claude"
-            tmux select-window -t "$session_name:1"
-            tmux attach-session -t "$session_name"
-        fi
-    fi
-}
-
-ta(){
-  tmux attach-session -t $@
-}
-
-tk(){
-  tmux kill-session -t  $@
-}
-
-tl(){
-  tmux ls
 }
 
 ###################################################################################
@@ -219,79 +174,6 @@ softReset() {
   git reset --soft "$base" || return 1
 }
 
-#####################################################################################
-# Git Worktree
-#####################################################################################
-work-tree() {
-  local name=""
-  local base_branch="dev"
-  local prefix=""
-
-  # Parse arguments
-  while [[ $# -gt 0 ]]; do
-    case "$1" in
-      -b|--base)
-        base_branch="$2"
-        shift 2
-        ;;
-      -p|--prefix)
-        prefix="$2"
-        shift 2
-        ;;
-      -h|--help)
-        echo "Usage: work-tree <name> [-b <base-branch>] [-p <prefix>]"
-        echo ""
-        echo "Options:"
-        echo "  -b, --base    Base branch (default: dev)"
-        echo "  -p, --prefix  Branch prefix (e.g., feature, bugfix)"
-        echo ""
-        echo "Examples:"
-        echo "  work-tree auth-service              # branch: auth-service"
-        echo "  work-tree auth-service -p feature   # branch: feature/auth-service"
-        echo "  work-tree hotfix -b main            # from main branch"
-        return 0
-        ;;
-      -*)
-        echo "Unknown option: $1"
-        return 1
-        ;;
-      *)
-        name="$1"
-        shift
-        ;;
-    esac
-  done
-
-  if [[ -z "$name" ]]; then
-    echo "Error: Please provide a branch name"
-    echo "Usage: work-tree <name> [-b <base-branch>] [-p <prefix>]"
-    return 1
-  fi
-
-  local branch_name
-  if [[ -n "$prefix" ]]; then
-    branch_name="${prefix}/${name}"
-  else
-    branch_name="$name"
-  fi
-
-  local repo_name=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")")
-  local worktree_dir="../${repo_name}-${name}"
-
-  echo "Creating worktree for ${branch_name} from ${base_branch}..."
-  git worktree add "${worktree_dir}" -b "${branch_name}" "${base_branch}"
-
-  if [[ $? -eq 0 ]]; then
-    echo "✅ Worktree created at ${worktree_dir}"
-    echo "📂 Branch: ${branch_name}"
-    cd "${worktree_dir}"
-    ts "${name}"
-  else
-    echo "❌ Failed to create worktree"
-    return 1
-  fi
-}
-alias worktree='work-tree'
 
 #####################################################################################
 # Kubernetes
@@ -299,3 +181,38 @@ alias worktree='work-tree'
 alias dbPortForward='kubectl port-forward svc/rdp-postgres 15432:5432 -n data-fabric --context kind-rdp > /dev/null 2>&1 &'
 
 source ~/.raftrc
+
+#####################################################################################
+# Vi Mode Indicator (prepended to PROMPT)
+#####################################################################################
+_ZVM_BASE_PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%} \$(git_prompt_info)"
+
+function _zvm_set_prompt() {
+  local indicator
+  case $ZVM_MODE in
+    $ZVM_MODE_NORMAL)      indicator="%F{#8aadf4}[NORMAL]%f " ;;
+    $ZVM_MODE_INSERT)      indicator="%F{#a6da95}[INSERT]%f " ;;
+    $ZVM_MODE_VISUAL)      indicator="%F{#ed8796}[VISUAL]%f " ;;
+    $ZVM_MODE_VISUAL_LINE) indicator="%F{#ed8796}[V-LINE]%f " ;;
+    $ZVM_MODE_REPLACE)     indicator="%F{#ed8796}[REPLACE]%f " ;;
+    *)                     indicator="%F{#a6da95}[INSERT]%f " ;;
+  esac
+  PROMPT="${indicator}${_ZVM_BASE_PROMPT}"
+}
+
+function zvm_after_select_vi_mode() { _zvm_set_prompt }
+function zvm_after_init() { _zvm_set_prompt }
+
+#####################################################################################
+# Carapace - Shell Completion
+#####################################################################################
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+
+export CARAPACE_STYLE_CARAPACE_DESCRIPTION="dim"
+export CARAPACE_STYLE_CARAPACE_VALUE="fg:#cba6f7"
+export CARAPACE_STYLE_CARAPACE_KEYWORD="fg:#89b4fa,bold"
+export CARAPACE_STYLE_CARAPACE_SECTION="fg:#a6e3a1,bold"
+export CARAPACE_STYLE_CARAPACE_FLAG="fg:#f38ba8"
+
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
