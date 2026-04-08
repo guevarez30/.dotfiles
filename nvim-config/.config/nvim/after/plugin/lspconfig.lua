@@ -19,7 +19,7 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
 	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-	vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, bufopts)
+	vim.keymap.set("n", "gr", function() require("telescope.builtin").lsp_references({}) end, bufopts)
 end
 
 --Enable (broadcasting) snippet capability for completion

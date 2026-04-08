@@ -64,13 +64,6 @@ end, { noremap = true, desc = "Modified files to quickfix" })
 -- Remap Esc in Terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 
--- Harpoon
-local harpoon = require("harpoon")
-
-harpoon:setup()
-
-vim.keymap.set("n", "<leader>h", function() harpoon:list():add() end)
-vim.keymap.set("n", "<leader>hl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()

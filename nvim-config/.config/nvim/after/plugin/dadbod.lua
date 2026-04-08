@@ -31,5 +31,4 @@ local dbs = {
   rdp_backend = vim.env.DB_RDP_BACKEND,
 }
 vim.g.dbs = dbs
-vim.g.db = dbs.rdp_platform
 

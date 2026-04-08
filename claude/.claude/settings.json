@@ -3,12 +3,13 @@
     "allow": [
       "Read(//Users/TaylorGuevarez/**)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(cat:*)",
-      "Edit(**)",
-      "Write(**)"
+      "Bash(cat:*)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [
+      "Edit(**)",
+      "Write(**)"
+    ]
   },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true
