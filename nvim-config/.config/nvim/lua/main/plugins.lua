@@ -25,78 +25,85 @@ require("lazy").setup({
 	"williamboman/mason.nvim",
 
 	-- Treesitter
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		event = { "BufReadPost", "BufNewFile" },
-		config = function()
-			require("nvim-treesitter").setup({})
-			-- Install parsers
-			local parsers = {
-				"bash", "c", "css", "go", "gomod", "gosum", "gotmpl",
-				"html", "java", "javascript", "json", "lua",
-				"markdown", "markdown_inline", "python", "rust",
-				"typescript", "tsx", "vim", "vimdoc", "yaml",
-			}
-			local installed = require("nvim-treesitter.config").get_installed()
-			local to_install = vim.tbl_filter(function(p)
-				return not vim.list_contains(installed, p)
-			end, parsers)
-			if #to_install > 0 then
-				require("nvim-treesitter.install").install(to_install)
-			end
-
-			-- Enable treesitter highlighting
-			vim.api.nvim_create_autocmd("FileType", {
-				callback = function(args)
-					pcall(vim.treesitter.start, args.buf)
-				end,
-			})
-			-- Start on the current buffer (which triggered the load)
-			pcall(vim.treesitter.start)
-		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		config = function()
-			local select = require("nvim-treesitter-textobjects.select")
-			local move = require("nvim-treesitter-textobjects.move")
-			local swap = require("nvim-treesitter-textobjects.swap")
-			local config = require("nvim-treesitter-textobjects.config")
-
-			config.update({ select = { lookahead = true } })
-
-			-- Select textobjects
-			local select_maps = {
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = "@class.inner",
-				["aa"] = "@parameter.outer",
-				["ia"] = "@parameter.inner",
-			}
-			for key, query in pairs(select_maps) do
-				vim.keymap.set({ "x", "o" }, key, function()
-					select.select_textobject(query)
-				end, { desc = "Select " .. query })
-			end
-
-			-- Move to next/previous textobjects
-			vim.keymap.set({ "n", "x", "o" }, "]m", function() move.goto_next_start("@function.outer") end, { desc = "Next function start" })
-			vim.keymap.set({ "n", "x", "o" }, "]]", function() move.goto_next_start("@class.outer") end, { desc = "Next class start" })
-			vim.keymap.set({ "n", "x", "o" }, "]M", function() move.goto_next_end("@function.outer") end, { desc = "Next function end" })
-			vim.keymap.set({ "n", "x", "o" }, "][", function() move.goto_next_end("@class.outer") end, { desc = "Next class end" })
-			vim.keymap.set({ "n", "x", "o" }, "[m", function() move.goto_previous_start("@function.outer") end, { desc = "Previous function start" })
-			vim.keymap.set({ "n", "x", "o" }, "[[", function() move.goto_previous_start("@class.outer") end, { desc = "Previous class start" })
-			vim.keymap.set({ "n", "x", "o" }, "[M", function() move.goto_previous_end("@function.outer") end, { desc = "Previous function end" })
-			vim.keymap.set({ "n", "x", "o" }, "[]", function() move.goto_previous_end("@class.outer") end, { desc = "Previous class end" })
-
-			-- Swap parameters
-			vim.keymap.set("n", "<leader>a", function() swap.swap_next("@parameter.inner") end, { desc = "Swap with next parameter" })
-			vim.keymap.set("n", "<leader>A", function() swap.swap_previous("@parameter.inner") end, { desc = "Swap with previous parameter" })
-		end,
-	},
+		{
+			"nvim-treesitter/nvim-treesitter",
+			build = ":TSUpdate",
+			event = { "BufReadPost", "BufNewFile" },
+			config = function()
+				local parsers = {
+					"bash", "c", "css", "go", "gomod", "gosum", "gotmpl",
+					"html", "java", "javascript", "json", "lua",
+					"markdown", "markdown_inline", "python", "rust",
+					"typescript", "tsx", "vim", "vimdoc", "yaml",
+				}
+				require("nvim-treesitter").setup({
+					ensure_installed = parsers,
+					auto_install = true,
+					highlight = {
+						enable = true,
+					},
+					indent = {
+						enable = true,
+					},
+					incremental_selection = {
+						enable = true,
+						keymaps = {
+							init_selection = "an",
+							node_incremental = "an",
+							node_decremental = "in",
+							scope_incremental = false,
+						},
+					},
+					textobjects = {
+						select = {
+							enable = true,
+							lookahead = true,
+							keymaps = {
+								["af"] = "@function.outer",
+								["if"] = "@function.inner",
+								["ac"] = "@class.outer",
+								["ic"] = "@class.inner",
+								["aa"] = "@parameter.outer",
+								["ia"] = "@parameter.inner",
+							},
+						},
+						move = {
+							enable = true,
+							set_jumps = true,
+							goto_next_start = {
+								["]m"] = "@function.outer",
+								["]]"] = "@class.outer",
+							},
+							goto_next_end = {
+								["]M"] = "@function.outer",
+								["]["] = "@class.outer",
+							},
+							goto_previous_start = {
+								["[m"] = "@function.outer",
+								["[["] = "@class.outer",
+							},
+							goto_previous_end = {
+								["[M"] = "@function.outer",
+								["[]"] = "@class.outer",
+							},
+						},
+						swap = {
+							enable = true,
+							swap_next = {
+								["<leader>a"] = "@parameter.inner",
+							},
+							swap_previous = {
+								["<leader>A"] = "@parameter.inner",
+							},
+						},
+					},
+				})
+			end,
+		},
+		{
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			dependencies = { "nvim-treesitter/nvim-treesitter" },
+		},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
@@ -115,11 +122,7 @@ require("lazy").setup({
 		end,
 	},
 
-    {
-      "neovim/nvim-lspconfig",
-      cmd = "LspInfo", -- Make LspInfo command available immediately
-      -- other configurations
-    },
+	"neovim/nvim-lspconfig",
 
 	-- CMP
 	"hrsh7th/nvim-cmp",
@@ -165,8 +168,8 @@ require("lazy").setup({
 			})
 
 			local telescope = require("telescope").load_extension("bookmarks")
-			vim.keymap.set("n", "]m", bm.bookmark_next,   { desc = "Next bookmark" })
-			vim.keymap.set("n", "[m", bm.bookmark_prev,   { desc = "Previous bookmark" })
+			vim.keymap.set("n", "]b", bm.bookmark_next,   { desc = "Next bookmark" })
+			vim.keymap.set("n", "[b", bm.bookmark_prev,   { desc = "Previous bookmark" })
 			vim.keymap.set("n", "mm", bm.bookmark_toggle, { desc = "Toggle bookmark" })
 			vim.keymap.set("n", "ma", bm.bookmark_ann,    { desc = "Bookmark with annotation" })
 			vim.keymap.set("n", "mc", bm.bookmark_clean,  { desc = "Clear all bookmarks in file" })
@@ -223,106 +226,32 @@ require("lazy").setup({
 		config = true,
 	},
 
-	-- CodeCompanion - AI assistant
+	-- Codex terminal integration
 	{
-		"olimorris/codecompanion.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			"ravitemer/codecompanion-history.nvim",
+		"johnseth97/codex.nvim",
+		cmd = { "Codex", "CodexToggle" },
+		keys = {
+			{
+				"<leader>cc",
+				function()
+					require("codex").toggle()
+				end,
+				desc = "Toggle Codex",
+				mode = { "n", "t" },
+			},
 		},
-		config = function()
-			require("codecompanion").setup({
-				adapters = {
-					acp = {
-						claude_code = function()
-							return require("codecompanion.adapters").extend("claude_code", {
-								env = {
-									CLAUDE_CODE_OAUTH_TOKEN = "CLAUDE_CODE_OAUTH_TOKEN",
-								},
-							})
-						end,
-					},
-				},
-				interactions = {
-					chat = {
-						adapter = "claude_code",
-						opts = {
-							system_prompt = "You are a senior software engineer. Be direct and concise. No filler, no preamble, no summaries. Code-only responses unless explanation is explicitly asked for.",
-						},
-					},
-					inline = {
-						adapter = "claude_code",
-					},
-				},
-				display = {
-					chat = {
-						fold_reasoning = false,
-						show_reasoning = false,
-					},
-				},
-				diff = {
-					enabled = true,
-					provider = "inline",
-				},
-				tools = {
-					["insert_edit_into_file"] = {
-						opts = {
-							require_approval_before = {
-								buffer = true,
-								file = true,
-							},
-							require_confirmation_after = true,
-						},
-					},
-					["cmd_runner"] = {
-						opts = {
-							require_approval_before = true,
-						},
-					},
-				},
-				rules = {
-					default = {
-						description = "Project rules auto-loaded into every chat",
-						files = {
-							{ path = "CLAUDE.md", parser = "claude" },
-							{ path = "CLAUDE.local.md", parser = "claude" },
-							"AGENT.md",
-							"AGENTS.md",
-							".cursorrules",
-						},
-					},
-					opts = {
-						chat = {
-							enabled = true,
-							autoload = "default",
-						},
-					},
-				},
-				extensions = {
-					history = {
-						enabled = true,
-						opts = {
-							keymap = "gh",
-							save_chat_keymap = "sc",
-							auto_save = true,
-							picker = "telescope",
-							auto_generate_title = true,
-							expiration_days = 0,
-						},
-					},
-				},
-			})
-
-			vim.keymap.set({ "n", "v" }, "<leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle chat" })
-			vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>CodeCompanionActions<cr>", { desc = "Actions palette" })
-			vim.keymap.set("v", "<leader>ci", "<cmd>CodeCompanionChat Add<cr>", { desc = "Add selection to chat" })
-			vim.keymap.set("n", "<leader>ch", "<cmd>CodeCompanionHistory<cr>", { desc = "CodeCompanion history" })
-			vim.cmd([[cab cc CodeCompanion]])
-		end,
+		opts = {
+			keymaps = {
+				toggle = nil,
+			},
+			border = "rounded",
+			width = 0.35,
+			autoinstall = false,
+			panel = true,
+		},
 	},
 
-{
+	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,

@@ -25,6 +25,12 @@ set.expandtab = false -- Use actual tab characters
 set.copyindent = true
 set.preserveindent = true
 set.scrolloff = 8
+set.winborder = "rounded"
+set.pumheight = 12
+set.pummaxwidth = 80
+set.completeopt = { "menu", "menuone", "noselect", "popup", "fuzzy" }
+set.diffopt:append({ "indent-heuristic", "inline:word" })
+set.signcolumn = "yes:1"
 
 -- Split behavior: always vertical, always on the right
 set.splitright = true

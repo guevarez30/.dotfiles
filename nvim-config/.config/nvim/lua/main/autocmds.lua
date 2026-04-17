@@ -1,19 +1,31 @@
-local cmd = vim.cmd
+local augroup = vim.api.nvim_create_augroup
 
--- Auto update on file change
-cmd([[autocmd FocusGained * :checktime]])
-cmd([[highlight clear LineNr]])
+vim.api.nvim_set_hl(0, "LineNr", {})
+
+vim.api.nvim_create_autocmd("FocusGained", {
+	group = augroup("DotfilesChecktime", { clear = true }),
+	callback = function()
+		vim.cmd.checktime()
+	end,
+})
 
 -- Auto format on save
 vim.api.nvim_create_autocmd("BufWritePre", {
+	group = augroup("DotfilesFormatOnSave", { clear = true }),
 	pattern = "*",
 	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
+		require("conform").format({
+			bufnr = args.buf,
+			async = false,
+			lsp_format = "fallback",
+			quiet = true,
+		})
 	end,
 })
 
 -- Prevent automatic comment continuation
 vim.api.nvim_create_autocmd("FileType", {
+	group = augroup("DotfilesFormatOptions", { clear = true }),
 	pattern = "*",
 	callback = function()
 		vim.opt_local.formatoptions:remove({ "r", "o" })
@@ -22,6 +34,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Fix indentation for CSS, SCSS, and similar files
 vim.api.nvim_create_autocmd("FileType", {
+	group = augroup("DotfilesCssIndent", { clear = true }),
 	pattern = { "css", "scss", "sass", "less" },
 	callback = function()
 		vim.opt_local.tabstop = 4
@@ -33,6 +46,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Detect Helm chart templates as gotmpl for proper syntax highlighting
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	group = augroup("DotfilesHelmTemplates", { clear = true }),
 	pattern = { "*/templates/*.yaml", "*/templates/*.yml", "*/templates/*.tpl", "*.gotmpl" },
 	callback = function()
 		vim.bo.filetype = "gotmpl"
@@ -65,5 +79,3 @@ vim.keymap.set("n", "<Esc>", function()
 		end
 	end
 end, { desc = "Close floating windows" })
-
-vim.cmd.colorscheme("catppuccin-mocha")

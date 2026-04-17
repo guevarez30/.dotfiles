@@ -186,6 +186,10 @@ function zvm_after_select_vi_mode() { _zvm_set_prompt }
 function zvm_after_init() { _zvm_set_prompt }
 
 
+alias dirty-tag='echo "$(git rev-parse --short HEAD)-dirty"'
+
+
+
 
 #####################################################################################
 # Carapace - Shell Completion

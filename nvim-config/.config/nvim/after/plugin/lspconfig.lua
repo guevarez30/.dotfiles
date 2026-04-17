@@ -1,9 +1,27 @@
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
+
+vim.diagnostic.config({
+	underline = false,
+	virtual_text = {
+		spacing = 2,
+		source = "if_many",
+	},
+	signs = false,
+	update_in_insert = false,
+	severity_sort = true,
+	float = {
+		border = "rounded",
+		source = "if_many",
+	},
+})
+
 vim.keymap.set("n", "E", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "[d", function()
+	vim.diagnostic.jump({ count = -1, float = true })
+end, opts)
+vim.keymap.set("n", "]d", function()
+	vim.diagnostic.jump({ count = 1, float = true })
+end, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -11,19 +29,33 @@ local on_attach = function(client, bufnr)
 	-- Enable completion triggered by <c-x><c-o>
 	vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+	vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, bufopts)
 	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
 	vim.keymap.set("n", "gr", function() require("telescope.builtin").lsp_references({}) end, bufopts)
+	vim.keymap.set("n", "grx", vim.lsp.codelens.run, bufopts)
+
+	if client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens) then
+		local group = vim.api.nvim_create_augroup("DotfilesLspCodeLens" .. bufnr, { clear = true })
+		vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+			group = group,
+			buffer = bufnr,
+			callback = vim.lsp.codelens.refresh,
+		})
+		vim.lsp.codelens.refresh()
+	end
+
+	if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	end
 end
 
 --Enable (broadcasting) snippet capability for completion
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local lsp_flags = {
@@ -49,7 +81,9 @@ vim.lsp.config.ts_ls = {
 	cmd = { "typescript-language-server", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
 	on_attach = on_attach,
+	capabilities = capabilities,
 	flags = lsp_flags,
+	workspace_required = true,
 }
 
 -- Tailwind CSS
@@ -72,7 +106,7 @@ vim.lsp.config.rust_analyzer = {
 			diagnostics = {
 				disabled = { "unresolved-import" },
 			},
-			checkOnSave = {
+			check = {
 				command = "clippy",
 			},
 		},
@@ -97,6 +131,7 @@ vim.lsp.config.gopls = {
 		client.server_capabilities.documentRangeFormattingProvider = false
 		on_attach(client, bufnr)
 	end,
+	capabilities = capabilities,
 	flags = lsp_flags,
 	settings = {
 		gopls = {
@@ -111,6 +146,7 @@ vim.lsp.config.eslint = {
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue", "svelte", "astro" },
 	on_attach = on_attach,
 	capabilities = capabilities,
+	workspace_required = true,
 	settings = {
 		codeActionOnSave = {
 			enable = true,
@@ -139,6 +175,7 @@ vim.lsp.config.htmx = {
 vim.lsp.config.cssls = {
 	cmd = { "vscode-css-language-server", "--stdio" },
 	filetypes = { "css", "scss", "less" },
+	on_attach = on_attach,
 	capabilities = capabilities,
 }
 
