@@ -44,12 +44,20 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Detect Helm chart templates as gotmpl for proper syntax highlighting
+-- Detect Helm chart templates as helm for proper Tree-sitter highlighting
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	group = augroup("DotfilesHelmTemplates", { clear = true }),
 	pattern = { "*/templates/*.yaml", "*/templates/*.yml", "*/templates/*.tpl", "*.gotmpl" },
 	callback = function()
-		vim.bo.filetype = "gotmpl"
+		vim.bo.filetype = "helm"
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup("DotfilesTreesitterTemplates", { clear = true }),
+	pattern = { "helm", "gotmpl" },
+	callback = function(args)
+		pcall(vim.treesitter.start, args.buf)
 	end,
 })
 

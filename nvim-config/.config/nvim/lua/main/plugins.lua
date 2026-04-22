@@ -32,7 +32,7 @@ require("lazy").setup({
 			config = function()
 				local parsers = {
 					"bash", "c", "css", "go", "gomod", "gosum", "gotmpl",
-					"html", "java", "javascript", "json", "lua",
+					"helm", "html", "java", "javascript", "json", "lua",
 					"markdown", "markdown_inline", "python", "rust",
 					"typescript", "tsx", "vim", "vimdoc", "yaml",
 				}

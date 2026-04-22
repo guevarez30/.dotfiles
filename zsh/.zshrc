@@ -59,12 +59,9 @@ plugins=(git web-search sudo zsh-syntax-highlighting zsh-autosuggestions zsh-vi-
 
 source $ZSH/oh-my-zsh.sh
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
+# Preferred editor for CLI tools that honor either VISUAL or EDITOR.
+export VISUAL='nvim'
+export EDITOR='nvim'
 
 source ~/.localrc
 
@@ -75,3 +72,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="$HOME/.local/bin:$PATH"
+export K9S_CONFIG_DIR="$HOME/.config/k9s"

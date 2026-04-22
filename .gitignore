@@ -2,3 +2,4 @@ helix/runtime
 .tmux
 claude/.claude
 .nvimlog
+*.log
