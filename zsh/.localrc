@@ -27,7 +27,8 @@ t() {
     if [ $# -gt 0 ]; then
         tmux new-session -A -s "$1"
     else
-        sesh connect $(sesh list --tmux | fzf \
+        local session
+        session=$(sesh list --tmux | fzf \
             --height 40% \
             --reverse \
             --border \
@@ -36,20 +37,9 @@ t() {
             --bind 'ctrl-j:down,ctrl-k:up' \
             --pointer '▶' \
             --marker '✓' | tr -d '[:space:]')
+
+        [ -n "$session" ] && sesh connect "$session"
     fi
-}
-
-# Set the terminal tab/window title before launching Codex.
-codex() {
-    local tab_title="codex"
-    printf '\033]1;%s\007\033]2;%s\007' "$tab_title" "$tab_title"
-
-    if [ -n "$TMUX" ]; then
-        tmux set-window-option automatic-rename off >/dev/null 2>&1
-        tmux rename-window "$tab_title" >/dev/null 2>&1
-    fi
-
-    command codex "$@"
 }
 
 ###################################################################################

@@ -61,6 +61,14 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup("DotfilesTreesitterGo", { clear = true }),
+	pattern = { "go", "gomod", "gosum" },
+	callback = function(args)
+		pcall(vim.treesitter.start, args.buf)
+	end,
+})
+
 -- :F / :P - show path and copy to clipboard
 vim.api.nvim_create_user_command("F", function()
 	local path = vim.fn.expand("%:p")
