@@ -1,7 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Fall back to xterm-256color if terminal type is unknown (e.g. xterm-ghostty over SSH)
+# Fall back to xterm-256color if terminal type is unknown, such as xterm-ghostty over SSH.
 if ! infocmp "$TERM" &>/dev/null; then
   export TERM=xterm-256color
 fi
@@ -64,19 +64,25 @@ plugins=(git web-search sudo zsh-syntax-highlighting zsh-autosuggestions zsh-vi-
 
 source $ZSH/oh-my-zsh.sh
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
+# Preferred editor for CLI tools that honor either VISUAL or EDITOR.
+export VISUAL='nvim'
+export EDITOR='nvim'
 
 source ~/.localrc
 
 # bun completions
-[ -s "/Users/TaylorGuevarez/.bun/_bun" ] && source "/Users/TaylorGuevarez/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="$HOME/.local/bin:$PATH"
+export K9S_CONFIG_DIR="$HOME/.config/k9s"
+
+copy() {
+	clipboard-copy
+}
+
+paste() {
+	clipboard-paste
+}

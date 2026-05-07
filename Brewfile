@@ -21,6 +21,10 @@ brew "bat"          # Cat with syntax highlighting
 brew "tree"         # Directory tree visualization
 brew "jq"           # JSON processor
 brew "stow"         # Symlink farm manager for dotfiles
+brew "fzf"          # Fuzzy finder for shell and editor integration
+brew "zoxide"       # Smarter cd (required by sesh)
+tap "joshmedeski/sesh"
+brew "joshmedeski/sesh/sesh" # Tmux session manager with fzf integration
 
 ###################################################################################
 # Development Tools

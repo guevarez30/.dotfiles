@@ -25,6 +25,20 @@ set.expandtab = false -- Use actual tab characters
 set.copyindent = true
 set.preserveindent = true
 set.scrolloff = 8
+set.winborder = "rounded"
+set.pumheight = 12
+if vim.fn.exists("&pummaxwidth") == 1 then
+	set.pummaxwidth = 80
+end
+set.completeopt = { "menu", "menuone", "noselect" }
+if vim.fn.has("nvim-0.12") == 1 then
+	set.completeopt:append({ "popup", "fuzzy" })
+end
+set.diffopt:append({ "indent-heuristic" })
+if vim.fn.has("nvim-0.12") == 1 then
+	set.diffopt:append({ "inline:word" })
+end
+set.signcolumn = "yes:1"
 
 -- Split behavior: always vertical, always on the right
 set.splitright = true
@@ -34,11 +48,3 @@ set.equalalways = false  -- Don't automatically equalize window sizes
 -- Prevent automatic comment continuation
 set.formatoptions:remove("o")
 set.formatoptions:remove("r")
-
--- Diagnostic display
-vim.diagnostic.config({
-	virtual_text = true,
-	signs = true,
-	underline = true,
-	update_in_insert = false,
-})

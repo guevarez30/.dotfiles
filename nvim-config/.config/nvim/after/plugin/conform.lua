@@ -7,11 +7,9 @@ conform.setup({
 		javascript = { "prettier" },
 		javascriptreact = { "prettier" },
 		json = { "prettier" },
-		go = { "gofmt" },
-		-- java disabled - jdtls formatter doesn't match IntelliJ style
-		-- java = { lsp_format = "prefer" },
-		rust = { "rustfmt" },
-		python = { "isort", "ruff_format" },
+		go = { "goimports", "gofmt" },
+	 	rust = { "rustfmt" },
+		python = { "autopep8" },
 		yaml = { "prettier" },
 		markdown = { "prettier" },
 		["_"] = { "trim_whitespace" },
@@ -40,3 +38,4 @@ local templ_format = function()
 	})
 end
 vim.api.nvim_create_autocmd({ "BufWritePre" }, { pattern = { "*.templ" }, callback = templ_format })
+

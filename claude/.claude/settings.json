@@ -11,6 +11,8 @@
       "Write(**)"
     ]
   },
-  "enabledPlugins": {},
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  },
   "alwaysThinkingEnabled": false
 }

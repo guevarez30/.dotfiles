@@ -16,9 +16,6 @@ vim.keymap.set("n", "J", "mzJ`z", { noremap = true })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
 
-vim.keymap.set("n", "gh", "_", { noremap = true })
-vim.keymap.set("n", "gl", "$", { noremap = true })
-
 -- Move across line
 vim.keymap.set("n", "gh", "_", { noremap = true })
 vim.keymap.set("n", "gl", "$", { noremap = true })
@@ -28,35 +25,14 @@ vim.keymap.set("n", "n", "nzzzv", { noremap = true })
 vim.keymap.set("n", "N", "Nzzzv", { noremap = true })
 vim.keymap.set("n", "*", "*zzzv", { noremap = true })
 
+-- Explicit host/system clipboard copy
+vim.keymap.set("n", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipboard" })
+vim.keymap.set("v", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipboard" })
+vim.keymap.set("n", "<leader>Y", '"+yy', { noremap = true, desc = "Copy line to clipboard" })
+
 -- Telescope
-local telescope_builtin = require("telescope.builtin")
-
--- Find files: exclude *_test.go
-vim.keymap.set("n", "<leader>p", function()
-	telescope_builtin.find_files({
-		find_command = { "rg", "--files", "--glob", "!*_test.go" },
-	})
-end, { noremap = true, desc = "Find files (no Go tests)" })
-
--- Find files: include all
-vim.keymap.set("n", "<leader>P", function()
-	telescope_builtin.find_files()
-end, { noremap = true, desc = "Find files (with Go tests)" })
-
--- Live grep: exclude *_test.go
-vim.keymap.set("n", "<leader>f", function()
-	telescope_builtin.live_grep({
-		additional_args = { "--glob", "!*_test.go" },
-	})
-end, { noremap = true, desc = "Live grep (no Go tests)" })
-
--- Live grep: include all
-vim.keymap.set("n", "<leader>F", function()
-	telescope_builtin.live_grep()
-end, { noremap = true, desc = "Live grep (with Go tests)" })
-
-vim.keymap.set("n", "<leader>b", ":Telescope git_status <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>d", ":Telescope diagnostics<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>p", ":Telescope find_files <CR>", { noremap = true })
+vim.keymap.set("n", "<leader>f", ":Telescope live_grep <CR>", { noremap = true })
 
 -- Visual mode telescope grep
 vim.keymap.set("v", "<leader>f", function()
@@ -92,13 +68,6 @@ end, { noremap = true, desc = "Modified files to quickfix" })
 -- Remap Esc in Terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 
--- Harpoon
-local harpoon = require("harpoon")
-
-harpoon:setup()
-
-vim.keymap.set("n", "<leader>h", function() harpoon:list():add() end)
-vim.keymap.set("n", "<leader>hl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
@@ -109,9 +78,5 @@ vim.keymap.set("n", "<Leader>ee", function()
 	elseif filetype == "javascript" or filetype == "typescript" then
 		vim.cmd.normal("itry {\n\n} catch(err) {\n  console.error(err)\n}")
 		return vim.cmd.normal("3k")
-	elseif filetype == "java" then
-		vim.cmd.normal("itry {\n\n} catch (Exception e) {\n  e.printStackTrace();\n}")
-		return vim.cmd.normal("3k")
 	end
 end)
-

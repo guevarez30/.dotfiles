@@ -3,7 +3,6 @@ local cmp = require("cmp")
 local lspkind = require("lspkind")
 local luasnip = require("luasnip")
 
--- better autocompletion experience
 vim.o.completeopt = "menuone,noselect"
 
 cmp.setup({
@@ -52,11 +51,4 @@ cmp.setup.filetype({ "sql" }, {
 		{name = "vim-dadbod-completion"},
 		{ name = "buffer"}
 	}
-})
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
-	underline = false,
-	virtual_text = true,
-	signs = false,
-	update_in_insert = false,
 })

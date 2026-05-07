@@ -6,22 +6,23 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local function get_bookmark_file(dir)
+	dir = dir or vim.fn.getcwd()
+	local result = vim.fn.systemlist("git -C " .. vim.fn.shellescape(dir) .. " rev-parse --show-toplevel")
+	if vim.v.shell_error == 0 and result[1] and result[1] ~= "" then
+		return result[1] .. "/.bookmarks"
+	end
+	return dir .. "/.bookmarks"
+end
+
 -- Setup lazy.nvim
 require("lazy").setup({
 	{
-		"ThePrimeagen/harpoon",
-		branch = "harpoon2",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
-
-	{
 		"nvim-lualine/lualine.nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons" },
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 
 	"williamboman/mason.nvim",
-	"williamboman/mason-lspconfig.nvim",
-	"WhoIsSethDaniel/mason-tool-installer.nvim",
 
 	-- Treesitter
 	{
@@ -30,62 +31,18 @@ require("lazy").setup({
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
 			require("nvim-treesitter.configs").setup({
-				ensure_installed = {
-					"bash", "c", "css", "go", "gomod", "gosum", "gotmpl",
-					"html", "java", "javascript", "json", "lua",
-					"markdown", "markdown_inline", "python", "rust",
-					"typescript", "tsx", "vim", "vimdoc", "yaml",
-				},
-				sync_install = false,
-				auto_install = true,
 				highlight = {
 					enable = true,
-					additional_vim_regex_highlighting = false,
 				},
-				indent = { enable = true },
+				indent = {
+					enable = true,
+				},
 			})
 		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		config = function()
-			local select = require("nvim-treesitter-textobjects.select")
-			local move = require("nvim-treesitter-textobjects.move")
-			local swap = require("nvim-treesitter-textobjects.swap")
-			local config = require("nvim-treesitter-textobjects.config")
-
-			config.update({ select = { lookahead = true } })
-
-			-- Select textobjects
-			local select_maps = {
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = "@class.inner",
-				["aa"] = "@parameter.outer",
-				["ia"] = "@parameter.inner",
-			}
-			for key, query in pairs(select_maps) do
-				vim.keymap.set({ "x", "o" }, key, function()
-					select.select_textobject(query)
-				end, { desc = "Select " .. query })
-			end
-
-			-- Move to next/previous textobjects
-			vim.keymap.set({ "n", "x", "o" }, "]m", function() move.goto_next_start("@function.outer") end, { desc = "Next function start" })
-			vim.keymap.set({ "n", "x", "o" }, "]]", function() move.goto_next_start("@class.outer") end, { desc = "Next class start" })
-			vim.keymap.set({ "n", "x", "o" }, "]M", function() move.goto_next_end("@function.outer") end, { desc = "Next function end" })
-			vim.keymap.set({ "n", "x", "o" }, "][", function() move.goto_next_end("@class.outer") end, { desc = "Next class end" })
-			vim.keymap.set({ "n", "x", "o" }, "[m", function() move.goto_previous_start("@function.outer") end, { desc = "Previous function start" })
-			vim.keymap.set({ "n", "x", "o" }, "[[", function() move.goto_previous_start("@class.outer") end, { desc = "Previous class start" })
-			vim.keymap.set({ "n", "x", "o" }, "[M", function() move.goto_previous_end("@function.outer") end, { desc = "Previous function end" })
-			vim.keymap.set({ "n", "x", "o" }, "[]", function() move.goto_previous_end("@class.outer") end, { desc = "Previous class end" })
-
-			-- Swap parameters
-			vim.keymap.set("n", "<leader>a", function() swap.swap_next("@parameter.inner") end, { desc = "Swap with next parameter" })
-			vim.keymap.set("n", "<leader>A", function() swap.swap_previous("@parameter.inner") end, { desc = "Swap with previous parameter" })
-		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
@@ -104,12 +61,11 @@ require("lazy").setup({
 			})
 		end,
 	},
-
-    {
-      "neovim/nvim-lspconfig",
-      cmd = "LspInfo", -- Make LspInfo command available immediately
-      -- other configurations
-    },
+	"neovim/nvim-lspconfig",
+	{
+		"mfussenegger/nvim-jdtls",
+		ft = { "java" },
+	},
 
 	-- CMP
 	"hrsh7th/nvim-cmp",
@@ -136,6 +92,51 @@ require("lazy").setup({
 	-- Git gutter
 	"mhinz/vim-signify",
 
+	-- Bookmarks with Telescope integration
+	{
+		"tomasky/bookmarks.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+		config = function()
+			local bm_config = require("bookmarks.config")
+			local bm        = require("bookmarks")
+
+			bm.setup({
+				save_file = get_bookmark_file(),
+				keywords = {
+					["@t"] = "☑ ",
+					["@w"] = "⚠ ",
+					["@f"] = "⛏ ",
+					["@n"] = " ",
+				},
+			})
+
+			local telescope = require("telescope").load_extension("bookmarks")
+			vim.keymap.set("n", "]b", bm.bookmark_next,   { desc = "Next bookmark" })
+			vim.keymap.set("n", "[b", bm.bookmark_prev,   { desc = "Previous bookmark" })
+			vim.keymap.set("n", "mm", bm.bookmark_toggle, { desc = "Toggle bookmark" })
+			vim.keymap.set("n", "ma", bm.bookmark_ann,    { desc = "Bookmark with annotation" })
+			vim.keymap.set("n", "mc", bm.bookmark_clean,  { desc = "Clear all bookmarks in file" })
+			vim.keymap.set("n", "mx", function()
+				bm.bookmark_clear_all()
+				bm.refresh()
+			end, { desc = "Clear all bookmarks" })
+			vim.keymap.set("n", "ml", telescope.list, { desc = "List all bookmarks" })
+
+			vim.api.nvim_create_autocmd("DirChanged", {
+				group = vim.api.nvim_create_augroup("BookmarksProjectLocal", { clear = true }),
+				callback = function(ev)
+					local new_file = get_bookmark_file(ev.file)
+					if new_file ~= bm_config.config.save_file then
+						bm_config.config.save_file = new_file
+						bm_config.config.cache = { data = {} }
+						require("bookmarks.actions").loadBookmarks()
+						bm.refresh()
+					end
+				end,
+			})
+		end,
+	},
+
 	-- telescope
 	{
 		"nvim-telescope/telescope.nvim",
@@ -155,199 +156,25 @@ require("lazy").setup({
 	-- Autoformatter
 	"stevearc/conform.nvim",
 
-	"Mofiqul/dracula.nvim",
-
 	"tpope/vim-dadbod",
 	"kristijanhusak/vim-dadbod-ui",
 	"kristijanhusak/vim-dadbod-completion",
-
-	{
-		"oysandvik94/curl.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		cmd = { "CurlOpen" },
-		config = true,
-	},
-
-	-- CodeCompanion - AI assistant
-	{
-		"olimorris/codecompanion.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		config = function()
-			require("codecompanion").setup({
-				adapters = {
-					acp = {
-						claude_code = function()
-							return require("codecompanion.adapters").extend("claude_code", {
-								env = {
-									CLAUDE_CODE_OAUTH_TOKEN = "CLAUDE_CODE_OAUTH_TOKEN",
-								},
-							})
-						end,
-					},
-				},
-				interactions = {
-					chat = {
-						adapter = "claude_code",
-						opts = {
-							system_prompt = "You are a senior software engineer. Be direct and concise. No filler, no preamble, no summaries. Code-only responses unless explanation is explicitly asked for.",
-						},
-					},
-					inline = {
-						adapter = "claude_code",
-					},
-				},
-				-- Enable diff approval workflow
-				diff = {
-					enabled = true,
-					provider = "inline", -- Shows changes in floating window (options: inline, split, mini_diff)
-				},
-				-- Tool approval settings
-				tools = {
-					["insert_edit_into_file"] = {
-						opts = {
-							require_approval_before = {
-								buffer = true, -- Require approval for buffer edits
-								file = true,   -- Require approval for file edits
-							},
-							require_confirmation_after = true,
-						},
-					},
-					["cmd_runner"] = {
-						opts = {
-							require_approval_before = true, -- Require approval for command execution
-						},
-					},
-				},
-				rules = {
-					default = {
-						description = "Project rules auto-loaded into every chat",
-						files = {
-							{ path = "CLAUDE.md", parser = "claude" },
-							{ path = "CLAUDE.local.md", parser = "claude" },
-							"AGENT.md",
-							"AGENTS.md",
-							".cursorrules",
-						},
-					},
-					opts = {
-						chat = {
-							enabled = true,
-							autoload = "default",
-						},
-					},
-				},
-			})
-
-			vim.keymap.set({ "n", "v" }, "<leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle chat" })
-			vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>CodeCompanionActions<cr>", { desc = "Actions palette" })
-			vim.keymap.set("v", "<leader>ci", "<cmd>CodeCompanionChat Add<cr>", { desc = "Add selection to chat" })
-			vim.cmd([[cab cc CodeCompanion]])
-		end,
-	},
-
-	-- CodeCompanion - AI assistant
-	{
-		"olimorris/codecompanion.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			"ravitemer/codecompanion-history.nvim",
-		},
-		config = function()
-			require("codecompanion").setup({
-				adapters = {
-					acp = {
-						claude_code = function()
-							return require("codecompanion.adapters").extend("claude_code", {
-								env = {
-									CLAUDE_CODE_OAUTH_TOKEN = "CLAUDE_CODE_OAUTH_TOKEN",
-								},
-							})
-						end,
-					},
-				},
-				interactions = {
-					chat = {
-						adapter = "claude_code",
-						opts = {
-							system_prompt = "You are a senior software engineer. Be direct and concise. No filler, no preamble, no summaries. Code-only responses unless explanation is explicitly asked for.",
-						},
-					},
-					inline = {
-						adapter = "claude_code",
-					},
-				},
-				diff = {
-					enabled = true,
-					provider = "inline",
-				},
-				tools = {
-					["insert_edit_into_file"] = {
-						opts = {
-							require_approval_before = {
-								buffer = true,
-								file = true,
-							},
-							require_confirmation_after = true,
-						},
-					},
-					["cmd_runner"] = {
-						opts = {
-							require_approval_before = true,
-						},
-					},
-				},
-				rules = {
-					default = {
-						description = "Project rules auto-loaded into every chat",
-						files = {
-							{ path = "CLAUDE.md", parser = "claude" },
-							{ path = "CLAUDE.local.md", parser = "claude" },
-							"AGENT.md",
-							"AGENTS.md",
-							".cursorrules",
-						},
-					},
-					opts = {
-						chat = {
-							enabled = true,
-							autoload = "default",
-						},
-					},
-				},
-				extensions = {
-					history = {
-						enabled = true,
-						opts = {
-							keymap = "gh",
-							save_chat_keymap = "sc",
-							auto_save = true,
-							picker = "telescope",
-							auto_generate_title = true,
-							expiration_days = 0,
-						},
-					},
-				},
-			})
-
-			vim.keymap.set({ "n", "v" }, "<leader>cc", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle chat" })
-			vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>CodeCompanionActions<cr>", { desc = "Actions palette" })
-			vim.keymap.set("v", "<leader>ci", "<cmd>CodeCompanionChat Add<cr>", { desc = "Add selection to chat" })
-			vim.keymap.set("n", "<leader>ch", "<cmd>CodeCompanionHistory<cr>", { desc = "CodeCompanion history" })
-			vim.cmd([[cab cc CodeCompanion]])
-		end,
-	},
 
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,
 		config = function()
+			-- Read theme from config file, default to mocha
+			local theme_file = io.open(vim.fn.expand("~/.config/theme"), "r")
+			local flavour = "mocha"
+			if theme_file then
+				flavour = theme_file:read("*l") or "mocha"
+				theme_file:close()
+			end
+			
 			require("catppuccin").setup({
-				flavour = "macchiato",
+				flavour = flavour,
 				transparent_background = true,
 				integrations = {
 					cmp = true,
@@ -357,46 +184,42 @@ require("lazy").setup({
 					telescope = {
 						enabled = true,
 					},
-					harpoon = true,
 					mason = true,
 				},
 			})
 			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
-
 	{
-		"guevarez30/no-go.nvim",
-		branch = "fix/treesitter-query-statement-list",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		ft = "go",
-		opts = {
-			identifiers = { "err", "error" },
-			prefix = " ",
-		},
-	},
+	  "MeanderingProgrammer/render-markdown.nvim",
+	  dependencies = {
+	    "nvim-treesitter/nvim-treesitter",
+	    "nvim-mini/mini.nvim",
+	  },
+	  ft = { "markdown" },
+	  config = function()
+	    require("render-markdown").setup({
+	      heading = {
+	        sign = false,
+	        icons = {},
+	      },
+	      bullet = {
+	        enabled = true,
+	      },
+	      quote = {
+	        enabled = true,
+	      },
+	      indent = {
+	        enabled = true,
+	      },
+	      code = {
+	        sign = false,
+	        border = "none",
+	        width = "full",
+	      },
+	    })
+	  end,
+	}
 
-	-- SonarQube LSP
-	{
-		"iamkarasik/sonarqube.nvim",
-		config = function()
-			local rules = require("main.sonarqube-rules")
-			local mason_path = vim.fn.stdpath("data") .. "/mason/packages/sonarlint-language-server/extension"
-			require("sonarqube").setup({
-				rules = rules,
-				lsp = {
-					cmd = {
-						"java",
-						"-jar",
-						mason_path .. "/server/sonarlint-ls.jar",
-						"-stdio",
-						"-analyzers",
-						mason_path .. "/analyzers/sonarjava.jar",
-						mason_path .. "/analyzers/sonargo.jar",
-					},
-				},
-			})
-		end,
-	},
 
 })

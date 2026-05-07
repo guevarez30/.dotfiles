@@ -1,103 +1,68 @@
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "E", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-	-- Enable completion triggered by <c-x><c-o>
+vim.diagnostic.config({
+	underline = false,
+	virtual_text = true,
+	signs = false,
+	update_in_insert = false,
+})
+
+vim.keymap.set("n", "E", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[d", function()
+	vim.diagnostic.jump({ count = -1, float = true })
+end, opts)
+vim.keymap.set("n", "]d", function()
+	vim.diagnostic.jump({ count = 1, float = true })
+end, opts)
+
+local on_attach = function(_, bufnr)
 	vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
 	vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, bufopts)
 end
 
---Enable (broadcasting) snippet capability for completion
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local lsp_flags = {
-	-- This is the default in Nvim 0.7+
 	debounce_text_changes = 150,
 }
 
--- Add templ file type
-vim.filetype.add({ extension = { templ = "templ" } })
+local function config(name, settings)
+	vim.lsp.config(name, settings)
+end
 
--- Add helm file type detection for files in chart directories
-vim.filetype.add({
-	pattern = {
-		[".*/templates/.*%.yaml"] = "helm",
-		[".*/templates/.*%.tpl"] = "helm",
-		["helmfile.*%.yaml"] = "helm",
-	},
-})
+vim.filetype.add({ extension = { templ = "templ" } })
 
 require("mason").setup()
 
--- Auto-install LSP servers
-require("mason-lspconfig").setup({
-	ensure_installed = {
-		"pyright",
-		"ruff",
-		"yamlls",
-		"helm_ls",
-	},
-})
-
--- Auto-install formatters and other tools
-require("mason-tool-installer").setup({
-	ensure_installed = {
-		"isort",
-	},
-})
-
--- Python (Pyright for type checking)
-vim.lsp.config('pyright', {
+config("pyright", {
 	cmd = { "pyright-langserver", "--stdio" },
 	filetypes = { "python" },
 	on_attach = on_attach,
 	flags = lsp_flags,
 })
 
--- Python (Ruff for linting)
-vim.lsp.config('ruff', {
-	cmd = { "ruff", "server" },
-	filetypes = { "python" },
-	on_attach = on_attach,
-	capabilities = capabilities,
-})
-vim.lsp.enable('ruff')
-
--- TypeScript
-vim.lsp.config.ts_ls = {
+config("ts_ls", {
 	cmd = { "typescript-language-server", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
 	on_attach = on_attach,
+	capabilities = capabilities,
 	flags = lsp_flags,
-}
+})
 
--- Tailwind CSS
-vim.lsp.config.tailwindcss = {
+config("tailwindcss", {
 	cmd = { "tailwindcss-language-server", "--stdio" },
 	filetypes = { "templ", "astro", "javascript", "typescript", "react", "javascriptreact" },
 	init_options = { userLanguages = { templ = "html" } },
 	on_attach = on_attach,
 	capabilities = capabilities,
-}
+})
 
--- Rust
-vim.lsp.config.rust_analyzer = {
+config("rust_analyzer", {
 	cmd = { "rust-analyzer" },
 	filetypes = { "rust" },
 	on_attach = on_attach,
@@ -112,26 +77,24 @@ vim.lsp.config.rust_analyzer = {
 			},
 		},
 	},
-}
+})
 
--- Templ
-vim.lsp.config.templ = {
+config("templ", {
 	cmd = { "templ", "lsp" },
 	filetypes = { "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,
-}
+})
 
--- Go
-vim.lsp.config.gopls = {
+config("gopls", {
 	cmd = { "gopls" },
 	filetypes = { "go", "templ" },
 	on_attach = on_attach,
+	capabilities = capabilities,
 	flags = lsp_flags,
-}
+})
 
--- ESLint
-vim.lsp.config.eslint = {
+config("eslint", {
 	cmd = { "vscode-eslint-language-server", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue", "svelte", "astro" },
 	on_attach = on_attach,
@@ -142,81 +105,29 @@ vim.lsp.config.eslint = {
 			mode = "all",
 		},
 	},
-}
+})
 
--- HTML
-vim.lsp.config.html = {
+config("html", {
 	cmd = { "vscode-html-language-server", "--stdio" },
 	filetypes = { "html", "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,
-}
+})
 
--- HTMX
-vim.lsp.config.htmx = {
+config("htmx", {
 	cmd = { "htmx-lsp" },
 	filetypes = { "html", "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,
-}
+})
 
--- CSS
-vim.lsp.config.cssls = {
+config("cssls", {
 	cmd = { "vscode-css-language-server", "--stdio" },
 	filetypes = { "css", "scss", "less" },
-	capabilities = capabilities,
-}
-
--- Java
-vim.lsp.config('jdtls', {
-	cmd = { "jdtls" },
-	filetypes = { "java" },
-	on_attach = on_attach,
-	flags = lsp_flags,
-	capabilities = capabilities,
-	settings = {
-		java = {
-			format = {
-				enabled = true,
-				settings = {
-					url = "file://" .. vim.fn.stdpath("config") .. "/formatter/intellij-java-style.xml",
-					profile = "Default",
-				},
-			},
-		},
-	},
-})
-vim.lsp.enable('jdtls')
-
--- YAML Language Server
-vim.lsp.config('yamlls', {
-	cmd = { "yaml-language-server", "--stdio" },
-	filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		yaml = {
-			schemas = {
-				kubernetes = "*.yaml",
-			},
-			schemaStore = {
-				enable = true,
-			},
-		},
-	},
-})
-vim.lsp.enable('yamlls')
-
--- Helm Language Server
-vim.lsp.config('helm_ls', {
-	cmd = { "helm_ls", "serve" },
-	filetypes = { "helm" },
 	on_attach = on_attach,
 	capabilities = capabilities,
 })
-vim.lsp.enable('helm_ls')
 
--- Enable all configured language servers
 vim.lsp.enable({
 	"pyright",
 	"ts_ls",

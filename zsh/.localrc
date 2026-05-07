@@ -21,6 +21,7 @@ gitExclude() {
 ###################################################################################
 # TMUX
 ###################################################################################
+# Fuzzy attach to or create a tmux session with Tab/Shift+Tab navigation
 tn() {
     local name
     name=$(basename "$PWD" | tr '[:lower:]' '[:upper:]')
@@ -31,7 +32,8 @@ t() {
     if [ $# -gt 0 ]; then
         tmux new-session -A -s "$1"
     else
-        sesh connect $(sesh list --tmux | fzf \
+        local session
+        session=$(sesh list --tmux | fzf \
             --height 40% \
             --reverse \
             --border \
@@ -40,16 +42,10 @@ t() {
             --bind 'ctrl-j:down,ctrl-k:up' \
             --pointer '▶' \
             --marker '✓' | tr -d '[:space:]')
+
+        [ -n "$session" ] && sesh connect "$session"
     fi
 }
-
-###################################################################################
-# Docker
-###################################################################################
-alias d='docker'
-alias dc='docker compose'
-alias drm='docker rm $(docker ps --all --quiet)'
-alias drmi='docker rmi $(docker images --quiet --filter "dangling=true")'
 
 ###################################################################################
 # Git
@@ -59,6 +55,7 @@ alias pull='git pull'
 alias fetch='git fetch'
 alias checkout='git checkout'
 alias branch='git branch'
+
 push(){
    git push --set-upstream origin $1
 }
@@ -67,6 +64,14 @@ remote_checkout(){
   fetch
   git checkout -b $1 origin/$1
 }
+
+###################################################################################
+# Docker
+###################################################################################
+alias d='docker'
+alias dc='docker compose'
+alias drm='docker rm $(docker ps --all --quiet)'
+alias drmi='docker rmi $(docker images --quiet --filter "dangling=true")'
 
 #####################################################################################
 #Aliases
@@ -84,7 +89,16 @@ alias ckear='clear'
 alias ipconfig='ifconfig'
 alias dot='cd ~/.dotfiles'
 alias grep='rg'
-alias find='fdfind'
+if command -v fdfind &>/dev/null; then
+  alias find='fdfind'
+elif command -v fd &>/dev/null; then
+  alias find='fd'
+fi
+if command -v eza &>/dev/null; then
+  alias ls="eza"
+  alias ll="eza -l --git"
+  alias tree="eza --tree"
+fi
 alias lt='du -sh * | sort -h'
 alias loads='cd ~/raft-tech'
 alias src='source ~/.zshrc'
@@ -109,7 +123,9 @@ alias py-env="source .venv/bin/activate"
 #####################################################################################
 #Include Scripts to Path and Custom Functions
 #####################################################################################
-export PATH="$PATH:/opt/homebrew/opt/libpq/bin"
+if [[ -d /opt/homebrew/opt/libpq/bin ]]; then
+  export PATH="$PATH:/opt/homebrew/opt/libpq/bin"
+fi
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -127,6 +143,25 @@ export NVM_DIR="$HOME/.nvm"
 #####################################################################################
 export GOPATH="$HOME/go"
 export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
+
+#####################################################################################
+# FZF - Fuzzy Finder
+#####################################################################################
+# Shell keybindings: Ctrl+R (history), Ctrl+T (files), Alt+C (cd)
+if command -v fzf &>/dev/null; then
+    source <(fzf --zsh)
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+    if command -v fdfind &>/dev/null; then
+        fd_cmd='fdfind'
+    elif command -v fd &>/dev/null; then
+        fd_cmd='fd'
+    fi
+    if [[ -n "$fd_cmd" ]]; then
+        export FZF_DEFAULT_COMMAND="$fd_cmd --type f --hidden --follow --exclude .git"
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        export FZF_ALT_C_COMMAND="$fd_cmd --type d --hidden --follow --exclude .git"
+    fi
+fi
 
 #####################################################################################
 # Notes
@@ -187,21 +222,65 @@ source ~/.raftrc
 #####################################################################################
 _ZVM_BASE_PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%} \$(git_prompt_info)"
 
-function _zvm_set_prompt() {
-  local indicator
-  case $ZVM_MODE in
-    $ZVM_MODE_NORMAL)      indicator="%F{#8aadf4}[NORMAL]%f " ;;
-    $ZVM_MODE_INSERT)      indicator="%F{#a6da95}[INSERT]%f " ;;
-    $ZVM_MODE_VISUAL)      indicator="%F{#ed8796}[VISUAL]%f " ;;
-    $ZVM_MODE_VISUAL_LINE) indicator="%F{#ed8796}[V-LINE]%f " ;;
-    $ZVM_MODE_REPLACE)     indicator="%F{#ed8796}[REPLACE]%f " ;;
-    *)                     indicator="%F{#a6da95}[INSERT]%f " ;;
+bindkey -v
+KEYTIMEOUT=1
+
+function _zvm_current_mode() {
+  if [[ -n "${ZVM_MODE:-}" ]]; then
+    case $ZVM_MODE in
+      $ZVM_MODE_NORMAL) echo "NORMAL"; return ;;
+      $ZVM_MODE_INSERT) echo "INSERT"; return ;;
+      $ZVM_MODE_VISUAL) echo "VISUAL"; return ;;
+      $ZVM_MODE_VISUAL_LINE) echo "V-LINE"; return ;;
+      $ZVM_MODE_REPLACE) echo "REPLACE"; return ;;
+    esac
+  fi
+
+  case ${KEYMAP:-main} in
+    vicmd) echo "NORMAL" ;;
+    visual) echo "VISUAL" ;;
+    viopp) echo "NORMAL" ;;
+    *) echo "INSERT" ;;
   esac
+}
+
+function _zvm_set_prompt() {
+  local mode
+  local indicator
+  mode=$(_zvm_current_mode)
+
+  case $mode in
+    NORMAL)  indicator="%F{#8aadf4}[NORMAL]%f " ;;
+    INSERT)  indicator="%F{#a6da95}[INSERT]%f " ;;
+    VISUAL)  indicator="%F{#ed8796}[VISUAL]%f " ;;
+    V-LINE)  indicator="%F{#ed8796}[V-LINE]%f " ;;
+    REPLACE) indicator="%F{#ed8796}[REPLACE]%f " ;;
+    *)       indicator="%F{#a6da95}[INSERT]%f " ;;
+  esac
+
   PROMPT="${indicator}${_ZVM_BASE_PROMPT}"
 }
 
 function zvm_after_select_vi_mode() { _zvm_set_prompt }
 function zvm_after_init() { _zvm_set_prompt }
+
+function _zvm_refresh_prompt() {
+  _zvm_set_prompt
+  zle && zle reset-prompt
+}
+
+if ! command -v zvm_version >/dev/null 2>&1; then
+  function zle-line-init() {
+    _zvm_refresh_prompt
+  }
+
+  function zle-keymap-select() {
+    _zvm_refresh_prompt
+  }
+
+  zle -N zle-line-init
+  zle -N zle-keymap-select
+fi
 
 #####################################################################################
 # Carapace - Shell Completion
