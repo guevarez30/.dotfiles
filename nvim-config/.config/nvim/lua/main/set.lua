@@ -25,11 +25,21 @@ set.expandtab = false -- Use actual tab characters
 set.copyindent = true
 set.preserveindent = true
 set.scrolloff = 8
-set.winborder = "rounded"
+if vim.fn.exists("&winborder") == 1 then
+	set.winborder = "rounded"
+end
 set.pumheight = 12
-set.pummaxwidth = 80
-set.completeopt = { "menu", "menuone", "noselect", "popup", "fuzzy" }
-set.diffopt:append({ "indent-heuristic", "inline:word" })
+if vim.fn.exists("&pummaxwidth") == 1 then
+	set.pummaxwidth = 80
+end
+set.completeopt = { "menu", "menuone", "noselect" }
+if vim.fn.has("nvim-0.12") == 1 then
+	set.completeopt:append({ "popup", "fuzzy" })
+end
+set.diffopt:append({ "indent-heuristic" })
+if vim.fn.has("nvim-0.12") == 1 then
+	set.diffopt:append({ "inline:word" })
+end
 set.signcolumn = "yes:1"
 
 -- Split behavior: always vertical, always on the right
