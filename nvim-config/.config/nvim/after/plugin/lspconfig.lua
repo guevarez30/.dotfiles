@@ -31,6 +31,14 @@ local lsp_flags = {
 	debounce_text_changes = 150,
 }
 
+local function cmd_path(name, fallback)
+	local path = vim.fn.exepath(name)
+	if path ~= "" then
+		return path
+	end
+	return vim.fn.expand(fallback)
+end
+
 local function config(name, settings)
 	vim.lsp.config(name, settings)
 end
@@ -87,7 +95,7 @@ config("templ", {
 })
 
 config("gopls", {
-	cmd = { "gopls" },
+	cmd = { cmd_path("gopls", "~/go/bin/gopls") },
 	filetypes = { "go", "templ" },
 	on_attach = on_attach,
 	capabilities = capabilities,

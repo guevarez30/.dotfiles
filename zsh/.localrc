@@ -223,7 +223,10 @@ source ~/.raftrc
 _ZVM_BASE_PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%} \$(git_prompt_info)"
 
 bindkey -v
-KEYTIMEOUT=1
+# Keep this high enough for terminal escape sequences like bracketed paste.
+# If it is too low, the trailing "~" in ESC [ 201 ~ can reach vi mode and
+# toggle the case of the last pasted character.
+KEYTIMEOUT=10
 
 function _zvm_current_mode() {
   if [[ -n "${ZVM_MODE:-}" ]]; then

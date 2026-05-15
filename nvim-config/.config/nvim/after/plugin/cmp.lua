@@ -3,8 +3,6 @@ local cmp = require("cmp")
 local lspkind = require("lspkind")
 local luasnip = require("luasnip")
 
-vim.o.completeopt = "menuone,noselect"
-
 cmp.setup({
 	-- Format the autocomplete menu
 	formatting = {

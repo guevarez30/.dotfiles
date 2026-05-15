@@ -17,7 +17,8 @@ set.smarttab = true
 set.autoread = true
 set.cursorline = true
 set.termguicolors = true
-set.clipboard = "unnamedplus"
+-- Keep normal yanks inside Neovim. Use <leader>y when copying to the host clipboard.
+set.clipboard = ""
 set.tabstop = 4
 set.softtabstop = 4
 set.shiftwidth = 4

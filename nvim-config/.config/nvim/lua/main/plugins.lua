@@ -41,10 +41,6 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-	},
-	{
 		"nvim-treesitter/nvim-treesitter-context",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
@@ -147,9 +143,6 @@ require("lazy").setup({
 		build = "make",
 	},
 
-	-- Coloroizer
-	"norcalli/nvim-colorizer.lua",
-
 	-- Tmux Integration
 	"christoomey/vim-tmux-navigator",
 
@@ -172,14 +165,14 @@ require("lazy").setup({
 				flavour = theme_file:read("*l") or "mocha"
 				theme_file:close()
 			end
-			
 			require("catppuccin").setup({
 				flavour = flavour,
 				transparent_background = true,
 				integrations = {
 					cmp = true,
-					gitsigns = true,
-					nvimtree = true,
+					native_lsp = {
+						enabled = true,
+					},
 					treesitter = true,
 					telescope = {
 						enabled = true,
