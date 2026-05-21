@@ -46,20 +46,36 @@ vim.keymap.set("n", "<leader>sv", ":Vexplore <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>sh", ":Hexplore <CR>", { noremap = true })
 
 -- Git
-vim.keymap.set("n", "<leader>gg", ":Git <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gd", ":Gvdiffsplit! <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gp", ":Git -c push.default=current push <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gl", ":Git log -n 20 --decorate <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gb", ":Git blame <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gm", function()
-	local files = vim.fn.systemlist("git diff --name-only")
+local function git_changed_files_to_qf(args, title)
+	local files = vim.fn.systemlist("git diff --name-only " .. args)
+	if vim.v.shell_error ~= 0 then
+		vim.notify("git diff failed for " .. args, vim.log.levels.ERROR)
+		return
+	end
+
 	local qf_list = {}
 	for _, file in ipairs(files) do
-		table.insert(qf_list, { filename = file, lnum = 1 })
+		if file ~= "" then
+			table.insert(qf_list, { filename = file, lnum = 1 })
+		end
 	end
-	vim.fn.setqflist(qf_list)
+
+	vim.fn.setqflist({}, " ", { title = title, items = qf_list })
 	vim.cmd("copen")
-end, { noremap = true, desc = "Modified files to quickfix" })
+end
+
+	vim.keymap.set("n", "<leader>gg", ":Git <CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>gd", ":Gvdiffsplit! <CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>gr", function()
+		git_changed_files_to_qf("origin/dev...HEAD", "Branch review vs origin/dev")
+	end, { noremap = true, desc = "Review branch vs origin/dev" })
+	vim.keymap.set("n", "<leader>gv", ":Gvdiffsplit origin/dev:% <CR>", { noremap = true, desc = "Diff current file vs origin/dev" })
+	vim.keymap.set("n", "<leader>gp", ":Git -c push.default=current push <CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>gl", ":Git log -n 20 --decorate <CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>gb", ":Git blame <CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>gm", function()
+		git_changed_files_to_qf("", "Modified files")
+	end, { noremap = true, desc = "Modified files to quickfix" })
 
 -- Remap Esc in Terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
@@ -76,4 +92,3 @@ vim.keymap.set("n", "<Leader>ee", function()
 		return vim.cmd.normal("3k")
 	end
 end)
-

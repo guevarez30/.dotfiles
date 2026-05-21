@@ -190,6 +190,7 @@ All file changes made by Claude Code require manual approval before being applie
 - Catppuccin Macchiato theme
 - Custom prefix: `Ctrl+a`
 - vim-tmux-navigator integration
+- Native tmux session chooser on `prefix + s`
 - Plugin management via TPM
 
 </details>

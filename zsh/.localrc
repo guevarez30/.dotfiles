@@ -27,18 +27,11 @@ t() {
     if [ $# -gt 0 ]; then
         tmux new-session -A -s "$1"
     else
-        local session
-        session=$(sesh list --tmux | fzf \
-            --height 40% \
-            --reverse \
-            --border \
-            --prompt '⚡ ' \
-            --bind 'tab:down,shift-tab:up' \
-            --bind 'ctrl-j:down,ctrl-k:up' \
-            --pointer '▶' \
-            --marker '✓' | tr -d '[:space:]')
-
-        [ -n "$session" ] && sesh connect "$session"
+        if [ -n "$TMUX" ]; then
+            tmux choose-session
+        else
+            tmux attach-session || tmux new-session
+        fi
     fi
 }
 
@@ -137,6 +130,13 @@ note () {
 }
 alias notes='note'
 
+#####################################################################################
+# Notes
+#####################################################################################
+todo () {
+  \nvim ~/notes/todo.md
+}
+
 # Add a blank line after ps1 and reset mouse tracking
 # The printf disables mouse tracking modes that TUI apps may leave enabled
 # Prevents garbage like "[<34;95;28M" when apps crash or don't clean up
@@ -166,27 +166,6 @@ softReset() {
 
 
 source ~/.raftrc
-
-#####################################################################################
-# Vi Mode Indicator (prepended to PROMPT)
-#####################################################################################
-_ZVM_BASE_PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%} \$(git_prompt_info)"
-
-function _zvm_set_prompt() {
-  local indicator
-  case $ZVM_MODE in
-    $ZVM_MODE_NORMAL)      indicator="%F{#8aadf4}[NORMAL]%f " ;;
-    $ZVM_MODE_INSERT)      indicator="%F{#a6da95}[INSERT]%f " ;;
-    $ZVM_MODE_VISUAL)      indicator="%F{#ed8796}[VISUAL]%f " ;;
-    $ZVM_MODE_VISUAL_LINE) indicator="%F{#ed8796}[V-LINE]%f " ;;
-    $ZVM_MODE_REPLACE)     indicator="%F{#ed8796}[REPLACE]%f " ;;
-    *)                     indicator="%F{#a6da95}[INSERT]%f " ;;
-  esac
-  PROMPT="${indicator}${_ZVM_BASE_PROMPT}"
-}
-
-function zvm_after_select_vi_mode() { _zvm_set_prompt }
-function zvm_after_init() { _zvm_set_prompt }
 
 
 alias dirty-tag='echo "$(git rev-parse --short HEAD)-dirty"'

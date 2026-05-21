@@ -17,7 +17,7 @@ end
 
 -- Setup lazy.nvim
 require("lazy").setup({
-{
+    {
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons" },
 	},
@@ -37,7 +37,7 @@ require("lazy").setup({
 				"typescript", "tsx", "vim", "vimdoc", "yaml",
 			}
 
-			require("nvim-treesitter.configs").setup({
+			require("nvim-treesitter").setup({
 				ensure_installed = parsers,
 				auto_install = true,
 				highlight = {
@@ -209,50 +209,53 @@ require("lazy").setup({
 		build = "make",
 	},
 
-	-- Coloroizer
-	"norcalli/nvim-colorizer.lua",
-
 	-- Tmux Integration
 	"christoomey/vim-tmux-navigator",
 
 	-- Autoformatter
 	"stevearc/conform.nvim",
 
-	"Mofiqul/dracula.nvim",
-
 	"tpope/vim-dadbod",
 	"kristijanhusak/vim-dadbod-ui",
 	"kristijanhusak/vim-dadbod-completion",
 
+	-- CodeCompanion chat integration
 	{
-		"oysandvik94/curl.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		cmd = { "CurlOpen" },
-		config = true,
-	},
-
-	-- Codex terminal integration
-	{
-		"johnseth97/codex.nvim",
-		cmd = { "Codex", "CodexToggle" },
+		"olimorris/codecompanion.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"MunifTanjim/nui.nvim",
+		},
+		cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionChat" },
 		keys = {
 			{
 				"<leader>cc",
-				function()
-					require("codex").toggle()
-				end,
-				desc = "Toggle Codex",
+				"<cmd>CodeCompanionChat Toggle<cr>",
+				desc = "Toggle CodeCompanion",
 				mode = { "n", "t" },
 			},
 		},
 		opts = {
-			keymaps = {
-				toggle = nil,
+			adapters = {
+				acp = {
+					codex = function()
+						return require("codecompanion.adapters").extend("codex", {
+							defaults = {
+								auth_method = "chatgpt",
+							},
+						})
+					end,
+				},
 			},
-			border = "rounded",
-			width = 0.35,
-			autoinstall = false,
-			panel = true,
+			interactions = {
+				chat = {
+					adapter = "codex",
+				},
+				inline = {
+					adapter = "codex",
+				},
+			},
 		},
 	},
 
@@ -286,4 +289,37 @@ require("lazy").setup({
 			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
+
+	{
+	  "MeanderingProgrammer/render-markdown.nvim",
+	  dependencies = {
+	    "nvim-treesitter/nvim-treesitter",
+	    "nvim-mini/mini.nvim",
+	  },
+	  ft = { "markdown" },
+	  config = function()
+	    require("render-markdown").setup({
+	      heading = {
+	        sign = false,
+	        icons = {},
+	      },
+	      bullet = {
+	        enabled = true,
+	      },
+	      quote = {
+	        enabled = true,
+	      },
+	      indent = {
+	        enabled = true,
+	      },
+	      code = {
+	        sign = false,
+	        border = "none",
+	        width = "full",
+	      },
+	    })
+	  end,
+	}
+
+
 })
