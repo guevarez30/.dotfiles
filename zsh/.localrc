@@ -33,7 +33,7 @@ t() {
         tmux new-session -A -s "$1"
     else
         local session
-        session=$(sesh list --tmux | fzf \
+        session=$(tmux list-sessions -F '#S' 2>/dev/null | fzf \
             --height 40% \
             --reverse \
             --border \
@@ -43,7 +43,7 @@ t() {
             --pointer '▶' \
             --marker '✓' | tr -d '[:space:]')
 
-        [ -n "$session" ] && sesh connect "$session"
+        [ -n "$session" ] && tmux attach-session -t "$session"
     fi
 }
 
@@ -171,6 +171,14 @@ note () {
 }
 alias notes='note'
 
+#####################################################################################
+# todo
+#####################################################################################
+todo () {
+  \nvim ~/notes/todo.md
+}
+alias todos='todo'
+
 # Terminal title
 CUSTOM_TITLE=""
 
@@ -216,74 +224,6 @@ softReset() {
 alias dbPortForward='kubectl port-forward svc/rdp-postgres 15432:5432 -n data-fabric --context kind-rdp > /dev/null 2>&1 &'
 
 source ~/.raftrc
-
-#####################################################################################
-# Vi Mode Indicator (prepended to PROMPT)
-#####################################################################################
-_ZVM_BASE_PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%} \$(git_prompt_info)"
-
-bindkey -v
-# Keep this high enough for terminal escape sequences like bracketed paste.
-# If it is too low, the trailing "~" in ESC [ 201 ~ can reach vi mode and
-# toggle the case of the last pasted character.
-KEYTIMEOUT=10
-
-function _zvm_current_mode() {
-  if [[ -n "${ZVM_MODE:-}" ]]; then
-    case $ZVM_MODE in
-      $ZVM_MODE_NORMAL) echo "NORMAL"; return ;;
-      $ZVM_MODE_INSERT) echo "INSERT"; return ;;
-      $ZVM_MODE_VISUAL) echo "VISUAL"; return ;;
-      $ZVM_MODE_VISUAL_LINE) echo "V-LINE"; return ;;
-      $ZVM_MODE_REPLACE) echo "REPLACE"; return ;;
-    esac
-  fi
-
-  case ${KEYMAP:-main} in
-    vicmd) echo "NORMAL" ;;
-    visual) echo "VISUAL" ;;
-    viopp) echo "NORMAL" ;;
-    *) echo "INSERT" ;;
-  esac
-}
-
-function _zvm_set_prompt() {
-  local mode
-  local indicator
-  mode=$(_zvm_current_mode)
-
-  case $mode in
-    NORMAL)  indicator="%F{#8aadf4}[NORMAL]%f " ;;
-    INSERT)  indicator="%F{#a6da95}[INSERT]%f " ;;
-    VISUAL)  indicator="%F{#ed8796}[VISUAL]%f " ;;
-    V-LINE)  indicator="%F{#ed8796}[V-LINE]%f " ;;
-    REPLACE) indicator="%F{#ed8796}[REPLACE]%f " ;;
-    *)       indicator="%F{#a6da95}[INSERT]%f " ;;
-  esac
-
-  PROMPT="${indicator}${_ZVM_BASE_PROMPT}"
-}
-
-function zvm_after_select_vi_mode() { _zvm_set_prompt }
-function zvm_after_init() { _zvm_set_prompt }
-
-function _zvm_refresh_prompt() {
-  _zvm_set_prompt
-  zle && zle reset-prompt
-}
-
-if ! command -v zvm_version >/dev/null 2>&1; then
-  function zle-line-init() {
-    _zvm_refresh_prompt
-  }
-
-  function zle-keymap-select() {
-    _zvm_refresh_prompt
-  }
-
-  zle -N zle-line-init
-  zle -N zle-keymap-select
-fi
 
 #####################################################################################
 # Carapace - Shell Completion

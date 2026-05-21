@@ -149,6 +149,37 @@ require("lazy").setup({
 	-- Autoformatter
 	"stevearc/conform.nvim",
 
+	{
+		"olimorris/codecompanion.nvim",
+		version = "^19.0.0",
+		cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionCmd" },
+		keys = {
+			{ "<leader>cc", "<cmd>CodeCompanionChat<cr>", mode = { "n", "v" }, desc = "CodeCompanion Chat" },
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {
+			interactions = {
+				chat = {
+					adapter = "codex",
+				},
+			},
+			adapters = {
+				acp = {
+					codex = function()
+						return require("codecompanion.adapters").extend("codex", {
+							defaults = {
+								auth_method = "chatgpt",
+							},
+						})
+					end,
+				},
+			},
+		},
+	},
+
 	"tpope/vim-dadbod",
 	"kristijanhusak/vim-dadbod-ui",
 	"kristijanhusak/vim-dadbod-completion",
@@ -189,7 +220,7 @@ require("lazy").setup({
 	    "nvim-treesitter/nvim-treesitter",
 	    "nvim-mini/mini.nvim",
 	  },
-	  ft = { "markdown" },
+	  ft = { "markdown", "codecompanion" },
 	  config = function()
 	    require("render-markdown").setup({
 	      heading = {
@@ -203,7 +234,7 @@ require("lazy").setup({
 	        enabled = true,
 	      },
 	      indent = {
-	        enabled = true,
+	        enabled = false,
 	      },
 	      code = {
 	        sign = false,
