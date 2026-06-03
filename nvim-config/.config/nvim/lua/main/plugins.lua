@@ -185,6 +185,17 @@ require("lazy").setup({
 	"kristijanhusak/vim-dadbod-completion",
 
 	{
+		"Mofiqul/dracula.nvim",
+		name = "dracula",
+		priority = 1000,
+		config = function()
+			require("dracula").setup({
+				transparent_bg = false,
+			})
+			vim.cmd.colorscheme("dracula")
+		end,
+	},
+	{
 	  "MeanderingProgrammer/render-markdown.nvim",
 	  dependencies = {
 	    "nvim-treesitter/nvim-treesitter",
@@ -217,5 +228,3 @@ require("lazy").setup({
 
 
 })
-
-vim.cmd.colorscheme("dracula-plus")

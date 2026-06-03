@@ -187,7 +187,7 @@ All file changes made by Claude Code require manual approval before being applie
 <details>
 <summary><b><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tmux/tmux-original.svg" height="16" alt="tmux"/> Tmux Configuration</b></summary>
 
-- Catppuccin Macchiato theme
+- Dracula theme
 - Custom prefix: `Ctrl+a`
 - vim-tmux-navigator integration
 - Plugin management via TPM
