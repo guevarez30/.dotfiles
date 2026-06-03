@@ -19,9 +19,14 @@ local on_attach = function(_, bufnr)
 	vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+	vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations, bufopts)
+	vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions, bufopts)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 	vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, bufopts)
+	vim.keymap.set("n", "<leader>ls", require("telescope.builtin").lsp_document_symbols, bufopts)
+	vim.keymap.set("n", "<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, bufopts)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()

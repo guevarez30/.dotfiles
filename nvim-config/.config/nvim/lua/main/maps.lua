@@ -43,7 +43,7 @@ end, { noremap = true, desc = "Grep visual selection" })
 -- QuickFix
 vim.keymap.set("n", "cn", ":cnext <CR>", { noremap = true })
 vim.keymap.set("n", "cp", ":cprevious <CR>", { noremap = true })
-vim.keymap.set("n", "co", ":vertical copen <CR>", { noremap = true })
+vim.keymap.set("n", "co", ":copen <CR>", { noremap = true })
 
 -- Split
 vim.keymap.set("n", "<leader>sv", ":Vexplore <CR>", { noremap = true })

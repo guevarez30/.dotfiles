@@ -185,36 +185,6 @@ require("lazy").setup({
 	"kristijanhusak/vim-dadbod-completion",
 
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		priority = 1000,
-		config = function()
-			-- Read theme from config file, default to mocha
-			local theme_file = io.open(vim.fn.expand("~/.config/theme"), "r")
-			local flavour = "mocha"
-			if theme_file then
-				flavour = theme_file:read("*l") or "mocha"
-				theme_file:close()
-			end
-			require("catppuccin").setup({
-				flavour = flavour,
-				transparent_background = true,
-				integrations = {
-					cmp = true,
-					native_lsp = {
-						enabled = true,
-					},
-					treesitter = true,
-					telescope = {
-						enabled = true,
-					},
-					mason = true,
-				},
-			})
-			vim.cmd.colorscheme("catppuccin")
-		end,
-	},
-	{
 	  "MeanderingProgrammer/render-markdown.nvim",
 	  dependencies = {
 	    "nvim-treesitter/nvim-treesitter",
@@ -247,3 +217,5 @@ require("lazy").setup({
 
 
 })
+
+vim.cmd.colorscheme("dracula-plus")

@@ -28,25 +28,6 @@ tn() {
     tmux new-session -s "$name" $@
 }
 
-t() {
-    if [ $# -gt 0 ]; then
-        tmux new-session -A -s "$1"
-    else
-        local session
-        session=$(tmux list-sessions -F '#S' 2>/dev/null | fzf \
-            --height 40% \
-            --reverse \
-            --border \
-            --prompt '⚡ ' \
-            --bind 'tab:down,shift-tab:up' \
-            --bind 'ctrl-j:down,ctrl-k:up' \
-            --pointer '▶' \
-            --marker '✓' | tr -d '[:space:]')
-
-        [ -n "$session" ] && tmux attach-session -t "$session"
-    fi
-}
-
 ###################################################################################
 # Git
 ###################################################################################
@@ -143,6 +124,7 @@ export NVM_DIR="$HOME/.nvm"
 #####################################################################################
 export GOPATH="$HOME/go"
 export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
+ export PATH="$(go env GOPATH)/bin:$PATH"
 
 #####################################################################################
 # FZF - Fuzzy Finder
