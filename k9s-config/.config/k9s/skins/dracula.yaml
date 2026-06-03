@@ -1,85 +1,99 @@
+# -----------------------------------------------------------------------------
+# Dracula skin
+# -----------------------------------------------------------------------------
+
+foreground: &foreground "#f8f8f2"
+background: &background default
+current_line: &current_line "#44475a"
+selection: &selection "#44475a"
+comment: &comment "#6272a4"
+cyan: &cyan "#8be9fd"
+green: &green "#50fa7b"
+orange: &orange "#ffb86c"
+pink: &pink "#ff79c6"
+purple: &purple "#bd93f9"
+red: &red "#ff5555"
+yellow: &yellow "#f1fa8c"
+
 k9s:
   body:
-    fgColor: "#f8f8f2"
-    bgColor: "#282a36"
-    logoColor: "#bd93f9"
+    fgColor: *foreground
+    bgColor: *background
+    logoColor: *purple
   prompt:
-    fgColor: "#f8f8f2"
-    bgColor: "#282a36"
-    suggestColor: "#8be9fd"
+    fgColor: *foreground
+    bgColor: *background
+    suggestColor: *purple
   info:
-    fgColor: "#f8f8f2"
-    sectionColor: "#bd93f9"
+    fgColor: *pink
+    sectionColor: *foreground
   dialog:
-    fgColor: "#f8f8f2"
-    bgColor: "#282a36"
-    buttonFgColor: "#282a36"
-    buttonBgColor: "#8be9fd"
-    buttonFocusFgColor: "#282a36"
-    buttonFocusBgColor: "#ffb86c"
-    labelFgColor: "#f1fa8c"
-    fieldFgColor: "#f8f8f2"
+    fgColor: *foreground
+    bgColor: *background
+    buttonFgColor: *foreground
+    buttonBgColor: *purple
+    buttonFocusFgColor: *yellow
+    buttonFocusBgColor: *pink
+    labelFgColor: *orange
+    fieldFgColor: *foreground
   frame:
     border:
-      fgColor: "#6272a4"
-      focusColor: "#bd93f9"
+      fgColor: *selection
+      focusColor: *current_line
     menu:
-      fgColor: "#f8f8f2"
-      keyColor: "#ff79c6"
-      numKeyColor: "#ffb86c"
+      fgColor: *foreground
+      keyColor: *pink
+      numKeyColor: *pink
     crumbs:
-      fgColor: "#f8f8f2"
-      bgColor: "#44475a"
-      activeColor: "#8be9fd"
+      fgColor: *foreground
+      bgColor: *current_line
+      activeColor: *current_line
     status:
-      newColor: "#8be9fd"
-      modifyColor: "#ffb86c"
-      addColor: "#50fa7b"
-      errorColor: "#ff5555"
-      highlightColor: "#ff79c6"
-      killColor: "#6272a4"
-      completedColor: "#6272a4"
+      newColor: *cyan
+      modifyColor: *purple
+      addColor: *green
+      errorColor: *red
+      highlightColor: *orange
+      killColor: *comment
+      completedColor: *comment
     title:
-      fgColor: "#f8f8f2"
-      bgColor: "#282a36"
-      highlightColor: "#f1fa8c"
-      counterColor: "#ff79c6"
-      filterColor: "#8be9fd"
+      fgColor: *foreground
+      bgColor: *background
+      highlightColor: *orange
+      counterColor: *purple
+      filterColor: *pink
   views:
     charts:
-      bgColor: "#282a36"
-      dialBgColor: "#6272a4"
+      bgColor: *background
       defaultDialColors:
-        - "#8be9fd"
-        - "#ff79c6"
+        - *purple
+        - *red
       defaultChartColors:
-        - "#50fa7b"
-        - "#ff5555"
+        - *purple
+        - *red
     table:
-      fgColor: "#f8f8f2"
-      bgColor: "#282a36"
-      cursorFgColor: "#282a36"
-      cursorBgColor: "#bd93f9"
-      markColor: "#f1fa8c"
+      fgColor: *foreground
+      bgColor: *background
+      cursorColor: *current_line
       header:
-        fgColor: "#f8f8f2"
-        bgColor: "#282a36"
-        sorterColor: "#8be9fd"
+        fgColor: *foreground
+        bgColor: *background
+        sorterColor: *cyan
     xray:
-      fgColor: "#f8f8f2"
-      bgColor: "#282a36"
-      cursorColor: "#bd93f9"
-      graphicColor: "#8be9fd"
+      fgColor: *foreground
+      bgColor: *background
+      cursorColor: *current_line
+      graphicColor: *purple
       showIcons: false
     yaml:
-      keyColor: "#8be9fd"
-      colonColor: "#ff79c6"
-      valueColor: "#50fa7b"
+      keyColor: *pink
+      colonColor: *purple
+      valueColor: *foreground
     logs:
-      fgColor: "#f8f8f2"
-      bgColor: "#282a36"
+      fgColor: *foreground
+      bgColor: *background
       indicator:
-        fgColor: "#282a36"
-        bgColor: "#8be9fd"
-        toggleOnColor: "#50fa7b"
-        toggleOffColor: "#6272a4"
+        fgColor: *foreground
+        bgColor: *purple
+        toggleOnColor: *green
+        toggleOffColor: *cyan
