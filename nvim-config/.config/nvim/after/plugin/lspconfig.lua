@@ -32,11 +32,14 @@ local on_attach = function(client, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+	vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations, bufopts)
+	vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions, bufopts)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
 	vim.keymap.set("n", "grt", vim.lsp.buf.type_definition, bufopts)
 	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
 	vim.keymap.set("n", "gr", function() require("telescope.builtin").lsp_references({}) end, bufopts)
+	vim.keymap.set("n", "<leader>ls", require("telescope.builtin").lsp_document_symbols, bufopts)
+	vim.keymap.set("n", "<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, bufopts)
 	vim.keymap.set("n", "grx", vim.lsp.codelens.run, bufopts)
 
 	if client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens) then

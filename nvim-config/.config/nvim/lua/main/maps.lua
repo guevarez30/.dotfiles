@@ -36,6 +36,9 @@ vim.keymap.set("v", "<leader>f", function()
 	require("telescope.builtin").grep_string({ search = table.concat(text, "\n") })
 end, { noremap = true, desc = "Grep visual selection" })
 
+-- Format visual selection with jq
+vim.keymap.set("v", "<leader>jq", ":!jq .<CR>", { noremap = true, desc = "Format visual selection with jq" })
+
 -- QuickFix
 vim.keymap.set("n", "cn", ":cnext <CR>", { noremap = true })
 vim.keymap.set("n", "cp", ":cprevious <CR>", { noremap = true })

@@ -1,0 +1,42 @@
+shell = "zsh -c '{}'"
+default-scheme = "base16-catppuccin-mocha"
+default-cycle-ring = "dark"
+
+[[rings]]
+name = "dark"
+schemes = [
+  "base16-catppuccin-mocha",
+  "base16-gruvbox-dark-hard",
+  "base16-ayu-dark",
+  "base16-tokyo-city-dark",
+  "base16-rose-pine",
+]
+
+[[items]]
+name = "tinted-terminal"
+path = "https://github.com/tinted-theming/tinted-terminal"
+themes-dir = "themes/ghostty"
+supported-systems = ["base16", "base24"]
+hook = """
+mkdir -p ~/.config/ghostty/themes
+command cp -f "$TINTY_THEME_FILE_PATH" ~/.config/ghostty/themes/tinted-theming
+killall -SIGUSR2 ghostty 2>/dev/null || true
+"""
+
+[[items]]
+name = "tinted-tmux"
+path = "https://github.com/tinted-theming/tinted-tmux"
+themes-dir = "colors"
+supported-systems = ["base16", "base24"]
+hook = """
+mkdir -p ~/.config/tinted-theming/tmux
+command cp -f "$TINTY_THEME_FILE_PATH" ~/.config/tinted-theming/tmux/current.conf
+tmux run 2> /dev/null && tmux source-file ~/.config/tinted-theming/tmux/current.conf
+"""
+
+[[items]]
+name = "k9s-skin"
+path = "https://github.com/tinted-theming/tinted-terminal"
+themes-dir = "themes/ghostty"
+supported-systems = ["base16", "base24"]
+hook = "python3 ~/.config/k9s/generate_tinted_skin.py"

@@ -13,6 +13,41 @@ gitExclude() {
 	echo $@ >> ~/.git/info/exclude
 }
 
+wtpr() {
+  local remote_branch="$1"
+
+  if [ -z "$remote_branch" ]; then
+    echo "Usage: wtpr <remote-branch>"
+    return 1
+  fi
+
+  git rev-parse --show-toplevel >/dev/null 2>&1 || {
+    echo "Not inside a git repository"
+    return 1
+  }
+
+  local repo_root repo_name worktree_root worktree_dir local_branch
+  repo_root=$(git rev-parse --show-toplevel)
+  repo_name=$(basename "$repo_root")
+  worktree_root="$HOME/pr/$repo_name"
+  worktree_dir="${worktree_root}/${remote_branch}"
+  local_branch="pr-${remote_branch//\//-}"
+
+  mkdir -p "$(dirname "$worktree_dir")"
+
+  git fetch origin
+
+  # If worktree already exists, remove it cleanly
+  if git worktree list | grep -Fq -- "$worktree_dir"; then
+    git worktree remove "$worktree_dir" --force
+  fi
+
+  # Recreate PR worktree on a local branch, leaving the original branch untouched
+  git worktree add -B "$local_branch" "$worktree_dir" "origin/$remote_branch" || return 1
+
+  cd "$worktree_dir"
+}
+
 ###################################################################################
 # TMUX
 ###################################################################################
@@ -21,18 +56,6 @@ tn() {
     local name
     name=$(basename "$PWD" | tr '[:lower:]' '[:upper:]')
     tmux new-session -s "$name" $@
-}
-
-t() {
-    if [ $# -gt 0 ]; then
-        tmux new-session -A -s "$1"
-    else
-        if [ -n "$TMUX" ]; then
-            tmux choose-session
-        else
-            tmux attach-session || tmux new-session
-        fi
-    fi
 }
 
 ###################################################################################

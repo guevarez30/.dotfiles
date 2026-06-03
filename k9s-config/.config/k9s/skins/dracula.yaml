@@ -1,0 +1,85 @@
+k9s:
+  body:
+    fgColor: "#f8f8f2"
+    bgColor: "#282a36"
+    logoColor: "#bd93f9"
+  prompt:
+    fgColor: "#f8f8f2"
+    bgColor: "#282a36"
+    suggestColor: "#8be9fd"
+  info:
+    fgColor: "#f8f8f2"
+    sectionColor: "#bd93f9"
+  dialog:
+    fgColor: "#f8f8f2"
+    bgColor: "#282a36"
+    buttonFgColor: "#282a36"
+    buttonBgColor: "#bd93f9"
+    buttonFocusFgColor: "#282a36"
+    buttonFocusBgColor: "#ffb86c"
+    labelFgColor: "#f1fa8c"
+    fieldFgColor: "#f8f8f2"
+  frame:
+    border:
+      fgColor: "#44475a"
+      focusColor: "#bd93f9"
+    menu:
+      fgColor: "#f8f8f2"
+      keyColor: "#ffb86c"
+      numKeyColor: "#ffb86c"
+    crumbs:
+      fgColor: "#282a36"
+      bgColor: "#bd93f9"
+      activeColor: "#8be9fd"
+    status:
+      newColor: "#8be9fd"
+      modifyColor: "#f1fa8c"
+      addColor: "#50fa7b"
+      errorColor: "#ff5555"
+      highlightColor: "#ffb86c"
+      killColor: "#6272a4"
+      completedColor: "#6272a4"
+    title:
+      fgColor: "#f8f8f2"
+      bgColor: "#282a36"
+      highlightColor: "#ffb86c"
+      counterColor: "#ff79c6"
+      filterColor: "#8be9fd"
+  views:
+    charts:
+      bgColor: "#282a36"
+      dialBgColor: "#44475a"
+      defaultDialColors:
+        - "#bd93f9"
+        - "#ff79c6"
+      defaultChartColors:
+        - "#bd93f9"
+        - "#ff79c6"
+    table:
+      fgColor: "#f8f8f2"
+      bgColor: "#282a36"
+      cursorFgColor: "#282a36"
+      cursorBgColor: "#bd93f9"
+      markColor: "#f1fa8c"
+      header:
+        fgColor: "#f8f8f2"
+        bgColor: "#282a36"
+        sorterColor: "#8be9fd"
+    xray:
+      fgColor: "#f8f8f2"
+      bgColor: "#282a36"
+      cursorColor: "#bd93f9"
+      graphicColor: "#8be9fd"
+      showIcons: false
+    yaml:
+      keyColor: "#8be9fd"
+      colonColor: "#ff79c6"
+      valueColor: "#50fa7b"
+    logs:
+      fgColor: "#f8f8f2"
+      bgColor: "#282a36"
+      indicator:
+        fgColor: "#282a36"
+        bgColor: "#bd93f9"
+        toggleOnColor: "#50fa7b"
+        toggleOffColor: "#6272a4"

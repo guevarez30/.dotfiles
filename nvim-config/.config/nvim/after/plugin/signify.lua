@@ -5,7 +5,7 @@ vim.g['signify_sign_delete']     = '_'
 vim.g['signify_line_highlight']  = 0
 vim.g['signify_sign_priority']   = 20
 
--- Re-apply after colorscheme loads so catppuccin doesn't wipe them
+-- Re-apply after colorscheme loads so theme highlights don't wipe them
 vim.api.nvim_create_autocmd("ColorScheme", {
 	pattern = "*",
 	callback = function()

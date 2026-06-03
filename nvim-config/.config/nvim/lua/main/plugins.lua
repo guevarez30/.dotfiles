@@ -260,33 +260,14 @@ require("lazy").setup({
 	},
 
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
+		"Mofiqul/dracula.nvim",
+		name = "dracula",
 		priority = 1000,
 		config = function()
-			-- Read theme from config file, default to mocha
-			local theme_file = io.open(vim.fn.expand("~/.config/theme"), "r")
-			local flavour = "mocha"
-			if theme_file then
-				flavour = theme_file:read("*l") or "mocha"
-				theme_file:close()
-			end
-			
-			require("catppuccin").setup({
-				flavour = flavour,
-				transparent_background = true,
-				integrations = {
-					cmp = true,
-					gitsigns = true,
-					nvimtree = true,
-					treesitter = true,
-					telescope = {
-						enabled = true,
-					},
-					mason = true,
-				},
+			require("dracula").setup({
+				transparent_bg = true,
 			})
-			vim.cmd.colorscheme("catppuccin")
+			vim.cmd.colorscheme("dracula")
 		end,
 	},
 
