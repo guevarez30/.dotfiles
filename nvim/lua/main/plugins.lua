@@ -18,10 +18,11 @@ return require("packer").startup(function()
 	})
 
 	use({
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
+	  "nvim-treesitter/nvim-treesitter",
+	  tag = "v0.9.3", -- works with Neovim 0.9.x
+	  run = ":TSUpdate",
 	})
-	use("nvim-treesitter/nvim-treesitter-context")
+
 
 	-- CMP
 	use("hrsh7th/nvim-cmp")

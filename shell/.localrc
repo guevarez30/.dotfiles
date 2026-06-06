@@ -212,7 +212,7 @@ work-tree() {
   local worktree_dir="../${repo_name}-${feature_name}"
 
   echo "Creating worktree for ${branch_name}..."
-  git worktree add "${worktree_dir}" -b "${branch_name}" develop
+  git worktree add "${worktree_dir}" -b "${branch_name}" main
 
   if [ $? -eq 0 ]; then
     echo "Linking node_modules..."
