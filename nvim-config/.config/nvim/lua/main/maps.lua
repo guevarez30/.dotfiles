@@ -30,16 +30,6 @@ vim.keymap.set("n", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipbo
 vim.keymap.set("v", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipboard" })
 vim.keymap.set("n", "<leader>Y", '"+yy', { noremap = true, desc = "Copy line to clipboard" })
 
--- Telescope
-vim.keymap.set("n", "<leader>p", ":Telescope find_files <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>f", ":Telescope live_grep <CR>", { noremap = true })
-
--- Visual mode telescope grep
-vim.keymap.set("v", "<leader>f", function()
-	local text = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() })
-	require("telescope.builtin").grep_string({ search = table.concat(text, "\n") })
-end, { noremap = true, desc = "Grep visual selection" })
-
 -- QuickFix
 vim.keymap.set("n", "cn", ":cnext <CR>", { noremap = true })
 vim.keymap.set("n", "cp", ":cprevious <CR>", { noremap = true })
@@ -49,40 +39,12 @@ vim.keymap.set("n", "co", ":copen <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>sv", ":Vexplore <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>sh", ":Hexplore <CR>", { noremap = true })
 
--- Git
-local function git_changed_files_to_qf(revision, title)
-	local cmd = "git diff --name-only"
-	if revision ~= "" then
-		cmd = cmd .. " " .. revision
-	end
-
-	local files = vim.fn.systemlist(cmd)
-	local qf_list = {}
-	for _, file in ipairs(files) do
-		table.insert(qf_list, { filename = file, lnum = 1 })
-	end
-
-	vim.fn.setqflist({}, "r", { title = title, items = qf_list })
-	vim.cmd("copen")
-end
-
-vim.keymap.set("n", "<leader>gg", ":Git <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gd", ":Gvdiffsplit! <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gr", function()
-	git_changed_files_to_qf("origin/dev...HEAD", "Branch review vs origin/dev")
-end, { noremap = true, desc = "Review branch vs origin/dev" })
-vim.keymap.set("n", "<leader>gv", ":Gvdiffsplit origin/dev:% <CR>", { noremap = true, desc = "Diff current file vs origin/dev" })
-vim.keymap.set("n", "<leader>gp", ":Git -c push.default=current push <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gl", ":Git log -n 20 --decorate <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>gb", ":Git blame <CR>", { noremap = true })
-
 -- Remap Esc in Terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 
-
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
-	filetype = vim.bo.filetype
+	local filetype = vim.bo.filetype
 	if filetype == "go" then
 		vim.cmd.normal("iif err != nil {\n\n}")
 		return vim.cmd.normal("k")
