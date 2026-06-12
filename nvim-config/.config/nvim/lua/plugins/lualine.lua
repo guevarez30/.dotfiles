@@ -1,4 +1,8 @@
 local function progress_status()
+	if type(vim.ui.progress_status) ~= "function" then
+		return ""
+	end
+
 	return vim.trim(vim.ui.progress_status())
 end
 

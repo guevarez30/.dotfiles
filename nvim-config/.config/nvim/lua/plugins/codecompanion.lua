@@ -13,6 +13,28 @@ return {
 		interactions = {
 			chat = {
 				adapter = "codex",
+				slash_commands = {
+					resume = {
+						opts = {
+							max_sessions = 5,
+						},
+					},
+				},
+			},
+		},
+		rules = {
+			goose = {
+				description = "Goose: guide the user through code changes one step at a time",
+				parser = "none",
+				files = {
+					vim.fn.stdpath("config") .. "/rules/goose.md",
+				},
+			},
+			opts = {
+				chat = {
+					enabled = true,
+					autoload = { "goose" },
+				},
 			},
 		},
 		adapters = {
