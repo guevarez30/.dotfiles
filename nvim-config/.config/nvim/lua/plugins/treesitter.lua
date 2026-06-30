@@ -1,14 +1,21 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
+		branch = "master",
 		build = ":TSUpdate",
 		event = { "BufReadPost", "BufNewFile" },
 		opts = {
 			highlight = {
 				enable = true,
+				disable = function(lang)
+					return not pcall(vim.treesitter.language.inspect, lang)
+				end,
 			},
 			indent = {
 				enable = true,
+				disable = function(lang)
+					return not pcall(vim.treesitter.language.inspect, lang)
+				end,
 			},
 		},
 		config = function(_, opts)

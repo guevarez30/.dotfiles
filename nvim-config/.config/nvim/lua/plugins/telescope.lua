@@ -1,6 +1,37 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	dependencies = { "nvim-lua/plenary.nvim" },
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
+		},
+	},
+	keys = {
+		{
+			"<leader>p",
+			function()
+				require("telescope.builtin").find_files()
+			end,
+			desc = "Find files",
+		},
+		{
+			"<leader>f",
+			function()
+				require("telescope.builtin").live_grep()
+			end,
+			desc = "Search text",
+		},
+		{
+			"<leader>f",
+			function()
+				local text = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() })
+				require("telescope.builtin").grep_string({ search = table.concat(text, "\n") })
+			end,
+			mode = "v",
+			desc = "Search visual selection",
+		},
+	},
 	opts = function()
 		return {
 			defaults = {
@@ -53,5 +84,11 @@ return {
 			},
 			extensions_list = { "themes", "terms" },
 		}
+	end,
+	config = function(_, opts)
+		local telescope = require("telescope")
+
+		telescope.setup(opts)
+		telescope.load_extension("fzf")
 	end,
 }

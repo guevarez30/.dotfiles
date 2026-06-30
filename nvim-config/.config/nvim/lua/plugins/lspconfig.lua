@@ -16,6 +16,7 @@ local function on_attach(_, bufnr)
 	vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions, bufopts)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 	vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, bufopts)
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", bufopts, { desc = "Rename symbol" }))
 	vim.keymap.set("n", "<leader>ls", require("telescope.builtin").lsp_document_symbols, bufopts)
 	vim.keymap.set("n", "<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, bufopts)
 end
