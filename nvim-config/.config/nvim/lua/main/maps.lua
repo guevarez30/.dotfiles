@@ -31,9 +31,17 @@ vim.keymap.set("v", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipbo
 vim.keymap.set("n", "<leader>Y", '"+yy', { noremap = true, desc = "Copy line to clipboard" })
 
 -- QuickFix
-vim.keymap.set("n", "cn", ":cnext <CR>", { noremap = true })
-vim.keymap.set("n", "cp", ":cprevious <CR>", { noremap = true })
+vim.keymap.set("n", "cn", function()
+	vim.cmd.cnext()
+end, { noremap = true })
+vim.keymap.set("n", "cp", function()
+	vim.cmd.cprevious()
+end, { noremap = true })
 vim.keymap.set("n", "co", ":copen <CR>", { noremap = true, desc = "Open quickfix" })
+
+-- Branch review
+vim.keymap.set("n", "<leader>dvo", "<cmd>BranchReviewOpen origin/dev<CR>", { noremap = true, desc = "Open branch review" })
+vim.keymap.set("n", "<leader>dvc", "<cmd>BranchReviewClose<CR>", { noremap = true, desc = "Close branch review" })
 
 -- Split
 vim.keymap.set("n", "<leader>sv", ":Vexplore <CR>", { noremap = true })

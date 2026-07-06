@@ -1,5 +1,12 @@
 return {
 	"tpope/vim-fugitive",
+	cmd = {
+		"G",
+		"Git",
+		"Gdiffsplit",
+		"Gvdiffsplit",
+		"Ghdiffsplit",
+	},
 	keys = {
 		{ "<leader>gg", "<cmd>Git<cr>", desc = "Git status" },
 		{ "<leader>gp", "<cmd>Git -c push.default=current push<cr>", desc = "Git push current branch" },

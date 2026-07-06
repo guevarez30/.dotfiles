@@ -7,8 +7,4 @@ return {
 		"DiffviewFocusFiles",
 		"DiffviewFileHistory",
 	},
-	keys = {
-		{ "<leader>dvo", "<cmd>DiffviewOpen origin/dev<cr>", desc = "Diffview origin/dev" },
-		{ "<leader>dvc", "<cmd>DiffviewClose<cr>", desc = "Close Diffview" },
-	},
 }
