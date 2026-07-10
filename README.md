@@ -1,212 +1,289 @@
-<div align="center">
+# Minimal Neovim Dotfiles
 
-# 🏠 Dotfiles
+This branch is intentionally small. Neovim is the main setup, with optional tmux and zsh files kept for the development VM.
 
-**Modern development environment • Consistent across machines • Powered by GNU Stow**
+## What Is Included
 
-[![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos/)
-[![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://www.linux.org/)
-[![GNU Stow](https://img.shields.io/badge/GNU%20Stow-A42E2B?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/software/stow/)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-
-</div>
-
----
-
-## 📦 Package Structure
-
-### Terminal & Shell
-
-- <img src="https://cdn.simpleicons.org/alacritty/F46D01" height="16" alt="alacritty"/> **`alacritty-config/`** - GPU-accelerated terminal
-- <img src="https://cdn.simpleicons.org/zsh/F15A24" height="16" alt="zsh"/> **`zsh/`** - Shell with oh-my-zsh
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tmux/tmux-original.svg" height="16" alt="tmux"/> **`tmux/`** - Terminal multiplexer
-
-### Editors & Tools
-
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neovim/neovim-original.svg" height="16" alt="neovim"/> **`nvim-config/`** - Neovim IDE setup
-- <img src="https://cdn.simpleicons.org/anthropic/191919" height="16" alt="claude"/> **`claude/`** - Claude Code AI assistant
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="16" alt="git"/> **`git-config/`** - Git utilities
-
-### 📝 Naming Convention
-
-> **Pattern:** `-config` suffix indicates XDG config directory, no suffix means home directory
-
-```
-alacritty-config/  →  ~/.config/alacritty/
-nvim-config/       →  ~/.config/nvim/
-ghostty-config/    →  ~/.config/ghostty/
-
-zsh/               →  ~/
-tmux/              →  ~/
-claude/            →  ~/.claude/
-git-config/        →  ~/  (exception: contains git utilities)
+```text
+nvim-config/
+└── .config/
+    └── nvim/
+        ├── init.lua
+        ├── lazy-lock.json
+        └── lua/
+tmux/
+└── .tmux.conf
+zsh/
+├── .zshrc
+└── .localrc
 ```
 
-## 🚀 Quick Start
+The config uses `lazy.nvim` to install and manage plugins automatically when Neovim starts. It also includes one command to install the starter Tree-sitter parsers, language servers, and formatters.
 
-### macOS Installation
+## Install Neovim
 
-<div align="left">
+Install these first:
 
-![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?style=flat-square&logo=homebrew&logoColor=black)
+- `git`, required by the plugin manager
+- `stow`, used to symlink this config into your home directory
+- `neovim`, the editor
+- `ripgrep`, used by Telescope for fast text search
+- `make` and a C compiler, used by Telescope's native fuzzy finder
+- `go`, `docker`, and `helm` for Go and platform development
 
-</div>
-
-**1. Install Homebrew** (if not already installed):
+macOS:
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install git stow neovim ripgrep make go helm docker
 ```
 
-**2. Install all packages from Brewfile**:
+Ubuntu/Debian:
 
-```bash
-cd ~/.dotfiles
-brew bundle install
-```
-
-This will install:
-
-- 🔧 Development tools (Go, Python, Git, Neovim, Tmux)
-- 📦 CLI utilities (ripgrep, fd, bat, tree, jq, stow)
-- 🖥️ Terminal emulators (Ghostty, Alacritty)
-
-**3. Install Node.js via nvm**:
-```bash
-# Install nvm (Node Version Manager)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-
-# Restart terminal or source profile
-source ~/.zshrc
-
-# Install latest LTS version
-nvm install --lts
-nvm use --lts
-```
-
-**4. Stow your dotfiles**:
-```bash
-stow zsh nvim-config alacritty-config claude git-config tmux
-```
-
-> 💡 **Tip:** Run `brew bundle dump --force` to update the Brewfile with newly installed packages
-
----
-
-### Linux Installation
-
-<div align="left">
-
-![APT](https://img.shields.io/badge/APT-A81D33?style=flat-square&logo=debian&logoColor=white)
-![Pacman](https://img.shields.io/badge/Pacman-1793D1?style=flat-square&logo=arch-linux&logoColor=white)
-
-</div>
-
-**Ubuntu/Debian:**
 ```bash
 sudo apt update
-sudo apt install -y stow git neovim tmux ripgrep fd-find bat tree jq \
-                    golang-go python3 python3-pip alacritty
+sudo apt install -y git stow neovim ripgrep build-essential golang-go docker.io
 ```
 
-**Arch Linux:**
+Arch:
+
 ```bash
-sudo pacman -S stow git neovim tmux ripgrep fd bat tree jq \
-               go python python-pip alacritty
+sudo pacman -S git stow neovim ripgrep base-devel go docker helm
 ```
 
-**Install Node.js via nvm:**
-```bash
-# Install nvm (Node Version Manager)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-source ~/.zshrc
+Mason installs editor tools. It does not replace system tools like the Docker daemon, Go runtime, or Helm CLI.
 
-# Install latest LTS version
-nvm install --lts
-nvm use --lts
-```
+## Install This Config
 
-**Stow your dotfiles:**
+Clone the repo:
+
 ```bash
+git clone <repo-url> ~/.dotfiles
 cd ~/.dotfiles
-stow zsh nvim-config alacritty-config claude git-config tmux
 ```
 
-> 💡 **Note:** On Ubuntu/Debian, `fd` is installed as `fdfind` and `bat` as `batcat`. Aliases in `.localrc` handle this.
-
-### Management
-
-**🗑️ Uninstall**
+Preview what Stow will link:
 
 ```bash
-stow -D zsh
+stow -n -v nvim-config
 ```
 
-**🔄 Restow**
+Install the Neovim config:
 
 ```bash
-stow -R zsh
+stow nvim-config
 ```
 
-**👀 Preview**
+That creates symlinks so Neovim reads this repo as:
+
+```text
+~/.config/nvim
+```
+
+To remove the symlinked config later:
 
 ```bash
-stow -n -v zsh
+stow -D nvim-config
 ```
 
----
+To relink it after changes:
 
-## ✅ Code Review Workflow
+```bash
+stow -R nvim-config
+```
 
-All file changes made by Claude Code require manual approval before being applied. This ensures you have full control over modifications to your dotfiles. Changes appear in a diff view within Neovim for easy review and acceptance.
+Optional VM shell setup:
 
----
+```bash
+stow tmux
+stow zsh
+```
 
-## 🛠️ What's Included
+Junior developers only need `stow nvim-config`. The `tmux` and `zsh` packages are included so this VM can keep its shell workflow.
 
-<details>
-<summary><b><img src="https://cdn.simpleicons.org/zsh/F15A24" height="16" alt="zsh"/> Zsh Configuration</b></summary>
+The tmux config expects TPM for plugins:
 
-- oh-my-zsh framework with robbyrussell theme
-- Plugins: git, web-search, sudo, syntax-highlighting, autosuggestions
-- Custom functions: tmux session management, git helpers, docker shortcuts
-- Machine-specific config via `.localrc`
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
 
-</details>
+After opening tmux, press `Ctrl+a`, then `I` to install tmux plugins.
 
-<details>
-<summary><b><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/neovim/neovim-original.svg" height="16" alt="neovim"/> Neovim Setup</b></summary>
+## First Start
 
-- lazy.nvim plugin manager
-- LSP support with Mason
-- Modular Lua configuration
-- Custom keybindings and color schemes
+Open Neovim:
 
-</details>
+```bash
+nvim
+```
 
-<details>
-<summary><b><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tmux/tmux-original.svg" height="16" alt="tmux"/> Tmux Configuration</b></summary>
+On the first launch, `lazy.nvim` will download the plugins in this config. Let that finish, then install the starter tools:
 
-- Dracula theme
-- Custom prefix: `Ctrl+a`
-- vim-tmux-navigator integration
-- Plugin management via TPM
+```vim
+:StarterInstall
+```
 
-</details>
+Restart Neovim once the install finishes.
 
-<details>
-<summary><b><img src="https://cdn.simpleicons.org/anthropic/191919" height="16" alt="claude"/> Claude Code</b></summary>
+Useful commands:
 
-- Global permissions & preferences
-- Custom skills (Slides CLI presentation tool)
-- Plugin repository configuration
+```vim
+:Lazy
+:Mason
+:StarterInstall
+:checkhealth
+```
 
-</details>
+- `:Lazy` opens the plugin manager.
+- `:Mason` opens the tool installer for language servers and formatters.
+- `:StarterInstall` installs the curated starter tools and Tree-sitter parsers.
+- `:checkhealth` reports missing system tools or plugin issues.
 
-<details>
-<summary><b><img src="https://cdn.simpleicons.org/alacritty/F46D01" height="16" alt="alacritty"/> Terminal Emulators</b></summary>
+## Core Concepts
 
-- **Alacritty:** GPU-accelerated, multiple themes, Hack Nerd Font
-- **Ghostty:** Placeholder for future configuration
+### Tree-sitter
 
-</details>
+Tree-sitter is a parser that understands the structure of code. Neovim uses it for better syntax highlighting, indentation, and code context than plain text highlighting can provide.
+
+In this config, Tree-sitter is handled by:
+
+```text
+nvim-config/.config/nvim/lua/plugins/treesitter.lua
+```
+
+These parsers are installed by `:StarterInstall`:
+
+```text
+Bash, CSS, Dockerfile, Go, Helm, HTML, JavaScript, JSON,
+Lua, Markdown, Python, Rust, TSX, TypeScript, Vim, YAML
+```
+
+If highlighting looks wrong for a language, run:
+
+```vim
+:TSUpdate
+```
+
+### Mason
+
+Mason installs external editor tools like language servers, linters, and formatters. These are separate programs that Neovim talks to.
+
+`:StarterInstall` installs these language servers:
+
+```text
+css-lsp, docker-compose-language-service, dockerfile-language-server,
+eslint-lsp, gopls, helm-ls, html-lsp, lua-language-server,
+pyright, rust-analyzer, typescript-language-server, yaml-language-server
+```
+
+It also installs these formatters:
+
+```text
+autopep8, gofumpt, goimports, prettier, stylua
+```
+
+Open Mason with:
+
+```vim
+:Mason
+```
+
+If you need another language later, install more tools from inside Mason by searching for the tool name and pressing `i`.
+
+### Telescope
+
+Telescope is a fuzzy finder. It helps you quickly open files, search project text, and jump around code.
+
+Important keymaps:
+
+```text
+<leader>p    find files
+<leader>f    search text with ripgrep
+```
+
+The leader key is Space, so `<leader>p` means:
+
+```text
+Space, then p
+```
+
+## Language Setup
+
+This config already wires Neovim to common language servers. The easiest way for a junior developer to start is:
+
+1. Open Neovim with `nvim`.
+2. Wait for `lazy.nvim` to finish installing plugins.
+3. Run `:StarterInstall`.
+4. Restart Neovim.
+5. Run `:checkhealth` if something does not work.
+
+Starter tools:
+
+```text
+Go:          gopls, goimports, gofumpt
+Docker:      docker-langserver, docker-compose-langserver
+Helm/YAML:   helm-ls, yaml-language-server
+Lua:         lua-language-server, stylua
+Python:      pyright, autopep8
+JavaScript:  typescript-language-server, vscode-eslint-language-server, prettier
+HTML/CSS:    vscode-html-language-server, vscode-css-language-server
+Rust:        rust-analyzer
+```
+
+Some tools still require the language runtime or CLI to be installed. For example, Go tools require Go, Docker tooling needs Docker, Helm support expects the Helm CLI, Rust tools require Rust, and many JavaScript tools require Node.js/npm.
+
+## Basic Workflow
+
+Open a project:
+
+```bash
+cd path/to/project
+nvim
+```
+
+Common keys:
+
+```text
+Space p     find a file
+Space f     search text in the project
+gd          go to definition
+gr          find references
+K           show documentation
+E           show diagnostics for the current line
+[d          previous diagnostic
+]d          next diagnostic
+Space rn    rename symbol
+```
+
+## Updating
+
+Update plugins:
+
+```vim
+:Lazy update
+```
+
+Update Tree-sitter parsers:
+
+```vim
+:TSUpdate
+```
+
+Check health after updating:
+
+```vim
+:checkhealth
+```
+
+## Troubleshooting
+
+If Neovim shows a short startup error and it disappears before you can read it, open the full message history:
+
+```vim
+:messages
+```
+
+For Mason install problems, open:
+
+```vim
+:MasonLog
+```

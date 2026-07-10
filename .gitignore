@@ -1,13 +1,8 @@
-helix/runtime
-.tmux
-claude/.claude
 .nvimlog
 *.log
+nvim-config/.config/go/
 
 # Local assistant/editor state
 .agents/
 .bookmarks
 .codex
-
-# Host-local shell helpers
-zsh/.local/

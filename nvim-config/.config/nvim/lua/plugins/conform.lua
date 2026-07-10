@@ -7,7 +7,7 @@ return {
 			javascript = { "prettier" },
 			javascriptreact = { "prettier" },
 			json = { "prettier" },
-			go = { "goimports", "gofmt" },
+			go = { "goimports", "gofumpt" },
 			rust = { "rustfmt" },
 			python = { "autopep8" },
 			templ = { "templ" },

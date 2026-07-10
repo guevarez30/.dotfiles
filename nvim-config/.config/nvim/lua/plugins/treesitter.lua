@@ -1,3 +1,27 @@
+local parsers = {
+	"bash",
+	"css",
+	"dockerfile",
+	"go",
+	"gomod",
+	"gosum",
+	"helm",
+	"html",
+	"javascript",
+	"json",
+	"lua",
+	"markdown",
+	"markdown_inline",
+	"python",
+	"query",
+	"rust",
+	"tsx",
+	"typescript",
+	"vim",
+	"vimdoc",
+	"yaml",
+}
+
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -20,6 +44,9 @@ return {
 		},
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
+			vim.api.nvim_create_user_command("StarterTreesitterInstall", function()
+				vim.cmd("TSInstall " .. table.concat(parsers, " "))
+			end, { desc = "Install starter Tree-sitter parsers" })
 		end,
 	},
 	{

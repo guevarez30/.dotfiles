@@ -51,9 +51,28 @@ return {
 			debounce_text_changes = 150,
 		}
 
-		vim.filetype.add({ extension = { templ = "templ" } })
+		vim.filetype.add({
+			extension = { templ = "templ" },
+			filename = {
+				["compose.yaml"] = "yaml.docker-compose",
+				["compose.yml"] = "yaml.docker-compose",
+				["docker-compose.yaml"] = "yaml.docker-compose",
+				["docker-compose.yml"] = "yaml.docker-compose",
+			},
+		})
 
 		local servers = {
+			lua_ls = {
+				cmd = { "lua-language-server" },
+				filetypes = { "lua" },
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" },
+						},
+					},
+				},
+			},
 			pyright = {
 				cmd = { "pyright-langserver", "--stdio" },
 				filetypes = { "python" },
@@ -61,6 +80,27 @@ return {
 			ts_ls = {
 				cmd = { "typescript-language-server", "--stdio" },
 				filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+			},
+			dockerls = {
+				cmd = { "docker-langserver", "--stdio" },
+				filetypes = { "dockerfile" },
+			},
+			docker_compose_language_service = {
+				cmd = { "docker-compose-langserver", "--stdio" },
+				filetypes = { "yaml.docker-compose" },
+			},
+			helm_ls = {
+				cmd = { "helm_ls", "serve" },
+				filetypes = { "helm" },
+			},
+			yamlls = {
+				cmd = { "yaml-language-server", "--stdio" },
+				filetypes = { "yaml", "yaml.docker-compose" },
+				settings = {
+					yaml = {
+						keyOrdering = false,
+					},
+				},
 			},
 			tailwindcss = {
 				cmd = { "tailwindcss-language-server", "--stdio" },
