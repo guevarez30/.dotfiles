@@ -25,11 +25,6 @@ vim.keymap.set("n", "n", "nzzzv", { noremap = true })
 vim.keymap.set("n", "N", "Nzzzv", { noremap = true })
 vim.keymap.set("n", "*", "*zzzv", { noremap = true })
 
--- Explicit host/system clipboard copy
-vim.keymap.set("n", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipboard" })
-vim.keymap.set("v", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipboard" })
-vim.keymap.set("n", "<leader>Y", '"+yy', { noremap = true, desc = "Copy line to clipboard" })
-
 -- QuickFix
 vim.keymap.set("n", "cn", ":cnext <CR>", { noremap = true })
 vim.keymap.set("n", "cp", ":cprevious <CR>", { noremap = true })

@@ -69,17 +69,15 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- :F / :P - show path and copy to clipboard
+-- :F / :P - show path
 vim.api.nvim_create_user_command("F", function()
 	local path = vim.fn.expand("%:p")
-	vim.fn.setreg("+", path)
-	vim.notify(path .. " (copied)")
+	vim.notify(path)
 end, {})
 
 vim.api.nvim_create_user_command("P", function()
 	local cwd = vim.uv.cwd()
-	vim.fn.setreg("+", cwd)
-	vim.notify(cwd .. " (copied)")
+	vim.notify(cwd)
 end, {})
 
 -- Abbreviate :f -> :F and :p -> :P in command mode

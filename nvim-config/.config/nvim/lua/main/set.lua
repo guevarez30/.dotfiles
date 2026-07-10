@@ -17,9 +17,6 @@ set.smarttab = true
 set.autoread = true
 set.cursorline = true
 set.termguicolors = true
--- Keep normal yanks inside Neovim. Use <leader>y when copying to the host clipboard.
-set.clipboard = ""
-vim.g.clipboard = "osc52"
 set.tabstop = 4
 set.softtabstop = 4
 set.shiftwidth = 4
