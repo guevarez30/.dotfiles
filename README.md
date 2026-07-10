@@ -144,6 +144,8 @@ Useful commands:
 
 Tree-sitter is a parser that understands the structure of code. Neovim uses it for better syntax highlighting, indentation, and code context than plain text highlighting can provide.
 
+Automatic Tree-sitter highlighting is enabled for the starter languages. Helm templates are excluded from Tree-sitter because the Helm parser can throw parser callback errors on real chart templates; they still use normal Neovim syntax highlighting.
+
 In this config, Tree-sitter is handled by:
 
 ```text
@@ -153,13 +155,14 @@ nvim-config/.config/nvim/lua/plugins/treesitter.lua
 These parsers are installed by `:StarterInstall`:
 
 ```text
-Bash, CSS, Dockerfile, Go, Helm, HTML, JavaScript, JSON,
+Bash, CSS, Dockerfile, Go, HTML, JavaScript, JSON,
 Lua, Markdown, Python, Rust, TSX, TypeScript, Vim, YAML
 ```
 
 If highlighting looks wrong for a language, run:
 
 ```vim
+:Lazy sync
 :TSUpdate
 ```
 
@@ -259,7 +262,7 @@ Space rn    rename symbol
 Update plugins:
 
 ```vim
-:Lazy update
+:Lazy sync
 ```
 
 Update Tree-sitter parsers:
