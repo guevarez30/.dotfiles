@@ -152,12 +152,17 @@ function M.render_buffer(bufnr)
 				table.insert(virt_lines, { { "- " .. deleted, "BranchReviewDeleteLine" } })
 			end
 
-			vim.api.nvim_buf_set_extmark(bufnr, ns, anchor, 0, {
+			local opts = {
 				virt_lines = virt_lines,
 				virt_lines_above = true,
-				sign_text = hunk.new_count == 0 and "_" or sign_text,
-				sign_hl_group = hunk.new_count == 0 and "BranchReviewDelete" or line_hl,
-			})
+			}
+
+			if hunk.new_count > 0 then
+				opts.sign_text = sign_text
+				opts.sign_hl_group = line_hl
+			end
+
+			vim.api.nvim_buf_set_extmark(bufnr, ns, anchor, 0, opts)
 		end
 	end
 end

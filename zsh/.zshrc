@@ -1,3 +1,9 @@
+# Avoid duplicate initialization when zsh startup files source each other.
+if [[ -n "${DOTFILES_ZSHRC_LOADED:-}" ]]; then
+  return
+fi
+export DOTFILES_ZSHRC_LOADED=1
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 

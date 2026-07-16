@@ -10,6 +10,17 @@ return {
 			untracked = { text = "+" },
 		},
 		sign_priority = 20,
+		on_attach = function(bufnr)
+			local gs = require("gitsigns")
+
+			vim.keymap.set("n", "]h", function()
+				gs.nav_hunk("next")
+			end, { buffer = bufnr, desc = "Next git hunk" })
+
+			vim.keymap.set("n", "[h", function()
+				gs.nav_hunk("prev")
+			end, { buffer = bufnr, desc = "Previous git hunk" })
+		end,
 	},
 	config = function(_, opts)
 		vim.keymap.set("n", "<leader>gq", function()
