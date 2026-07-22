@@ -6,6 +6,7 @@ local ns = vim.api.nvim_create_namespace("branch-review")
 local state = {
 	active = false,
 	base_ref = default_base,
+	mode = "branch",
 	merge_base = nil,
 	root = nil,
 	hunks_by_file = {},
@@ -202,27 +203,87 @@ local function build_quickfix()
 		return a.filename < b.filename
 	end)
 
-	vim.fn.setqflist({}, "r", { title = "Branch review vs " .. state.base_ref, items = items })
+	vim.fn.setqflist({}, "r", { title = "Branch review " .. state.base_ref, items = items })
 	return items
 end
 
-function M.open(base_ref)
-	state.base_ref = base_ref and base_ref ~= "" and base_ref or default_base
-
+local function set_root()
 	local root_output = git_output({ "rev-parse", "--show-toplevel" })
 	if not root_output or not root_output[1] or root_output[1] == "" then
-		return
+		return false
 	end
 	state.root = root_output[1]
+	return true
+end
 
-	local merge_base = git_output({ "merge-base", state.base_ref, "HEAD" })
+local function open_diff(label, diff_args)
+	local diff = git_output(diff_args)
+	if not diff then
+		return
+	end
+
+	state.hunks_by_file = parse_diff(state.root, diff)
+	state.active = true
+	state.base_ref = label
+
+	local items = build_quickfix()
+	render_loaded_buffers()
+
+	if #items > 0 then
+		pcall(vim.cmd, "cfirst")
+		vim.cmd("botright copen")
+	else
+		vim.notify("No hunks " .. label, vim.log.levels.INFO)
+	end
+end
+
+function M.open(base_ref)
+	base_ref = base_ref and base_ref ~= "" and base_ref or default_base
+
+	if not set_root() then
+		return
+	end
+
+	if base_ref == "--uncommitted" or base_ref == "uncommitted" then
+		state.mode = "uncommitted"
+		state.merge_base = nil
+		open_diff("uncommitted", {
+			"diff",
+			"--no-ext-diff",
+			"--no-color",
+			"--no-prefix",
+			"--find-renames",
+			"--histogram",
+			"--unified=0",
+		})
+		return
+	end
+
+	if base_ref == "--staged" or base_ref == "staged" then
+		state.mode = "staged"
+		state.merge_base = nil
+		open_diff("staged", {
+			"diff",
+			"--cached",
+			"--no-ext-diff",
+			"--no-color",
+			"--no-prefix",
+			"--find-renames",
+			"--histogram",
+			"--unified=0",
+		})
+		return
+	end
+
+	state.mode = "branch"
+	local merge_base = git_output({ "merge-base", base_ref, "HEAD" })
 	if not merge_base or not merge_base[1] or merge_base[1] == "" then
-		notify_error("No merge-base found for " .. state.base_ref)
+		notify_error("No merge-base found for " .. base_ref)
 		return
 	end
 	state.merge_base = merge_base[1]
 
-	local diff = git_output({
+	open_diff("vs " .. base_ref, {
 		"diff",
 		"--no-ext-diff",
 		"--no-color",
@@ -232,27 +293,12 @@ function M.open(base_ref)
 		"--unified=0",
 		state.merge_base,
 	})
-	if not diff then
-		return
-	end
-
-	state.hunks_by_file = parse_diff(state.root, diff)
-	state.active = true
-
-	local items = build_quickfix()
-	render_loaded_buffers()
-
-	if #items > 0 then
-		pcall(vim.cmd, "cfirst")
-		vim.cmd("botright copen")
-	else
-		vim.notify("No hunks vs " .. state.base_ref, vim.log.levels.INFO)
-	end
 end
 
 function M.close()
 	state.active = false
 	state.merge_base = nil
+	state.mode = "branch"
 	state.hunks_by_file = {}
 	vim.fn.setqflist({}, "r", { title = "Branch review", items = {} })
 	pcall(vim.cmd, "cclose")
@@ -265,7 +311,47 @@ function M.close()
 end
 
 function M.refresh()
-	M.open(state.base_ref)
+	if state.mode == "uncommitted" then
+		M.open("--uncommitted")
+	elseif state.mode == "staged" then
+		M.open("--staged")
+	else
+		M.open((state.base_ref or default_base):gsub("^vs ", ""))
+	end
+end
+
+function M.pick_branch()
+	if not set_root() then
+		return
+	end
+
+	local refs = git_output({ "branch", "--all", "--format=%(refname:short)" })
+	if not refs then
+		return
+	end
+
+	local seen = {}
+	local choices = {}
+	for _, ref in ipairs(refs) do
+		ref = ref:gsub("^origin/HEAD -> ", "")
+		ref = ref:gsub("^remotes/", "")
+		if ref ~= "" and not seen[ref] then
+			seen[ref] = true
+			table.insert(choices, ref)
+		end
+	end
+
+	table.sort(choices)
+	if #choices == 0 then
+		vim.notify("No branches found", vim.log.levels.INFO)
+		return
+	end
+
+	vim.ui.select(choices, { prompt = "Branch review base" }, function(choice)
+		if choice and choice ~= "" then
+			M.open(choice)
+		end
+	end)
 end
 
 local function set_highlights()
@@ -284,6 +370,7 @@ function M.setup()
 
 	vim.api.nvim_create_user_command("BranchReviewClose", M.close, {})
 	vim.api.nvim_create_user_command("BranchReviewRefresh", M.refresh, {})
+	vim.api.nvim_create_user_command("BranchReviewPick", M.pick_branch, {})
 
 	vim.api.nvim_create_autocmd({ "BufReadPost", "BufEnter", "TextChanged", "TextChangedI" }, {
 		callback = function(event)

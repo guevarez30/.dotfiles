@@ -18,41 +18,6 @@ gitExclude() {
 	echo $@ >> ~/.git/info/exclude
 }
 
-wtpr() {
-  local remote_branch="$1"
-
-  if [ -z "$remote_branch" ]; then
-    echo "Usage: wtpr <remote-branch>"
-    return 1
-  fi
-
-  git rev-parse --show-toplevel >/dev/null 2>&1 || {
-    echo "Not inside a git repository"
-    return 1
-  }
-
-  local repo_root repo_name worktree_root worktree_name worktree_dir local_branch
-  repo_root=$(git rev-parse --show-toplevel)
-  repo_name=$(basename "$repo_root")
-  worktree_root="$HOME/pr/$repo_name"
-  worktree_name="${remote_branch//\//-}"
-  worktree_dir="${worktree_root}/${worktree_name}"
-  local_branch="pr-${worktree_name}"
-
-  mkdir -p "$worktree_root"
-
-  git fetch origin
-
-  # If worktree already exists, remove it cleanly
-  if git worktree list | grep -Fq -- "$worktree_dir"; then
-    git worktree remove "$worktree_dir" --force
-  fi
-
-  # Recreate PR worktree on a local branch, leaving the original branch untouched
-  git worktree add -B "$local_branch" "$worktree_dir" "origin/$remote_branch" || return 1
-
-  cd "$worktree_dir"
-}
 
 ###################################################################################
 # TMUX
@@ -127,8 +92,10 @@ fi
 alias lt='du -sh * | sort -h'
 alias loads='cd ~/raft-tech'
 alias src='source ~/.zshrc'
-alias diff='nvim -d'
-alias dif='diff'
+# Deprecated: use tmux prefix+s for session switching/deletion.
+alias tms='~/.config/tmux/tmux-sessionizer.sh'
+alias tmw='~/.config/tmux/tmux-worktree.sh'
+alias dif='command diff'
 alias pretty="jq '.'"
 
 #####################################################################################

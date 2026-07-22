@@ -26,6 +26,7 @@ return {
 		vim.keymap.set("n", "<leader>gq", function()
 			require("gitsigns").setqflist("all")
 		end, { desc = "Git hunks to quickfix" })
+		vim.keymap.set("n", "<leader>gm", "<cmd>Gitsigns diffthis main<cr>", { silent = true, desc = "Diff against main" })
 
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			pattern = "*",

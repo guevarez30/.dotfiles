@@ -40,7 +40,10 @@ end, { noremap = true })
 vim.keymap.set("n", "co", ":copen <CR>", { noremap = true, desc = "Open quickfix" })
 
 -- Branch review
-vim.keymap.set("n", "<leader>dvo", "<cmd>BranchReviewOpen origin/dev<CR>", { noremap = true, desc = "Open branch review" })
+vim.keymap.set("n", "<leader>dvo", "<cmd>BranchReviewPick<CR>", { noremap = true, desc = "Open branch review" })
+vim.keymap.set("n", "<leader>dvd", "<cmd>BranchReviewOpen origin/dev<CR>", { noremap = true, desc = "Open branch review vs origin/dev" })
+vim.keymap.set("n", "<leader>dvu", "<cmd>BranchReviewOpen --uncommitted<CR>", { noremap = true, desc = "Open uncommitted review" })
+vim.keymap.set("n", "<leader>dvs", "<cmd>BranchReviewOpen --staged<CR>", { noremap = true, desc = "Open staged review" })
 vim.keymap.set("n", "<leader>dvc", "<cmd>BranchReviewClose<CR>", { noremap = true, desc = "Close branch review" })
 
 -- Split
@@ -61,3 +64,33 @@ vim.keymap.set("n", "<Leader>ee", function()
 		return vim.cmd.normal("3k")
 	end
 end)
+
+local function copy_ref(opts)
+	local path = vim.fn.expand("%:.")
+	local ref = path
+
+	if opts.visual then
+		local start_line = vim.fn.line("v")
+		local end_line = vim.fn.line(".")
+		if start_line > end_line then
+			start_line, end_line = end_line, start_line
+		end
+		ref = path .. ":" .. start_line .. ":" .. end_line
+	end
+
+	local note = vim.fn.input("Prompt (optional): ")
+	if note ~= "" then
+		ref = ref .. " " .. note
+	end
+
+	vim.fn.setreg("+", ref)
+	vim.notify("Copied: " .. ref)
+end
+
+vim.keymap.set("n", "<leader>cp", function()
+	copy_ref({})
+end, { desc = "Copy file path prompt" })
+
+vim.keymap.set("v", "<leader>cp", function()
+	copy_ref({ visual = true })
+end, { desc = "Copy file path range prompt" })
