@@ -1,8 +1,7 @@
-# Avoid duplicate initialization when zsh startup files source each other.
-if [[ -n "${DOTFILES_ZSHRC_LOADED:-}" ]]; then
+if [[ -n "${_DOTFILES_ZSHRC_SOURCED:-}" ]]; then
   return
 fi
-export DOTFILES_ZSHRC_LOADED=1
+_DOTFILES_ZSHRC_SOURCED=1
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -74,8 +73,6 @@ source $ZSH/oh-my-zsh.sh
 export VISUAL='nvim'
 export EDITOR='nvim'
 
-source ~/.localrc
-
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
@@ -85,6 +82,8 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
+
+source ~/.localrc
 
 copy() {
 	clipboard-copy

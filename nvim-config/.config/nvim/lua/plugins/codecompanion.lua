@@ -41,16 +41,22 @@ return {
 		adapters = {
 			acp = {
 				codex = function()
+					local codex_acp = vim.fn.exepath("codex-acp")
+					if codex_acp == "" then
+						codex_acp = "codex-acp"
+					end
+
 					return require("codecompanion.adapters").extend("codex", {
 						commands = {
 							default = {
-								"codex-acp",
+								codex_acp,
 								"-c",
 								"project_doc_max_bytes=0",
 							},
 						},
 						defaults = {
 							auth_method = "chatgpt",
+							timeout = 60000,
 						},
 					})
 				end,
