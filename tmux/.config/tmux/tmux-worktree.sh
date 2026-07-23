@@ -35,7 +35,7 @@ done < <(project_dirs)
 
 [ -z "$project_menu" ] && exit 0
 
-project_selection=$(printf '%s' "$project_menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Project> ")
+project_selection=$(printf '%s' "$project_menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Project> " --no-mouse)
 [ -z "$project_selection" ] && exit 0
 
 project_name=$(printf '%s' "$project_selection" | cut -f1)
@@ -44,17 +44,48 @@ project_dir=$(printf '%s' "$project_selection" | cut -f2)
 cd "$project_dir"
 git worktree prune >/dev/null 2>&1 || true
 
-branches=$(git branch --format='%(refname:short)')
-selection=$(printf '%s\n[new branch]\n' "$branches" | fzf --height 100% --prompt="Branch> ")
+local_branches=$(git branch --format='%(refname:short)')
+new_branch_label="[create new branch]"
+branch_menu="$new_branch_label"$'\t'"new"$'\t'$'\n'
+while IFS= read -r local_branch; do
+  [ -n "$local_branch" ] || continue
+  branch_menu+="[local] ${local_branch}"$'\t'"local"$'\t'"${local_branch}"$'\n'
+done <<<"$local_branches"
+
+selection=$(printf '%s' "$branch_menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Branch> " --no-mouse)
 [ -z "$selection" ] && exit 0
 
-if [ "$selection" = "[new branch]" ]; then
+selection_type=$(printf '%s' "$selection" | cut -f2)
+selection_ref=$(printf '%s' "$selection" | cut -f3)
+
+if [ "$selection_type" = "new" ]; then
   read -r -p "New branch name: " branch
   [ -z "$branch" ] && exit 0
-  is_new=true
+  if ! git check-ref-format --branch "$branch" >/dev/null 2>&1; then
+    echo "Invalid branch name: $branch"
+    read -r -p "Press enter to close..."
+    exit 1
+  fi
+  if git show-ref --verify --quiet "refs/heads/$branch"; then
+    echo "Branch already exists: $branch"
+    read -r -p "Press enter to close..."
+    exit 1
+  fi
+
+  base_menu="[current HEAD]"$'\t'"HEAD"$'\n'
+  while IFS= read -r local_branch; do
+    [ -n "$local_branch" ] || continue
+    base_menu+="[local] ${local_branch}"$'\t'"${local_branch}"$'\n'
+  done <<<"$local_branches"
+
+  base_selection=$(printf '%s' "$base_menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Base branch> " --no-mouse)
+  [ -z "$base_selection" ] && exit 0
+  base_ref=$(printf '%s' "$base_selection" | cut -f2)
+  mode="new"
 else
-  branch="$selection"
-  is_new=false
+  branch="$selection_ref"
+  base_ref=""
+  mode="existing"
 fi
 
 worktree_name=$(sanitize "$branch")
@@ -79,8 +110,8 @@ elif [ -d "$wt_path" ]; then
   echo "Directory exists but is not a registered worktree: $wt_path"
   read -r -p "Press enter to close..."
   exit 1
-elif [ "$is_new" = true ]; then
-  git worktree add "$wt_path" -b "$branch"
+elif [ "$mode" = "new" ]; then
+  git worktree add "$wt_path" -b "$branch" "$base_ref"
 else
   git worktree add "$wt_path" "$branch"
 fi

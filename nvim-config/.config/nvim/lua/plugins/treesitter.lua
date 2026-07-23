@@ -20,6 +20,19 @@ return {
 		},
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
+
+			-- Helm's parser does not expose gotmpl's anonymous "else if" token,
+			-- but the upstream helm query inherits gotmpl highlights. Strip only
+			-- that token until the parser/query mismatch is resolved upstream.
+			local gotmpl_query = vim.api.nvim_get_runtime_file("queries/gotmpl/highlights.scm", false)[1]
+			local helm_query = vim.api.nvim_get_runtime_file("queries/helm/highlights.scm", false)[1]
+			if gotmpl_query and helm_query then
+				local query = table.concat(vim.fn.readfile(gotmpl_query), "\n")
+					:gsub('%s*"else if"', "")
+					.. "\n"
+					.. table.concat(vim.fn.readfile(helm_query), "\n"):gsub("^; inherits: gotmpl\n", "")
+				vim.treesitter.query.set("helm", "highlights", query)
+			end
 		end,
 	},
 	{

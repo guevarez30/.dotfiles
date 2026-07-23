@@ -54,7 +54,7 @@ done < <(project_dirs)
 
 [ -z "$menu" ] && exit 0
 
-selection=$(printf '%s' "$menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Delete worktree> ")
+selection=$(printf '%s' "$menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Delete worktree> " --no-mouse)
 [ -z "$selection" ] && exit 0
 
 label=$(printf '%s' "$selection" | cut -f1)

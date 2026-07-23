@@ -30,7 +30,7 @@ switch_only="${TMUX_SESSIONIZER_SWITCH_ONLY:-false}"
 
 if tmux ls >/dev/null 2>&1; then
   while IFS= read -r sess; do
-    menu+="[switch] ${sess}"$'\t'"${sess}"$'\t'"${sess}"$'\t'"switch"$'\n'
+    menu+="${sess}"$'\t'"${sess}"$'\t'"${sess}"$'\t'"switch"$'\n'
   done < <(tmux list-sessions -F '#{session_name}')
 fi
 
@@ -61,7 +61,7 @@ while IFS= read -r root; do
       wt_sess="$(session_name "$name")($(session_name "$wt_label"))"
 
       if tmux has-session -t "$wt_sess" 2>/dev/null; then
-        label="[switch] ${name} (${branch})"
+        label="${name} (${branch})"
         type="switch"
       elif [ "$switch_only" != true ]; then
         label="[new] ${name} (${branch}) [worktree]"
@@ -77,7 +77,7 @@ done < <(project_dirs)
 
 [ -z "$menu" ] && exit 0
 
-selection=$(printf '%s' "$menu" | LC_ALL=C sort -u -t$'\t' -k2,2 | fzf --height 100% --delimiter=$'\t' --with-nth=1)
+selection=$(printf '%s' "$menu" | LC_ALL=C sort -u -t$'\t' -k2,2 | fzf --height 100% --delimiter=$'\t' --with-nth=1 --no-mouse)
 [ -z "$selection" ] && exit 0
 
 sess=$(printf '%s' "$selection" | cut -f2)
