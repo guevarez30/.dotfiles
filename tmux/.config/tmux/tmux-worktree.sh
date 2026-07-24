@@ -67,21 +67,20 @@ if [ "$selection_type" = "new" ]; then
     exit 1
   fi
   if git show-ref --verify --quiet "refs/heads/$branch"; then
-    echo "Branch already exists: $branch"
-    read -r -p "Press enter to close..."
-    exit 1
+    base_ref=""
+    mode="existing"
+  else
+    base_menu="[current HEAD]"$'\t'"HEAD"$'\n'
+    while IFS= read -r local_branch; do
+      [ -n "$local_branch" ] || continue
+      base_menu+="[local] ${local_branch}"$'\t'"${local_branch}"$'\n'
+    done <<<"$local_branches"
+
+    base_selection=$(printf '%s' "$base_menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Base branch> " --no-mouse)
+    [ -z "$base_selection" ] && exit 0
+    base_ref=$(printf '%s' "$base_selection" | cut -f2)
+    mode="new"
   fi
-
-  base_menu="[current HEAD]"$'\t'"HEAD"$'\n'
-  while IFS= read -r local_branch; do
-    [ -n "$local_branch" ] || continue
-    base_menu+="[local] ${local_branch}"$'\t'"${local_branch}"$'\n'
-  done <<<"$local_branches"
-
-  base_selection=$(printf '%s' "$base_menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Base branch> " --no-mouse)
-  [ -z "$base_selection" ] && exit 0
-  base_ref=$(printf '%s' "$base_selection" | cut -f2)
-  mode="new"
 else
   branch="$selection_ref"
   base_ref=""
@@ -111,9 +110,19 @@ elif [ -d "$wt_path" ]; then
   read -r -p "Press enter to close..."
   exit 1
 elif [ "$mode" = "new" ]; then
-  git worktree add "$wt_path" -b "$branch" "$base_ref"
+  printf 'Creating worktree at %s\nLarge/LFS repos can pause here; wait for checkout to finish.\n' "$wt_path"
+  if ! git worktree add "$wt_path" -b "$branch" "$base_ref"; then
+    printf '\nFailed to create worktree for new branch: %s\n' "$branch"
+    read -r -p "Press enter to close..."
+    exit 1
+  fi
 else
-  git worktree add "$wt_path" "$branch"
+  printf 'Creating worktree at %s\nLarge/LFS repos can pause here; wait for checkout to finish.\n' "$wt_path"
+  if ! git worktree add "$wt_path" "$branch"; then
+    printf '\nFailed to create worktree for existing branch: %s\n' "$branch"
+    read -r -p "Press enter to close..."
+    exit 1
+  fi
 fi
 
 sess_name="$(sanitize "$project_name")($worktree_name)"
