@@ -78,13 +78,14 @@ local function copy_ref(opts)
 		ref = path .. ":" .. start_line .. ":" .. end_line
 	end
 
-	local note = vim.fn.input("Prompt (optional): ")
-	if note ~= "" then
-		ref = ref .. " " .. note
-	end
+	vim.ui.input({ prompt = "Prompt (optional): " }, function(note)
+		if note and note ~= "" then
+			ref = ref .. " " .. note
+		end
 
-	vim.fn.setreg("+", ref)
-	vim.notify("Copied: " .. ref)
+		vim.fn.setreg("+", ref)
+		vim.notify("Copied: " .. ref)
+	end)
 end
 
 vim.keymap.set("n", "<leader>cp", function()
@@ -94,3 +95,11 @@ end, { desc = "Copy file path prompt" })
 vim.keymap.set("v", "<leader>cp", function()
 	copy_ref({ visual = true })
 end, { desc = "Copy file path range prompt" })
+
+vim.keymap.set("n", "<leader>cl", function()
+	require("main.clanker").insert()
+end, { desc = "Insert clanker comment" })
+
+vim.keymap.set("v", "<leader>cl", function()
+	require("main.clanker").insert({ visual = true })
+end, { desc = "Insert clanker comment above selection" })

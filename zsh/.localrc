@@ -269,3 +269,11 @@ zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 if command -v carapace &>/dev/null; then
   source <(carapace _carapace)
 fi
+
+clanker() {
+  nohup codex exec -C "$PWD" "use clanker skill" >/dev/null 2>&1 &
+  local pid=$!
+  disown "$pid"
+
+  echo "clanker running in background: pid=$pid"
+}

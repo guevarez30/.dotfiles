@@ -1,5 +1,6 @@
 return {
 	"olimorris/codecompanion.nvim",
+	enabled = false,
 	version = "^19.0.0",
 	cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionCmd" },
 	keys = {
