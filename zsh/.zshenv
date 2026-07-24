@@ -1,5 +1,6 @@
 # zsh reads this for every shell. Keep non-interactive shells light.
-[[ -s "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+typeset -U path PATH
+path=("$HOME/.cargo/bin" $path)
 
 # Some SSH/tmux entrypoints on this host skip the normal .zshrc path.
 # For interactive shells only, force .zshrc once.

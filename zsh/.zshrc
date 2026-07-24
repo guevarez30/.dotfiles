@@ -3,6 +3,16 @@ if [[ -n "${_DOTFILES_ZSHRC_SOURCED:-}" ]]; then
 fi
 _DOTFILES_ZSHRC_SOURCED=1
 
+typeset -U path PATH
+
+path_prepend() {
+  [[ -d "$1" ]] && path=("$1" $path)
+}
+
+path_append() {
+  [[ -d "$1" ]] && path=($path "$1")
+}
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -37,6 +47,7 @@ ZSH_THEME="robbyrussell"
 # zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+zstyle ':omz:update' mode disabled
 
 # Uncomment the following line to change how often to auto-update (in days).
 # zstyle ':omz:update' frequency 13
@@ -76,14 +87,11 @@ export EDITOR='nvim'
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
+path_prepend "$HOME/.local/bin"
+path_prepend "$HOME/go/bin"
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
 
-source ~/.localrc
+[[ -r "$HOME/.localrc" ]] && source "$HOME/.localrc"
 
 copy() {
 	clipboard-copy

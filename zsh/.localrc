@@ -1,6 +1,18 @@
 ###################################################################################
 # Functions
 ###################################################################################
+if ! whence -w path_prepend >/dev/null 2>&1; then
+  typeset -U path PATH
+
+  path_prepend() {
+    [[ -d "$1" ]] && path=("$1" $path)
+  }
+
+  path_append() {
+    [[ -d "$1" ]] && path=($path "$1")
+  }
+fi
+
 killport() {
     local pid=$(ss -tlnp 2>/dev/null | command grep ":$1 " | sed -n 's/.*pid=\([0-9]*\).*/\1/p' | head -1)
     if [[ -n "$pid" ]]; then
@@ -116,26 +128,50 @@ alias py-env="source .venv/bin/activate"
 #Include Scripts to Path and Custom Functions
 #####################################################################################
 if [[ -d /opt/homebrew/opt/libpq/bin ]]; then
-  export PATH="$PATH:/opt/homebrew/opt/libpq/bin"
+  path_append /opt/homebrew/opt/libpq/bin
 fi
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+path_prepend "$BUN_INSTALL/bin"
 
 #####################################################################################
 # Node Version Manager
 #####################################################################################
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+load_nvm() {
+  unfunction node npm npx nvm 2>/dev/null
+  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+  [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+}
+
+node() {
+  load_nvm
+  command node "$@"
+}
+
+npm() {
+  load_nvm
+  command npm "$@"
+}
+
+npx() {
+  load_nvm
+  command npx "$@"
+}
+
+nvm() {
+  load_nvm
+  nvm "$@"
+}
 
 #####################################################################################
 # Go
 #####################################################################################
 export GOPATH="$HOME/go"
-export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
- export PATH="$(go env GOPATH)/bin:$PATH"
+path_append /usr/local/go/bin
+path_prepend "$GOPATH/bin"
 
 #####################################################################################
 # FZF - Fuzzy Finder
@@ -216,7 +252,7 @@ softReset() {
 #####################################################################################
 alias dbPortForward='kubectl port-forward svc/rdp-postgres 15432:5432 -n data-fabric --context kind-rdp > /dev/null 2>&1 &'
 
-source ~/.raftrc
+[[ -r "$HOME/.raftrc" ]] && source "$HOME/.raftrc"
 
 #####################################################################################
 # Carapace - Shell Completion
