@@ -1,5 +1,11 @@
 local opts = { noremap = true, silent = true }
 
+if vim.fn.exists(":LspInfo") == 0 then
+	vim.api.nvim_create_user_command("LspInfo", "checkhealth vim.lsp", {
+		desc = "Show LSP health and status",
+	})
+end
+
 vim.diagnostic.config({
 	underline = false,
 	virtual_text = {

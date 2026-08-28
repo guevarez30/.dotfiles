@@ -44,6 +44,13 @@ vim.keymap.set("n", "cn", ":cnext <CR>", { noremap = true })
 vim.keymap.set("n", "cp", ":cprevious <CR>", { noremap = true })
 vim.keymap.set("n", "co", ":vertical copen <CR>", { noremap = true })
 
+-- Branch review
+vim.keymap.set("n", "<leader>dvo", "<cmd>BranchReviewPick<CR>", { noremap = true, desc = "Open branch review" })
+vim.keymap.set("n", "<leader>dvd", "<cmd>BranchReviewOpen origin/dev<CR>", { noremap = true, desc = "Open branch review vs origin/dev" })
+vim.keymap.set("n", "<leader>dvu", "<cmd>BranchReviewOpen --uncommitted<CR>", { noremap = true, desc = "Open uncommitted review" })
+vim.keymap.set("n", "<leader>dvs", "<cmd>BranchReviewOpen --staged<CR>", { noremap = true, desc = "Open staged review" })
+vim.keymap.set("n", "<leader>dvc", "<cmd>BranchReviewClose<CR>", { noremap = true, desc = "Close branch review" })
+
 -- Split
 vim.keymap.set("n", "<leader>sv", ":Vexplore <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>sh", ":Hexplore <CR>", { noremap = true })
@@ -69,9 +76,6 @@ end
 
 	vim.keymap.set("n", "<leader>gg", ":Git <CR>", { noremap = true })
 	vim.keymap.set("n", "<leader>gd", ":Gvdiffsplit! <CR>", { noremap = true })
-	vim.keymap.set("n", "<leader>gr", function()
-		git_changed_files_to_qf("origin/dev...HEAD", "Branch review vs origin/dev")
-	end, { noremap = true, desc = "Review branch vs origin/dev" })
 	vim.keymap.set("n", "<leader>gv", ":Gvdiffsplit origin/dev:% <CR>", { noremap = true, desc = "Diff current file vs origin/dev" })
 	vim.keymap.set("n", "<leader>gp", ":Git -c push.default=current push <CR>", { noremap = true })
 	vim.keymap.set("n", "<leader>gl", ":Git log -n 20 --decorate <CR>", { noremap = true })
@@ -83,10 +87,47 @@ end
 -- Remap Esc in Terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 
+local function copy_ref(opts)
+	local path = vim.fn.expand("%:.")
+	local ref = path
+
+	if opts.visual then
+		local start_line = vim.fn.line("v")
+		local end_line = vim.fn.line(".")
+		if start_line > end_line then
+			start_line, end_line = end_line, start_line
+		end
+		ref = path .. ":" .. start_line .. ":" .. end_line
+	end
+
+	local note = vim.fn.input("Prompt (optional): ")
+	if note ~= "" then
+		ref = ref .. " " .. note
+	end
+
+	vim.fn.setreg("+", ref)
+	vim.notify("Copied: " .. ref)
+end
+
+vim.keymap.set("n", "<leader>cp", function()
+	copy_ref({})
+end, { desc = "Copy file path prompt" })
+
+vim.keymap.set("v", "<leader>cp", function()
+	copy_ref({ visual = true })
+end, { desc = "Copy file path range prompt" })
+
+vim.keymap.set("n", "<leader>cl", function()
+	require("main.clanker").insert()
+end, { desc = "Insert clanker comment" })
+
+vim.keymap.set("v", "<leader>cl", function()
+	require("main.clanker").insert({ visual = true })
+end, { desc = "Insert clanker comment above selection" })
 
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
-	filetype = vim.bo.filetype
+	local filetype = vim.bo.filetype
 	if filetype == "go" then
 		vim.cmd.normal("iif err != nil {\n\n}")
 		return vim.cmd.normal("k")

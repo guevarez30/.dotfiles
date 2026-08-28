@@ -13,41 +13,6 @@ gitExclude() {
 	echo $@ >> ~/.git/info/exclude
 }
 
-wtpr() {
-  local remote_branch="$1"
-
-  if [ -z "$remote_branch" ]; then
-    echo "Usage: wtpr <remote-branch>"
-    return 1
-  fi
-
-  git rev-parse --show-toplevel >/dev/null 2>&1 || {
-    echo "Not inside a git repository"
-    return 1
-  }
-
-  local repo_root repo_name worktree_root worktree_dir local_branch
-  repo_root=$(git rev-parse --show-toplevel)
-  repo_name=$(basename "$repo_root")
-  worktree_root="$HOME/pr/$repo_name"
-  worktree_dir="${worktree_root}/${remote_branch}"
-  local_branch="pr-${remote_branch//\//-}"
-
-  mkdir -p "$(dirname "$worktree_dir")"
-
-  git fetch origin
-
-  # If worktree already exists, remove it cleanly
-  if git worktree list | grep -Fq -- "$worktree_dir"; then
-    git worktree remove "$worktree_dir" --force
-  fi
-
-  # Recreate PR worktree on a local branch, leaving the original branch untouched
-  git worktree add -B "$local_branch" "$worktree_dir" "origin/$remote_branch" || return 1
-
-  cd "$worktree_dir"
-}
-
 ###################################################################################
 # TMUX
 ###################################################################################
@@ -56,6 +21,18 @@ tn() {
     local name
     name=$(basename "$PWD" | tr '[:lower:]' '[:upper:]')
     tmux new-session -s "$name" $@
+}
+
+tk() {
+	tmux kill-session -t $@
+}
+
+ta() {
+	tmux attach-session -t $@
+}
+
+tl() {
+	tmux ls
 }
 
 ###################################################################################
@@ -85,15 +62,25 @@ alias ckear='clear'
 alias ipconfig='ifconfig'
 alias dot='cd ~/.dotfiles'
 alias grep='rg'
-alias find='fd'
-alias ls="eza"
-alias ll="eza -l --git"
-alias tree="eza --tree"
+if command -v fd &>/dev/null; then
+  alias find='fd'
+elif command -v fdfind &>/dev/null; then
+  alias find='fdfind'
+fi
+if command -v eza &>/dev/null; then
+  alias ls="eza"
+  alias ll="eza -l --git"
+  alias tree="eza --tree"
+fi
 alias lt='du -sh * | sort -h'
 alias loads='cd ~/raft-tech'
 alias src='source ~/.zshrc'
 alias diff='nvim -d'
-alias dif='diff'
+alias dif='command diff'
+# Deprecated: use tmux prefix+s for session switching/deletion.
+alias tms='~/.dotfiles/tmux/.config/tmux/tmux-sessionizer.sh'
+alias tmw='~/.dotfiles/tmux/.config/tmux/tmux-worktree.sh'
+alias tmwd='~/.dotfiles/tmux/.config/tmux/tmux-worktree-delete.sh'
 alias pretty="jq '.'"
 
 #####################################################################################
@@ -113,7 +100,9 @@ alias py-env="source .venv/bin/activate"
 #####################################################################################
 #Include Scripts to Path and Custom Functions
 #####################################################################################
-export PATH="$PATH:/opt/homebrew/opt/libpq/bin"
+if [[ -d /opt/homebrew/opt/libpq/bin ]]; then
+  export PATH="$PATH:/opt/homebrew/opt/libpq/bin"
+fi
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -139,10 +128,18 @@ export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 if command -v fzf &>/dev/null; then
     source <(fzf --zsh)
     export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
-    # Use fd for file finding (respects .gitignore)
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+    fd_cmd=""
+    if command -v fd &>/dev/null; then
+        fd_cmd='fd'
+    elif command -v fdfind &>/dev/null; then
+        fd_cmd='fdfind'
+    fi
+    if [[ -n "$fd_cmd" ]]; then
+        export FZF_DEFAULT_COMMAND="$fd_cmd --type f --hidden --follow --exclude .git"
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        export FZF_ALT_C_COMMAND="$fd_cmd --type d --hidden --follow --exclude .git"
+    fi
+    unset fd_cmd
 fi
 
 #####################################################################################
@@ -210,4 +207,6 @@ export CARAPACE_STYLE_CARAPACE_FLAG="fg:#f38ba8"          # red (flags)
 
 # Completion menu formatting
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-source <(carapace _carapace)
+if command -v carapace &>/dev/null; then
+  source <(carapace _carapace)
+fi

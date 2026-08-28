@@ -1,6 +1,11 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Fall back to xterm-256color if terminal type is unknown, such as xterm-ghostty over SSH.
+if ! infocmp "$TERM" &>/dev/null; then
+  export TERM=xterm-256color
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -66,7 +71,7 @@ export EDITOR='nvim'
 source ~/.localrc
 
 # bun completions
-[ -s "/Users/TaylorGuevarez/.bun/_bun" ] && source "/Users/TaylorGuevarez/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

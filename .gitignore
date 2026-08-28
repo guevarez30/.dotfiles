@@ -3,3 +3,11 @@ helix/runtime
 claude/.claude
 .nvimlog
 *.log
+
+# Local assistant/editor state
+.agents/
+.bookmarks
+.codex
+
+# Host-local shell helpers
+zsh/.local/

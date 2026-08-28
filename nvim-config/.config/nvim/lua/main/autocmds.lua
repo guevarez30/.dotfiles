@@ -1,7 +1,5 @@
 local augroup = vim.api.nvim_create_augroup
 
-vim.api.nvim_set_hl(0, "LineNr", {})
-
 vim.api.nvim_create_autocmd("FocusGained", {
 	group = augroup("DotfilesChecktime", { clear = true }),
 	callback = function()
