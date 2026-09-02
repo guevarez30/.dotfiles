@@ -88,18 +88,18 @@ local function copy_ref(opts)
 	end)
 end
 
-vim.keymap.set("n", "<leader>cp", function()
+vim.keymap.set("n", "<leader>ap", function()
 	copy_ref({})
 end, { desc = "Copy file path prompt" })
 
-vim.keymap.set("v", "<leader>cp", function()
+vim.keymap.set("v", "<leader>ap", function()
 	copy_ref({ visual = true })
 end, { desc = "Copy file path range prompt" })
 
-vim.keymap.set("n", "<leader>cl", function()
+vim.keymap.set("n", "<leader>al", function()
 	require("main.clanker").insert()
 end, { desc = "Insert clanker comment" })
 
-vim.keymap.set("v", "<leader>cl", function()
+vim.keymap.set("v", "<leader>al", function()
 	require("main.clanker").insert({ visual = true })
 end, { desc = "Insert clanker comment above selection" })
