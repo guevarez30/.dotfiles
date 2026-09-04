@@ -7,4 +7,88 @@ return {
 			build = "make",
 		},
 	},
+	keys = {
+		{
+			"<leader>p",
+			function()
+				require("telescope.builtin").find_files()
+			end,
+			desc = "Find files",
+		},
+		{
+			"<leader>f",
+			function()
+				require("telescope.builtin").live_grep()
+			end,
+			desc = "Search text",
+		},
+		{
+			"<leader>f",
+			function()
+				local text = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() })
+				require("telescope.builtin").grep_string({ search = table.concat(text, "\n") })
+			end,
+			mode = "v",
+			desc = "Search visual selection",
+		},
+	},
+	opts = function()
+		return {
+			defaults = {
+				vimgrep_arguments = {
+					"rg",
+					"-L",
+					"--color=never",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+					"--smart-case",
+				},
+				prompt_prefix = "  ",
+				selection_caret = "  ",
+				entry_prefix = "  ",
+				initial_mode = "insert",
+				selection_strategy = "reset",
+				sorting_strategy = "ascending",
+				layout_strategy = "horizontal",
+				layout_config = {
+					horizontal = {
+						prompt_position = "top",
+						preview_width = 0.55,
+						results_width = 0.8,
+					},
+					vertical = {
+						mirror = false,
+					},
+					width = 0.87,
+					height = 0.80,
+					preview_cutoff = 1,
+				},
+				file_sorter = require("telescope.sorters").get_fuzzy_file,
+				file_ignore_patterns = { "node_modules", "storage" },
+				generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+				path_display = { "truncate" },
+				winblend = 0,
+				border = {},
+				borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+				color_devicons = true,
+				set_env = { COLORTERM = "truecolor" },
+				file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+				grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+				qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+				buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+				mappings = {
+					n = { q = require("telescope.actions").close },
+				},
+			},
+			extensions_list = { "themes", "terms" },
+		}
+	end,
+	config = function(_, opts)
+		local telescope = require("telescope")
+
+		telescope.setup(opts)
+		telescope.load_extension("fzf")
+	end,
 }

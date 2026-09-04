@@ -4,7 +4,7 @@ return {
 	priority = 1000,
 	config = function()
 		require("dracula").setup({
-			transparent_bg = true,
+			transparent_bg = false,
 			overrides = function(colors)
 				local function blend(fg, bg, alpha)
 					local function hex_to_rgb(hex)

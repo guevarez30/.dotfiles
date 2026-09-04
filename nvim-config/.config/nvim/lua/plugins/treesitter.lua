@@ -4,18 +4,7 @@ return {
 		branch = "master",
 		build = ":TSUpdate",
 		event = { "BufReadPost", "BufNewFile" },
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
-		},
 		opts = {
-			ensure_installed = {
-				"bash", "c", "css", "go", "gomod", "gosum", "gotmpl",
-				"helm", "html", "java", "javascript", "json", "lua",
-				"markdown", "markdown_inline", "python", "rust",
-				"typescript", "tsx", "vim", "vimdoc", "yaml",
-			},
-			sync_install = false,
-			auto_install = true,
 			highlight = {
 				enable = true,
 				disable = function(lang)
@@ -28,58 +17,6 @@ return {
 					return not pcall(vim.treesitter.language.inspect, lang)
 				end,
 			},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "an",
-					node_incremental = "an",
-					node_decremental = "in",
-					scope_incremental = false,
-				},
-			},
-			textobjects = {
-				select = {
-					enable = true,
-					lookahead = true,
-					keymaps = {
-						["af"] = "@function.outer",
-						["if"] = "@function.inner",
-						["ac"] = "@class.outer",
-						["ic"] = "@class.inner",
-						["aa"] = "@parameter.outer",
-						["ia"] = "@parameter.inner",
-					},
-				},
-				move = {
-					enable = true,
-					set_jumps = true,
-					goto_next_start = {
-						["]m"] = "@function.outer",
-						["]]"] = "@class.outer",
-					},
-					goto_next_end = {
-						["]M"] = "@function.outer",
-						["]["] = "@class.outer",
-					},
-					goto_previous_start = {
-						["[m"] = "@function.outer",
-						["[["] = "@class.outer",
-					},
-					goto_previous_end = {
-						["[M"] = "@function.outer",
-						["[]"] = "@class.outer",
-					},
-				},
-				swap = {
-					enable = true,
-					swap_next = {
-						["<leader>a"] = "@parameter.inner",
-					},
-					swap_previous = {
-						["<leader>A"] = "@parameter.inner",
-					},
-				},
-			},
 		},
 		config = function(_, opts)
 			local ok, configs = pcall(require, "nvim-treesitter.configs")
@@ -89,6 +26,9 @@ return {
 				require("nvim-treesitter").setup(opts)
 			end
 
+			-- Helm's parser does not expose gotmpl's anonymous "else if" token,
+			-- but the upstream helm query inherits gotmpl highlights. Strip only
+			-- that token until the parser/query mismatch is resolved upstream.
 			local gotmpl_query = vim.api.nvim_get_runtime_file("queries/gotmpl/highlights.scm", false)[1]
 			local helm_query = vim.api.nvim_get_runtime_file("queries/helm/highlights.scm", false)[1]
 			if gotmpl_query and helm_query then

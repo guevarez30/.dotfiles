@@ -17,7 +17,9 @@ set.smarttab = true
 set.autoread = true
 set.cursorline = true
 set.termguicolors = true
-set.clipboard = "unnamedplus"
+-- Keep normal yanks inside Neovim. Use <leader>y when copying to the host clipboard.
+set.clipboard = ""
+vim.g.clipboard = "osc52"
 set.tabstop = 4
 set.softtabstop = 4
 set.shiftwidth = 4
@@ -25,9 +27,7 @@ set.expandtab = false -- Use actual tab characters
 set.copyindent = true
 set.preserveindent = true
 set.scrolloff = 8
-if vim.fn.exists("&winborder") == 1 then
-	set.winborder = "rounded"
-end
+set.winborder = "rounded"
 set.pumheight = 12
 if vim.fn.exists("&pummaxwidth") == 1 then
 	set.pummaxwidth = 80

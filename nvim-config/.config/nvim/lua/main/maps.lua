@@ -25,24 +25,15 @@ vim.keymap.set("n", "n", "nzzzv", { noremap = true })
 vim.keymap.set("n", "N", "Nzzzv", { noremap = true })
 vim.keymap.set("n", "*", "*zzzv", { noremap = true })
 
--- Telescope
-vim.keymap.set("n", "<leader>p", ":Telescope find_files <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>f", ":Telescope live_grep <CR>", { noremap = true })
-vim.keymap.set("n", "<leader>b", ":Telescope git_status <CR>", { noremap = true })
-
--- Visual mode telescope grep
-vim.keymap.set("v", "<leader>f", function()
-	local text = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() })
-	require("telescope.builtin").grep_string({ search = table.concat(text, "\n") })
-end, { noremap = true, desc = "Grep visual selection" })
-
--- Format visual selection with jq
-vim.keymap.set("v", "<leader>jq", ":!jq .<CR>", { noremap = true, desc = "Format visual selection with jq" })
+-- Explicit host/system clipboard copy
+vim.keymap.set("n", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipboard" })
+vim.keymap.set("v", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipboard" })
+vim.keymap.set("n", "<leader>Y", '"+yy', { noremap = true, desc = "Copy line to clipboard" })
 
 -- QuickFix
-vim.keymap.set("n", "cn", ":cnext <CR>", { noremap = true })
-vim.keymap.set("n", "cp", ":cprevious <CR>", { noremap = true })
-vim.keymap.set("n", "co", ":vertical copen <CR>", { noremap = true })
+vim.keymap.set("n", "]q", "<cmd>cnext<CR>", { noremap = true, desc = "Next quickfix item" })
+vim.keymap.set("n", "[q", "<cmd>cprevious<CR>", { noremap = true, desc = "Previous quickfix item" })
+vim.keymap.set("n", "<leader>qo", "<cmd>vertical copen<CR>", { noremap = true, desc = "Open quickfix list" })
 
 -- Branch review
 vim.keymap.set("n", "<leader>dvo", "<cmd>BranchReviewPick<CR>", { noremap = true, desc = "Open branch review" })
@@ -54,35 +45,6 @@ vim.keymap.set("n", "<leader>dvc", "<cmd>BranchReviewClose<CR>", { noremap = tru
 -- Split
 vim.keymap.set("n", "<leader>sv", ":Vexplore <CR>", { noremap = true })
 vim.keymap.set("n", "<leader>sh", ":Hexplore <CR>", { noremap = true })
-
--- Git
-local function git_changed_files_to_qf(args, title)
-	local files = vim.fn.systemlist("git diff --name-only " .. args)
-	if vim.v.shell_error ~= 0 then
-		vim.notify("git diff failed for " .. args, vim.log.levels.ERROR)
-		return
-	end
-
-	local qf_list = {}
-	for _, file in ipairs(files) do
-		if file ~= "" then
-			table.insert(qf_list, { filename = file, lnum = 1 })
-		end
-	end
-
-	vim.fn.setqflist({}, " ", { title = title, items = qf_list })
-	vim.cmd("copen")
-end
-
-	vim.keymap.set("n", "<leader>gg", ":Git <CR>", { noremap = true })
-	vim.keymap.set("n", "<leader>gd", ":Gvdiffsplit! <CR>", { noremap = true })
-	vim.keymap.set("n", "<leader>gv", ":Gvdiffsplit origin/dev:% <CR>", { noremap = true, desc = "Diff current file vs origin/dev" })
-	vim.keymap.set("n", "<leader>gp", ":Git -c push.default=current push <CR>", { noremap = true })
-	vim.keymap.set("n", "<leader>gl", ":Git log -n 20 --decorate <CR>", { noremap = true })
-	vim.keymap.set("n", "<leader>gb", ":Git blame <CR>", { noremap = true })
-	vim.keymap.set("n", "<leader>gm", function()
-		git_changed_files_to_qf("", "Modified files")
-	end, { noremap = true, desc = "Modified files to quickfix" })
 
 -- Remap Esc in Terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
@@ -100,28 +62,29 @@ local function copy_ref(opts)
 		ref = path .. ":" .. start_line .. ":" .. end_line
 	end
 
-	local note = vim.fn.input("Prompt (optional): ")
-	if note ~= "" then
-		ref = ref .. " " .. note
-	end
+	vim.ui.input({ prompt = "Prompt (optional): " }, function(note)
+		if note and note ~= "" then
+			ref = ref .. " " .. note
+		end
 
-	vim.fn.setreg("+", ref)
-	vim.notify("Copied: " .. ref)
+		vim.fn.setreg("+", ref)
+		vim.notify("Copied: " .. ref)
+	end)
 end
 
-vim.keymap.set("n", "<leader>cp", function()
+vim.keymap.set("n", "<leader>ap", function()
 	copy_ref({})
 end, { desc = "Copy file path prompt" })
 
-vim.keymap.set("v", "<leader>cp", function()
+vim.keymap.set("v", "<leader>ap", function()
 	copy_ref({ visual = true })
 end, { desc = "Copy file path range prompt" })
 
-vim.keymap.set("n", "<leader>cl", function()
+vim.keymap.set("n", "<leader>al", function()
 	require("main.clanker").insert()
 end, { desc = "Insert clanker comment" })
 
-vim.keymap.set("v", "<leader>cl", function()
+vim.keymap.set("v", "<leader>al", function()
 	require("main.clanker").insert({ visual = true })
 end, { desc = "Insert clanker comment above selection" })
 

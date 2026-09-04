@@ -7,7 +7,7 @@ end)
 
 require("main.plugins")
 require("main.set")
-require("main.branch_review").setup()
 require("main.maps")
 require("main.highlights")
 require("main.autocmds")
+require("main.branch_review").setup()
