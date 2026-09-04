@@ -2,7 +2,7 @@
 set -euo pipefail
 
 pane_text() {
-  tmux capture-pane -p -t "$1" -S -300 2>/dev/null || true
+  tmux capture-pane -p -t "$1" -S - 2>/dev/null || true
 }
 
 pane_status_text() {
@@ -82,9 +82,10 @@ session_name_for_thread() {
 
 codex_thread_name() {
   local pane_id="$1"
-  local text thread_id name
+  local text compact_text thread_id name
 
   text=$(pane_text "$pane_id")
+  compact_text=$(tr -d '\n' <<<"$text")
 
   while IFS= read -r thread_id; do
     [ -n "$thread_id" ] || continue
@@ -93,7 +94,7 @@ codex_thread_name() {
       printf '%s' "$name"
       return 0
     fi
-  done < <(grep -Eo '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' <<<"$text" | awk '!seen[$0]++')
+  done < <({ grep -Eo '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' <<<"$text"; grep -Eo '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' <<<"$compact_text"; } | awk '{ ids[NR] = $0 } END { for (i = NR; i >= 1; i--) if (!seen[ids[i]]++) print ids[i] }')
 
   return 1
 }
@@ -148,9 +149,9 @@ fi
 script_path=$(readlink -f "$0" 2>/dev/null || printf '%s' "$0")
 refresh_seconds="${CODEX_AGENT_REFRESH_SECONDS:-2}"
 reload_command=$(printf '%q --reload' "$script_path")
-header=$(printf '\033[34m●\033[0m working   \033[33m●\033[0m waiting   \033[32m●\033[0m idle   \033[31m●\033[0m dead   auto-refresh %ss' "$refresh_seconds")
+header=$(printf '\033[34m●\033[0m working   \033[33m●\033[0m waiting   \033[32m●\033[0m idle   \033[31m●\033[0m dead   ctrl-r refresh' )
 
-selection=$(printf '%s' "$menu" | fzf --ansi --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Codex agent> " --header="$header" --track --info=hidden --no-separator --pointer='>' --no-mouse --bind "load:reload($reload_command)")
+selection=$(printf '%s' "$menu" | fzf --ansi --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Codex agent> " --header="$header" --track --info=hidden --no-separator --pointer='>' --no-mouse --bind "ctrl-r:reload($reload_command)")
 [ -z "$selection" ] && exit 0
 
 pane_id=$(printf '%s' "$selection" | cut -f2)
