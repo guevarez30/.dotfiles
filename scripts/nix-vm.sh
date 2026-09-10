@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run on the destination Linux VM as the user named in nix/hosts.nix.
+# Run on the destination Linux VM. The default profile detects the current user.
 set -euo pipefail
 
 usage() {
@@ -7,11 +7,12 @@ usage() {
 Usage: bash scripts/nix-vm.sh <list|build|switch|verify> [profile]
 
   list             List the profiles in nix/hosts.nix.
-  build PROFILE    Build the environment without activating it.
-  switch PROFILE   Build, back up conflicting dotfiles, then activate.
+  build [PROFILE]  Build the environment without activating it.
+  switch [PROFILE] Build, back up conflicting dotfiles, then activate.
   verify           Check tools, shell startup, and Docker access.
 
 Requires Nix on a Linux VM. Never run this script with sudo.
+PROFILE defaults to current (automatically detects user, home and architecture).
 EOF
 }
 die() { printf 'Error: %s\n' "$*" >&2; exit 1; }
@@ -21,7 +22,7 @@ case "$action" in
   -h|--help) usage; exit 0 ;;
   list|verify) [[ $# -eq 1 ]] || die "Use --help for arguments." ;;
   build|switch)
-    [[ $# -eq 2 && $2 =~ ^[a-zA-Z0-9_-]+$ ]] || die "Specify a profile from nix/hosts.nix."
+    [[ $# -le 2 && ${2:-current} =~ ^[a-zA-Z0-9_-]+$ ]] || die "Specify a profile from nix/hosts.nix."
     ;;
   *) usage >&2; exit 1 ;;
 esac
@@ -71,23 +72,31 @@ if [[ $action == verify ]]; then
   exit "$failed"
 fi
 
-profile=$2
-attr="$repo#homeConfigurations.\"$profile\""
-expected_user=$("${nix_cmd[@]}" eval --raw --no-write-lock-file "$attr.config.home.username")
-expected_home=$("${nix_cmd[@]}" eval --raw --no-write-lock-file "$attr.config.home.homeDirectory")
-expected_system=$("${nix_cmd[@]}" eval --raw --no-write-lock-file "$attr.pkgs.stdenv.hostPlatform.system")
+profile=${2:-current}
 case $(uname -m) in
   x86_64) actual_system=x86_64-linux ;;
   aarch64|arm64) actual_system=aarch64-linux ;;
   *) die "Supported architectures: x86_64 and aarch64." ;;
 esac
+eval_flags=(--no-write-lock-file)
+if [[ $profile == current ]]; then
+  DOTFILES_VM_USER=$(id -un)
+  DOTFILES_VM_HOME=$HOME
+  DOTFILES_VM_SYSTEM=$actual_system
+  export DOTFILES_VM_USER DOTFILES_VM_HOME DOTFILES_VM_SYSTEM
+  eval_flags+=(--impure)
+fi
+attr="$repo#homeConfigurations.\"$profile\""
+expected_user=$("${nix_cmd[@]}" eval --raw "${eval_flags[@]}" "$attr.config.home.username")
+expected_home=$("${nix_cmd[@]}" eval --raw "${eval_flags[@]}" "$attr.config.home.homeDirectory")
+expected_system=$("${nix_cmd[@]}" eval --raw "${eval_flags[@]}" "$attr.pkgs.stdenv.hostPlatform.system")
 [[ $expected_system == "$actual_system" ]] || die "Profile expects $expected_system; VM is $actual_system."
 if [[ $action == switch ]]; then
   [[ $expected_user == "$(id -un)" && $expected_home == "$HOME" ]] || \
     die "Profile targets $expected_user at $expected_home. Edit nix/hosts.nix for this user first."
 fi
 
-generation=$("${nix_cmd[@]}" build --no-write-lock-file --no-link --print-out-paths "$attr.activationPackage")
+generation=$("${nix_cmd[@]}" build "${eval_flags[@]}" --no-link --print-out-paths "$attr.activationPackage")
 printf 'Built %s: %s\n' "$profile" "$generation"
 if [[ $action == switch ]]; then
   # Preserve existing regular files and Stow symlinks. Never use force or --adopt.

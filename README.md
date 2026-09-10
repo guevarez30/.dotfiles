@@ -95,28 +95,20 @@ stow zsh nvim-config alacritty-config claude git-config tmux
 
 ### Linux VM Installation (Nix)
 
-Use **Nix + Home Manager** for repeatable development environments across Linux
-VMs. [`flake.lock`](flake.lock) pins the shared packages; [`nix/hosts.nix`](nix/hosts.nix)
-defines each VM's user, home directory, architecture, and optional overrides.
-
-Follow the [complete VM setup guide](nix/README.md) to install Nix and Docker
-Engine on the destination VM, then configure its profile and run there:
+Run **on each Ubuntu/Debian VM** as your normal user:
 
 ```bash
-cd ~/.dotfiles
-bash scripts/nix-vm.sh build dev-amd64
-bash scripts/nix-vm.sh switch dev-amd64
+bash <(curl -fsSL https://raw.githubusercontent.com/guevarez30/.dotfiles/raft-vm/scripts/install-vm.sh)
 ```
 
-Replace the example profile's username/home first. An ARM64 example is also
-included. The profile installs Go, Node, Python, Java, Rust, Docker client tools,
-Helm, kind, kubectl, gh, k9s, Neovim, tmux, Zsh, Stow and CLI utilities, along
-with shell/editor plugins and language servers.
+This installs Nix, Docker Engine, all development packages, and your shell/editor
+configuration. It detects your user, home directory and architecture, configures
+Docker access and Zsh, and verifies the installation. No manual profile editing.
+Reconnect SSH after it finishes.
 
-Run `bash scripts/nix-vm.sh verify` from a fresh shell after activation.
-The helper refuses macOS and root. Home Manager manages VM dotfiles; do not
-also Stow the same files there. The Stow commands below remain for macOS and
-packages outside Home Manager.
+[`flake.lock`](flake.lock) pins the shared environment. See the
+[VM guide](nix/README.md) for optional per-VM overrides and upgrades. The installer
+refuses macOS. Home Manager manages VM dotfiles; do not also Stow those files.
 
 ### Management
 

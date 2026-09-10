@@ -20,7 +20,15 @@
       homes = builtins.mapAttrs (_: mkHome) hosts;
       systems = [ "x86_64-linux" "aarch64-linux" ];
     in {
-      homeConfigurations = homes;
+      homeConfigurations = homes // {
+        # Only machine identity is read from the environment. Packages stay locked.
+        # The helper supplies these values and enables --impure for this profile.
+        current = mkHome {
+          username = builtins.getEnv "DOTFILES_VM_USER";
+          homeDirectory = builtins.getEnv "DOTFILES_VM_HOME";
+          system = builtins.getEnv "DOTFILES_VM_SYSTEM";
+        };
+      };
       formatter = nixpkgs.lib.genAttrs systems (system: nixpkgs.legacyPackages.${system}.nixfmt);
     };
 }

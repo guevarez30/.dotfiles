@@ -1,6 +1,6 @@
 # Linux VMs with Nix and Home Manager
 
-One package definition, one dependency lock, and one small entry per VM/user.
+One command on each VM, with a shared package definition and dependency lock.
 This is a **user environment for existing Linux VMs**, not an OS installer.
 Run the installation commands below **on the destination VM**, never on the Mac.
 The helper refuses macOS and root before it invokes Nix or changes files.
@@ -33,144 +33,84 @@ Nix/Home Manager owns these files on the VM: shell startup files, `.localrc`,
 and Docker CLI plugin links. **Do not also Stow those files on the same VM.**
 Stow remains installed for other packages; the existing macOS setup is separate.
 
-## 1. Prepare the VM
+## Install on each VM
 
-Use a normal user with sudo access, an existing home directory, and a systemd
-Linux VM. The examples below use Ubuntu/Debian. Both x86_64 and ARM64 profiles
-are provided. Allow several GB of free space for the development environment
-and more for Docker images/clusters.
+Run this one command as your normal user on an Ubuntu 22.04/24.04/26.04 or
+Debian 12/13 VM with systemd and sudo access:
 
 ```bash
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl git xz-utils
-git clone https://github.com/guevarez30/.dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+bash <(curl -fsSL https://raw.githubusercontent.com/guevarez30/.dotfiles/raft-vm/scripts/install-vm.sh)
 ```
 
-Install Nix once per VM using the upstream multi-user installer. Download it
-first so you can inspect it before running it:
+It installs host prerequisites, clones/updates the `raft-vm` branch, installs and
+starts Docker Engine, installs Nix without interactive installer questions,
+builds and activates the full package/dotfile environment, sets Zsh as your login
+shell, and verifies the tools. It detects your username, home directory and
+architecture. **No profile edits or separate install commands are needed.**
 
-```bash
-curl --proto '=https' --tlsv1.2 -fL https://nixos.org/nix/install -o /tmp/install-nix.sh
-less /tmp/install-nix.sh
-sh /tmp/install-nix.sh --daemon
-```
+You may be prompted for your sudo password. Reconnect SSH when it finishes to
+pick up the login shell and Docker group. GitHub authentication remains personal:
+run `gh auth login` when you need it.
 
-Follow the installer's prompts, then log out and back in. The helper enables
-`nix-command` and `flakes` for its own commands, without changing global Nix
-settings. See [upstream installation requirements](https://nixos.org/download/).
+The same command works on both x86_64 and ARM64. It reuses existing Nix and
+Docker installations, updates a clean checkout with a fast-forward pull, and
+preserves local checkout changes. If `~/.dotfiles` is on another branch, it stops
+instead of switching your checkout. Rerun the command after correcting any
+reported error. Existing dotfile conflicts get unique `.pre-nix-TIMESTAMP-PID`
+backups during activation.
 
-### Docker Engine: one-time host setup
+Docker group membership grants root-equivalent access. Published container ports
+can bypass UFW rules. The bootstrap leaves SSH, firewall policy and OS upgrades
+to your VM provisioning process. It creates no Kubernetes clusters and does not
+copy authentication credentials. The VM needs Internet access and several GB of
+free disk space, plus room for your container images.
 
-Home Manager supplies the Docker **client**, not a root-owned system daemon.
-Install Docker Engine using the official repository for your actual distro:
-[Ubuntu](https://docs.docker.com/engine/install/ubuntu/) or
-[Debian](https://docs.docker.com/engine/install/debian/). Follow the repository
-setup there, then install the Engine packages and start the service:
+Upstream references: [Nix installation](https://nixos.org/download/),
+[Docker on Ubuntu](https://docs.docker.com/engine/install/ubuntu/),
+[Docker on Debian](https://docs.docker.com/engine/install/debian/).
 
-```bash
-# Only after configuring the official Docker APT repository:
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-sudo systemctl enable --now docker
-sudo usermod -aG docker "$USER"
-```
+## Optional per-VM customization
 
-The Docker group grants root-equivalent access. Log out and back in for group
-membership to take effect. If you prefer rootless Docker, use Docker's rootless
-setup instead. Keep SSH, firewall rules, OS updates and users under your VM/OS
-provisioning process. Docker-published ports can bypass UFW rules; account for
-that before publishing services. [Docker post-installation guidance](https://docs.docker.com/engine/install/linux-postinstall/)
+The default `current` profile detects machine identity. The helper uses
+`--impure` only for the three identity variables; packages and plugin versions
+still come from the committed `flake.lock`. Nothing is written to `hosts.nix`
+by installation.
 
-## 2. Define your machines
-
-Edit [`hosts.nix`](hosts.nix). Profile names are labels; they do not change the
-machine's hostname. Use the actual username/home directory from `id -un` and
-`echo "$HOME"`. `uname -m` maps to `x86_64-linux` or `aarch64-linux`:
+For a VM that needs extra packages or Git identity settings, add a named entry
+to [`hosts.nix`](hosts.nix):
 
 ```nix
-{
-  work-vm = {
-    system = "x86_64-linux";
-    username = "ubuntu";
-    homeDirectory = "/home/ubuntu";
-    gitName = "Your Name";
-    gitEmail = "you@example.com";
-  };
-  arm-lab = {
-    system = "aarch64-linux";
-    username = "taylor";
-    homeDirectory = "/home/taylor";
-    modules = [
-      ({ pkgs, ... }: { home.packages = [ pkgs.yq-go ]; })
-    ];
-  };
-}
+work-vm = {
+  system = "x86_64-linux";
+  username = "ubuntu";
+  homeDirectory = "/home/ubuntu";
+  gitName = "Your Name";
+  gitEmail = "you@example.com";
+  modules = [ ({ pkgs, ... }: { home.packages = [ pkgs.yq-go ]; }) ];
+};
 ```
 
-Commit the configuration and lockfile to your dotfiles repo and check out the
-same commit on each VM. Nix flakes in a Git checkout only see tracked files;
-stage new Nix files before building during development. Keep credentials,
-private keys and tokens out of all Nix files: Nix store contents are readable
-by other local users. Optional machine-only shell settings can go in
-`~/.raftrc`, which is sourced only when present.
+Then apply that named profile with `bash scripts/nix-vm.sh switch work-vm`.
+Use the named helper command for later updates to retain its overrides; the
+one-command bootstrap always applies the shared `current` profile.
 
-## 3. Build and apply on each VM
+Keep credentials out of Nix files: Nix store contents are readable by other
+local users. Optional private shell settings can go in `~/.raftrc`.
+
+## Optional maintenance commands
+
+After installation, the helper is available in `~/.dotfiles`:
 
 ```bash
-cd ~/.dotfiles
-bash scripts/nix-vm.sh list
-bash scripts/nix-vm.sh build work-vm
-bash scripts/nix-vm.sh switch work-vm
+bash scripts/nix-vm.sh build     # Prepare the current profile without activation
+bash scripts/nix-vm.sh switch    # Apply the current profile
+bash scripts/nix-vm.sh verify    # Check tools, shell startup and Docker access
 ```
 
-Use `arm-lab` on the ARM machine. The helper checks architecture; switching also
-checks username and home directory. `build` prepares packages without activating
-dotfiles. `switch` activates as the current user and backs up conflicting files
-or Stow links with a unique `.pre-nix-TIMESTAMP-PID` suffix. It does not overwrite
-the files those old symlinks point to. Existing Nix-managed files update normally.
-If activation stops on a conflict, inspect the reported paths and rerun; do not
-use `stow --adopt` or delete your old configuration blindly.
-
-Start Zsh after activation:
-
-```bash
-exec "$HOME/.nix-profile/bin/zsh" -l
-```
-
-Changing the login shell is a separate, optional host setting. If desired, add
-the stable profile path to `/etc/shells` and use `chsh`:
-
-```bash
-shell_path="$HOME/.nix-profile/bin/zsh"
-command grep -Fxq "$shell_path" /etc/shells || printf '%s\n' "$shell_path" | sudo tee -a /etc/shells
-chsh -s "$shell_path"
-```
-
-## 4. Verify and authenticate
-
-```bash
-bash scripts/nix-vm.sh verify
-go version
-nvim --version
-helm version --short
-kubectl version --client
-gh auth login
-```
-
-Verification checks command availability, Zsh startup, Compose/Buildx, and
-access to the Docker daemon. It does not create a cluster,
-run containers, or require GitHub authentication. In Neovim, `:checkhealth` gives
-additional detail. Use `uv venv` for Python projects; install project-specific
-Node packages locally rather than writing into Nix's read-only installation.
-
-For an end-to-end container/cluster check, run this explicitly on the VM:
-
-```bash
-docker run --rm hello-world
-kind create cluster --name dotfiles-smoke --wait 120s
-kubectl --context kind-dotfiles-smoke get nodes
-kind delete cluster --name dotfiles-smoke
-```
+The helper refuses macOS and root. These commands require the installed Nix;
+use the one-command bootstrap above on a new VM. In Neovim, `:checkhealth`
+provides more detail. Use `uv venv` for Python projects and local dependencies
+for Node projects; Nix-managed installations are read-only.
 
 For project clusters, keep a project-specific kind config and pin a node image
 digest supported by the locked kind version. Select kubectl within one minor
@@ -187,8 +127,8 @@ To deliberately update package/plugin versions on a Linux development VM:
 
 ```bash
 nix --extra-experimental-features 'nix-command flakes' flake update
-bash scripts/nix-vm.sh build work-vm
-bash scripts/nix-vm.sh switch work-vm
+bash scripts/nix-vm.sh build
+bash scripts/nix-vm.sh switch
 bash scripts/nix-vm.sh verify
 ```
 

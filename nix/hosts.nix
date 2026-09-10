@@ -1,4 +1,5 @@
-# One entry per VM/user. Replace the examples before switching on your machines.
+# Optional named profiles. The installer automatically uses the current user.
+# Customize these only when a VM needs overrides beyond the shared environment.
 # Profiles sharing a system and package list share the same cached packages.
 {
   dev-amd64 = {
