@@ -130,64 +130,58 @@ alias py-env="source .venv/bin/activate"
 #####################################################################################
 #Include Scripts to Path and Custom Functions
 #####################################################################################
-if [[ -z ${DOTFILES_NIX:-} && -d /opt/homebrew/opt/libpq/bin ]]; then
+if [[ -d /opt/homebrew/opt/libpq/bin ]]; then
   path_append /opt/homebrew/opt/libpq/bin
 fi
 
 # bun
-if [[ -z ${DOTFILES_NIX:-} ]]; then
-  export BUN_INSTALL="$HOME/.bun"
-  path_prepend "$BUN_INSTALL/bin"
-fi
+export BUN_INSTALL="$HOME/.bun"
+path_prepend "$BUN_INSTALL/bin"
 
 #####################################################################################
 # Node Version Manager
 #####################################################################################
-if [[ -z ${DOTFILES_NIX:-} ]]; then
-  export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$HOME/.nvm"
 
-  load_nvm() {
-    unfunction node npm npx nvm 2>/dev/null
-    [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
-    [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
-  }
+load_nvm() {
+  unfunction node npm npx nvm 2>/dev/null
+  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+  [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+}
 
-  node() {
-    load_nvm
-    command node "$@"
-  }
+node() {
+  load_nvm
+  command node "$@"
+}
 
-  npm() {
-    load_nvm
-    command npm "$@"
-  }
+npm() {
+  load_nvm
+  command npm "$@"
+}
 
-  npx() {
-    load_nvm
-    command npx "$@"
-  }
+npx() {
+  load_nvm
+  command npx "$@"
+}
 
-  nvm() {
-    load_nvm
-    nvm "$@"
-  }
-fi
+nvm() {
+  load_nvm
+  nvm "$@"
+}
 
 #####################################################################################
 # Go
 #####################################################################################
 export GOPATH="$HOME/go"
-if [[ -z ${DOTFILES_NIX:-} ]]; then
-  path_append /usr/local/go/bin
-  path_prepend "$GOPATH/bin"
-fi
+path_append /usr/local/go/bin
+path_prepend "$GOPATH/bin"
 
 #####################################################################################
 # FZF - Fuzzy Finder
 #####################################################################################
 # Shell keybindings: Ctrl+R (history), Ctrl+T (files), Alt+C (cd)
 if command -v fzf &>/dev/null; then
-    [[ -n ${DOTFILES_NIX:-} ]] || source <(fzf --zsh)
+    source <(fzf --zsh)
     export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
     if command -v fdfind &>/dev/null; then
         fd_cmd='fdfind'
@@ -275,7 +269,7 @@ export CARAPACE_STYLE_CARAPACE_SECTION="fg:#a6e3a1,bold"
 export CARAPACE_STYLE_CARAPACE_FLAG="fg:#f38ba8"
 
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-if [[ -z ${DOTFILES_NIX:-} ]] && command -v carapace &>/dev/null; then
+if command -v carapace &>/dev/null; then
   source <(carapace _carapace)
 fi
 

@@ -93,22 +93,76 @@ stow zsh nvim-config alacritty-config claude git-config tmux
 
 ---
 
-### Linux VM Installation (Nix)
+### Linux VM Installation
 
-Run **on each Ubuntu/Debian VM** as your normal user:
+Give an agent running **on the destination Linux VM** this instruction:
 
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/guevarez30/.dotfiles/raft-vm/scripts/install-vm.sh)
-```
+> Set up this VM using the Linux VM Installation section of `~/.dotfiles/README.md`.
+> Inspect the machine and existing dotfiles, install the required tools, apply the
+> configuration, and verify that it works. Perform the installation directly;
+> do not create installer scripts, test suites, or CI workflows. Preserve existing
+> files and report installed versions, remaining authentication, and any blockers.
 
-This installs Nix, Docker Engine, all development packages, and your shell/editor
-configuration. It detects your user, home directory and architecture, configures
-Docker access and Zsh, and verifies the installation. No manual profile editing.
-Reconnect SSH after it finishes.
+This section is the installation specification. Run installation work on the VM,
+never on the Mac used to edit this repository.
 
-[`flake.lock`](flake.lock) pins the shared environment. See the
-[VM guide](nix/README.md) for optional per-VM overrides and upgrades. The installer
-refuses macOS. Home Manager manages VM dotfiles; do not also Stow those files.
+#### Required tools
+
+| Area | Install |
+| --- | --- |
+| Languages | Go, Node.js LTS/npm through nvm, Python 3/pip/venv and uv, Java 21 JDK, Rust/Cargo/rustfmt/Clippy through rustup |
+| Containers | Docker Engine and CLI, Docker Compose plugin, Buildx plugin, Helm, kind, kubectl, k9s |
+| Shell | Zsh, Oh My Zsh, zsh-autosuggestions, zsh-syntax-highlighting, tmux, fzf, zoxide, Carapace |
+| Editor | Neovim, plugins from the existing configuration, Tree-sitter parsers, language servers and formatters |
+| Utilities | Git, GitHub CLI (`gh`), GNU Stow, ripgrep, fd, bat, jq, tree, eza, curl, wget, OpenSSH client, GnuPG, slides |
+| Build and system tools | GCC/C++, Make, CMake, pkg-config, OpenSSL development headers, CA certificates, zip/unzip, tar/gzip/xz, ncurses/terminfo tools, procps, iproute2, lsof, ShellCheck, shfmt |
+
+#### Installation requirements for the agent
+
+1. Detect the distribution, architecture, target user, home directory, and existing
+   installations. Use distro packages where suitable and current official vendor
+   instructions where newer versions are needed. Check project compatibility for
+   Go, Java, Node.js, Helm, kubectl, and kind. Record the chosen versions so other
+   VMs can use the same baseline.
+2. Use this checkout at `~/.dotfiles`, or clone
+   `https://github.com/guevarez30/.dotfiles.git` on branch `raft-vm` if absent.
+   Preserve local changes and the existing branch when reusing a checkout.
+3. Install Docker Engine with Compose and Buildx, enable its service, and configure
+   Docker access for the target user. Verify access from a fresh user session.
+4. Install Oh My Zsh at `~/.oh-my-zsh` and the two external Zsh plugins under its
+   custom plugins directory. Preserve the repository's `.zshrc`. Install nvm at
+   `~/.nvm`, use an fzf version supporting `fzf --zsh`, and make Go, Cargo, and
+   user-installed executables available in a fresh login shell. Set Zsh as the
+   user's login shell; check the shell paths in `tmux/.tmux.conf` against the VM.
+5. Back up conflicting dotfiles, then use GNU Stow as the target user. All packages
+   below target the home directory; their contents include the necessary `.config`
+   paths:
+
+   ```bash
+   cd ~/.dotfiles
+   stow --target="$HOME" zsh tmux nvim-config git-config k9s-config
+   ```
+
+6. Install TPM at `~/.tmux/plugins/tpm` and install the plugins declared in
+   `tmux/.tmux.conf`. Initialize Neovim's existing Lazy configuration using the
+   committed `lazy-lock.json`. Inspect `nvim-config/.config/nvim/lua/plugins/`
+   for required language servers, parsers, formatters, and external dependencies;
+   use Mason or official tool installers as appropriate. Formatting currently
+   requires StyLua, Prettier, goimports/gofmt, rustfmt, autopep8, and templ.
+7. Configure Git's global excludes file to use `~/.gitignore_global`. Keep personal
+   Git identity, GitHub authentication, private repository access, and AI provider
+   credentials specific to each user. Machine-specific shell settings can live in
+   `~/.raftrc`. Desktop terminals and fonts belong on the SSH client; install optional
+   AI tools and their configuration only when requested.
+
+#### Completion checks on the VM
+
+Verify the required commands and versions in a fresh login shell, Docker daemon
+access plus Compose/Buildx, tmux startup and plugins, and Neovim startup and
+`:checkhealth`. Confirm Stow links resolve to this checkout and configured
+formatters and language servers are available. Report failures and outstanding
+authentication explicitly. Creating a kind cluster is project-specific and is
+not part of the base installation.
 
 ### Management
 
