@@ -31,6 +31,8 @@ vim.keymap.set("v", "<leader>y", '"+y', { noremap = true, desc = "Copy to clipbo
 vim.keymap.set("n", "<leader>Y", '"+yy', { noremap = true, desc = "Copy line to clipboard" })
 
 -- QuickFix
+vim.keymap.set("n", "cn", "<cmd>cnext<CR>", { noremap = true, desc = "Next quickfix item" })
+vim.keymap.set("n", "cp", "<cmd>cprevious<CR>", { noremap = true, desc = "Previous quickfix item" })
 vim.keymap.set("n", "]q", "<cmd>cnext<CR>", { noremap = true, desc = "Next quickfix item" })
 vim.keymap.set("n", "[q", "<cmd>cprevious<CR>", { noremap = true, desc = "Previous quickfix item" })
 vim.keymap.set("n", "<leader>qo", "<cmd>vertical copen<CR>", { noremap = true, desc = "Open quickfix list" })
@@ -79,14 +81,6 @@ end, { desc = "Copy file path prompt" })
 vim.keymap.set("v", "<leader>ap", function()
 	copy_ref({ visual = true })
 end, { desc = "Copy file path range prompt" })
-
-vim.keymap.set("n", "<leader>al", function()
-	require("main.clanker").insert()
-end, { desc = "Insert clanker comment" })
-
-vim.keymap.set("v", "<leader>al", function()
-	require("main.clanker").insert({ visual = true })
-end, { desc = "Insert clanker comment above selection" })
 
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
