@@ -52,6 +52,12 @@ while IFS= read -r local_branch; do
   branch_menu+="[local] ${local_branch}"$'\t'"local"$'\t'"${local_branch}"$'\n'
 done <<<"$local_branches"
 
+while IFS=$'\t' read -r remote_ref symbolic_ref; do
+  [ -n "$remote_ref" ] || continue
+  [ -z "$symbolic_ref" ] || continue
+  branch_menu+="[remote] ${remote_ref}"$'\t'"remote"$'\t'"${remote_ref}"$'\n'
+done < <(git for-each-ref --format='%(refname:strip=2)%09%(symref)' refs/remotes/)
+
 selection=$(printf '%s' "$branch_menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Branch> " --no-mouse)
 [ -z "$selection" ] && exit 0
 
@@ -81,6 +87,15 @@ if [ "$selection_type" = "new" ]; then
     base_ref=$(printf '%s' "$base_selection" | cut -f2)
     mode="new"
   fi
+elif [ "$selection_type" = "remote" ]; then
+  branch="${selection_ref#*/}"
+  base_ref="refs/remotes/$selection_ref"
+  mode="remote"
+  if git show-ref --verify --quiet "refs/heads/$branch"; then
+    printf 'Local branch already exists: %s. Select it from the local branch menu.\n' "$branch"
+    read -r -p "Press enter to close..."
+    exit 1
+  fi
 else
   branch="$selection_ref"
   base_ref=""
@@ -109,6 +124,13 @@ elif [ -d "$wt_path" ]; then
   echo "Directory exists but is not a registered worktree: $wt_path"
   read -r -p "Press enter to close..."
   exit 1
+elif [ "$mode" = "remote" ]; then
+  printf 'Creating worktree at %s tracking %s\n' "$wt_path" "$selection_ref"
+  if ! git worktree add --track -b "$branch" "$wt_path" "$base_ref"; then
+    printf '\nFailed to create worktree for remote branch: %s\n' "$selection_ref"
+    read -r -p "Press enter to close..."
+    exit 1
+  fi
 elif [ "$mode" = "new" ]; then
   printf 'Creating worktree at %s\nLarge/LFS repos can pause here; wait for checkout to finish.\n' "$wt_path"
   if ! git worktree add "$wt_path" -b "$branch" "$base_ref"; then
