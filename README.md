@@ -93,46 +93,30 @@ stow zsh nvim-config alacritty-config claude git-config tmux
 
 ---
 
-### Linux Installation
+### Linux VM Installation (Nix)
 
-<div align="left">
+Use **Nix + Home Manager** for repeatable development environments across Linux
+VMs. [`flake.lock`](flake.lock) pins the shared packages; [`nix/hosts.nix`](nix/hosts.nix)
+defines each VM's user, home directory, architecture, and optional overrides.
 
-![APT](https://img.shields.io/badge/APT-A81D33?style=flat-square&logo=debian&logoColor=white)
-![Pacman](https://img.shields.io/badge/Pacman-1793D1?style=flat-square&logo=arch-linux&logoColor=white)
+Follow the [complete VM setup guide](nix/README.md) to install Nix and Docker
+Engine on the destination VM, then configure its profile and run there:
 
-</div>
-
-**Ubuntu/Debian:**
-```bash
-sudo apt update
-sudo apt install -y stow git neovim tmux ripgrep fd-find bat tree jq \
-                    golang-go python3 python3-pip alacritty
-```
-
-**Arch Linux:**
-```bash
-sudo pacman -S stow git neovim tmux ripgrep fd bat tree jq \
-               go python python-pip alacritty
-```
-
-**Install Node.js via nvm:**
-```bash
-# Install nvm (Node Version Manager)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-source ~/.zshrc
-
-# Install latest LTS version
-nvm install --lts
-nvm use --lts
-```
-
-**Stow your dotfiles:**
 ```bash
 cd ~/.dotfiles
-stow zsh nvim-config alacritty-config claude git-config tmux
+bash scripts/nix-vm.sh build dev-amd64
+bash scripts/nix-vm.sh switch dev-amd64
 ```
 
-> 💡 **Note:** On Ubuntu/Debian, `fd` is installed as `fdfind` and `bat` as `batcat`. Aliases in `.localrc` handle this.
+Replace the example profile's username/home first. An ARM64 example is also
+included. The profile installs Go, Node, Python, Java, Rust, Docker client tools,
+Helm, kind, kubectl, gh, k9s, Neovim, tmux, Zsh, Stow and CLI utilities, along
+with shell/editor plugins and language servers.
+
+Run `bash scripts/nix-vm.sh verify` from a fresh shell after activation.
+The helper refuses macOS and root. Home Manager manages VM dotfiles; do not
+also Stow the same files there. The Stow commands below remain for macOS and
+packages outside Home Manager.
 
 ### Management
 
