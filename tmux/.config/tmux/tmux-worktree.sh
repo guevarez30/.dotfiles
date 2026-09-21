@@ -44,21 +44,16 @@ project_dir=$(printf '%s' "$project_selection" | cut -f2)
 cd "$project_dir"
 git worktree prune >/dev/null 2>&1 || true
 
-local_branches=$(git branch --format='%(refname:short)')
-new_branch_label="[create new branch]"
+local_branches=$(git branch --format='%(refname:short)' | LC_ALL=C sort -u)
+new_branch_label="check out new branch"
 branch_menu="$new_branch_label"$'\t'"new"$'\t'$'\n'
+branch_menu+="check out remote branch"$'\t'"remote"$'\t'$'\n'
 while IFS= read -r local_branch; do
   [ -n "$local_branch" ] || continue
   branch_menu+="[local] ${local_branch}"$'\t'"local"$'\t'"${local_branch}"$'\n'
 done <<<"$local_branches"
 
-while IFS=$'\t' read -r remote_ref symbolic_ref; do
-  [ -n "$remote_ref" ] || continue
-  [ -z "$symbolic_ref" ] || continue
-  branch_menu+="[remote] ${remote_ref}"$'\t'"remote"$'\t'"${remote_ref}"$'\n'
-done < <(git for-each-ref --format='%(refname:strip=2)%09%(symref)' refs/remotes/)
-
-selection=$(printf '%s' "$branch_menu" | LC_ALL=C sort -u | fzf --height 100% --delimiter=$'\t' --with-nth=1 --prompt="Branch> " --no-mouse)
+selection=$(printf '%s' "$branch_menu" | fzf --height 100% --layout=reverse --no-sort --delimiter=$'\t' --with-nth=1 --prompt="Branch> " --no-mouse)
 [ -z "$selection" ] && exit 0
 
 selection_type=$(printf '%s' "$selection" | cut -f2)
@@ -88,6 +83,28 @@ if [ "$selection_type" = "new" ]; then
     mode="new"
   fi
 elif [ "$selection_type" = "remote" ]; then
+  printf 'Fetching remote branches for %s...\n' "$project_name"
+  if ! git fetch --all --prune; then
+    printf '\nFailed to fetch remote branches for %s.\n' "$project_name"
+    read -r -p "Press enter to close..."
+    exit 1
+  fi
+
+  remote_menu=""
+  while IFS=$'\t' read -r remote_ref symbolic_ref; do
+    [ -n "$remote_ref" ] || continue
+    [ -z "$symbolic_ref" ] || continue
+    remote_menu+="${remote_ref}"$'\n'
+  done < <(git for-each-ref --format='%(refname:strip=2)%09%(symref)' refs/remotes/)
+
+  if [ -z "$remote_menu" ]; then
+    echo "No remote branches available."
+    read -r -p "Press enter to close..."
+    exit 0
+  fi
+
+  selection_ref=$(printf '%s' "$remote_menu" | LC_ALL=C sort -u | fzf --height 100% --prompt="Remote branch> " --no-mouse)
+  [ -z "$selection_ref" ] && exit 0
   branch="${selection_ref#*/}"
   base_ref="refs/remotes/$selection_ref"
   mode="remote"
