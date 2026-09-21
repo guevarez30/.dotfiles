@@ -41,9 +41,24 @@ vim.keymap.set("n", "co", ":copen <CR>", { noremap = true, desc = "Open quickfix
 
 -- Branch review
 vim.keymap.set("n", "<leader>dvo", "<cmd>BranchReviewPick<CR>", { noremap = true, desc = "Open branch review" })
-vim.keymap.set("n", "<leader>dvd", "<cmd>BranchReviewOpen origin/dev<CR>", { noremap = true, desc = "Open branch review vs origin/dev" })
-vim.keymap.set("n", "<leader>dvu", "<cmd>BranchReviewOpen --uncommitted<CR>", { noremap = true, desc = "Open uncommitted review" })
-vim.keymap.set("n", "<leader>dvs", "<cmd>BranchReviewOpen --staged<CR>", { noremap = true, desc = "Open staged review" })
+vim.keymap.set(
+	"n",
+	"<leader>dvd",
+	"<cmd>BranchReviewOpen origin/dev<CR>",
+	{ noremap = true, desc = "Open branch review vs origin/dev" }
+)
+vim.keymap.set(
+	"n",
+	"<leader>dvu",
+	"<cmd>BranchReviewOpen --uncommitted<CR>",
+	{ noremap = true, desc = "Open uncommitted review" }
+)
+vim.keymap.set(
+	"n",
+	"<leader>dvs",
+	"<cmd>BranchReviewOpen --staged<CR>",
+	{ noremap = true, desc = "Open staged review" }
+)
 vim.keymap.set("n", "<leader>dvc", "<cmd>BranchReviewClose<CR>", { noremap = true, desc = "Close branch review" })
 
 -- Split
@@ -95,11 +110,3 @@ end, { desc = "Copy file path prompt" })
 vim.keymap.set("v", "<leader>ap", function()
 	copy_ref({ visual = true })
 end, { desc = "Copy file path range prompt" })
-
-vim.keymap.set("n", "<leader>al", function()
-	require("main.clanker").insert()
-end, { desc = "Insert clanker comment" })
-
-vim.keymap.set("v", "<leader>al", function()
-	require("main.clanker").insert({ visual = true })
-end, { desc = "Insert clanker comment above selection" })

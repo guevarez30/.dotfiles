@@ -100,3 +100,5 @@ copy() {
 paste() {
 	clipboard-paste
 }
+
+source "/home/tguevarez/raft-tech/rafty/completions/rafty.zsh"
