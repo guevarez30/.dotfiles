@@ -52,35 +52,57 @@ vim.keymap.set("n", "<leader>sh", ":Hexplore <CR>", { noremap = true })
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 
 local function copy_ref(opts)
-	local path = vim.fn.expand("%:.")
-	local ref = path
-
-	if opts.visual then
-		local start_line = vim.fn.line("v")
-		local end_line = vim.fn.line(".")
-		if start_line > end_line then
-			start_line, end_line = end_line, start_line
-		end
-		ref = path .. ":" .. start_line .. ":" .. end_line
+	local path = vim.fn.expand("%:p")
+	if path == "" then
+		vim.notify("Save the buffer first so the agent has a file path.", vim.log.levels.WARN)
+		return
 	end
 
+	-- Snapshot the source before the prompt changes focus or Visual mode.
+	local start_line = vim.fn.line(".")
+	local lines = { vim.api.nvim_get_current_line() }
+	local filetype = vim.bo.filetype
+
+	if opts.visual then
+		local anchor = vim.fn.getpos("v")
+		local cursor = vim.fn.getpos(".")
+		start_line = math.min(anchor[2], cursor[2])
+		lines = vim.fn.getregion(anchor, cursor, { type = vim.fn.mode() })
+		vim.cmd.normal({ args = { vim.keycode("<Esc>") }, bang = true })
+	end
+
+	local end_line = start_line + #lines - 1
+	local ref = path .. ":" .. start_line
+	if end_line > start_line then
+		ref = ref .. "-" .. end_line
+	end
+	local content = table.concat(lines, "\n")
+	local fence = "```"
+	for ticks in content:gmatch("`+") do
+		if #ticks >= #fence then
+			fence = string.rep("`", #ticks + 1)
+		end
+	end
+	local context = ref .. "\n\n" .. fence .. filetype .. "\n" .. content .. "\n" .. fence
+
 	vim.ui.input({ prompt = "Prompt (optional): " }, function(note)
-		if note and note ~= "" then
-			ref = ref .. " " .. note
+		if note == nil then
+			return
 		end
 
-		vim.fn.setreg("+", ref)
-		vim.notify("Copied: " .. ref)
+		local prompt = note ~= "" and (note .. "\n\n" .. context) or context
+		vim.fn.setreg("+", prompt)
+		vim.notify("Copied prompt: " .. ref)
 	end)
 end
 
 vim.keymap.set("n", "<leader>ap", function()
 	copy_ref({})
-end, { desc = "Copy file path prompt" })
+end, { desc = "Copy agent prompt with current line" })
 
-vim.keymap.set("v", "<leader>ap", function()
+vim.keymap.set("x", "<leader>ap", function()
 	copy_ref({ visual = true })
-end, { desc = "Copy file path range prompt" })
+end, { desc = "Copy agent prompt with selection" })
 
 -- Error
 vim.keymap.set("n", "<Leader>ee", function()
