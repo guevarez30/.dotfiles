@@ -1,0 +1,21 @@
+nerdfont: true
+status_format: false
+mode: session
+window_prefix: " {project}∶"
+panes:
+  - focus: true
+sidebar:
+  templates:
+    compact: "{status_icon} {primary} {pane_suffix}"
+    tiles:
+      - "{primary} {pane_suffix}"
+      - "{secondary} {fill} {git_stats}"
+      - "{pane_title} {fill} {pr_number} {pr_checks}"
+    horizontal:
+      - "{status_icon} {primary} {pane_suffix}"
+      - "{secondary} {fill} {git_stats}"
+      - "{pane_title} {fill} {pr_number} {pr_checks}"
+    grouped:
+      tiles:
+        - "{primary} {pane_suffix} {fill} {pr_number} {pr_checks}"
+        - "{pane_title} {fill} {git_stats}"

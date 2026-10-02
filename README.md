@@ -86,7 +86,7 @@ nvm use --lts
 
 **4. Stow your dotfiles**:
 ```bash
-stow zsh nvim-config alacritty-config claude git-config tmux
+stow zsh nvim-config alacritty-config claude git-config tmux workmux
 ```
 
 > 💡 **Tip:** Run `brew bundle dump --force` to update the Brewfile with newly installed packages
@@ -129,7 +129,7 @@ nvm use --lts
 **Stow your dotfiles:**
 ```bash
 cd ~/.dotfiles
-stow zsh nvim-config alacritty-config claude git-config tmux
+stow zsh nvim-config alacritty-config claude git-config tmux workmux
 ```
 
 > 💡 **Note:** On Ubuntu/Debian, `fd` is installed as `fdfind` and `bat` as `batcat`. Aliases in `.localrc` handle this.

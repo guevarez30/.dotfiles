@@ -29,6 +29,7 @@ brew "zoxide"       # Smarter cd
 ###################################################################################
 brew "neovim"       # Modern vim
 brew "tmux"         # Terminal multiplexer
+brew "raine/workmux/workmux" # Git worktrees with tmux sessions
 brew "git"          # Version control
 
 ###################################################################################

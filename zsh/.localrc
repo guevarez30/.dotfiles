@@ -192,6 +192,7 @@ alias dirty-tag='echo "$(git rev-parse --short HEAD)-dirty"'
 
 
 
+alias wm='workmux'
 
 #####################################################################################
 # Carapace - Shell Completion
