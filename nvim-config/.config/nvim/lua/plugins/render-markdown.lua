@@ -4,7 +4,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"echasnovski/mini.nvim",
 	},
-	ft = { "markdown", "codecompanion" },
+	ft = { "markdown" },
 	opts = {
 		heading = {
 			sign = false,
