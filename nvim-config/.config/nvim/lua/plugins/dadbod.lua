@@ -29,6 +29,7 @@ return {
 				rdp_platform = vim.env.DB_RDP_PLATFORM,
 				rdp_catalog_api = vim.env.DB_RDP_CATALOG_API,
 				rdp_backend = vim.env.DB_RDP_BACKEND,
+				rdp_geoserver = vim.env.DB_RDP_GEOSERVER,
 			}
 		end,
 	},

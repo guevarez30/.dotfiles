@@ -110,6 +110,11 @@ alias src='source ~/.zshrc'
 # Deprecated: use tmux prefix+s for session switching/deletion.
 alias tms='~/.config/tmux/tmux-sessionizer.sh'
 alias tmw='~/.config/tmux/tmux-worktree.sh'
+alias wm='workmux'
+# Keep workmux hooks attached to this pane instead of a shared daemon's TMUX_PANE.
+if [[ -n "${TMUX:-}" ]]; then
+  alias codex='codex --no-daemon'
+fi
 alias dif='command diff'
 alias pretty="jq '.'"
 

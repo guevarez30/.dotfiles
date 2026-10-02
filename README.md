@@ -20,6 +20,7 @@
 - <img src="https://cdn.simpleicons.org/alacritty/F46D01" height="16" alt="alacritty"/> **`alacritty-config/`** - GPU-accelerated terminal
 - <img src="https://cdn.simpleicons.org/zsh/F15A24" height="16" alt="zsh"/> **`zsh/`** - Shell with oh-my-zsh
 - <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tmux/tmux-original.svg" height="16" alt="tmux"/> **`tmux/`** - Terminal multiplexer
+- **`workmux/`** - Git worktrees with tmux sessions
 
 ### Editors & Tools
 
@@ -35,6 +36,7 @@
 alacritty-config/  →  ~/.config/alacritty/
 nvim-config/       →  ~/.config/nvim/
 ghostty-config/    →  ~/.config/ghostty/
+workmux/           →  ~/.config/workmux/
 
 zsh/               →  ~/
 tmux/              →  ~/
@@ -86,7 +88,7 @@ nvm use --lts
 
 **4. Stow your dotfiles**:
 ```bash
-stow zsh nvim-config alacritty-config claude git-config tmux
+stow zsh nvim-config alacritty-config claude git-config tmux workmux
 ```
 
 > 💡 **Tip:** Run `brew bundle dump --force` to update the Brewfile with newly installed packages
@@ -112,7 +114,7 @@ never on the Mac used to edit this repository.
 | --- | --- |
 | Languages | Go, Node.js LTS/npm through nvm, Python 3/pip/venv and uv, Java 21 JDK, Rust/Cargo/rustfmt/Clippy through rustup |
 | Containers | Docker Engine and CLI, Docker Compose plugin, Buildx plugin, Helm, kind, kubectl, k9s |
-| Shell | Zsh, Oh My Zsh, zsh-autosuggestions, zsh-syntax-highlighting, tmux, fzf, zoxide, Carapace |
+| Shell | Zsh, Oh My Zsh, zsh-autosuggestions, zsh-syntax-highlighting, tmux, workmux, fzf, zoxide, Carapace |
 | Editor | Neovim, plugins from the existing configuration, Tree-sitter parsers, language servers and formatters |
 | Utilities | Git, GitHub CLI (`gh`), GNU Stow, ripgrep, fd, bat, jq, tree, eza, curl, wget, OpenSSH client, GnuPG, slides |
 | Build and system tools | GCC/C++, Make, CMake, pkg-config, OpenSSL development headers, CA certificates, zip/unzip, tar/gzip/xz, ncurses/terminfo tools, procps, iproute2, lsof, ShellCheck, shfmt |
@@ -134,13 +136,17 @@ never on the Mac used to edit this repository.
    `~/.nvm`, use an fzf version supporting `fzf --zsh`, and make Go, Cargo, and
    user-installed executables available in a fresh login shell. Set Zsh as the
    user's login shell; check the shell paths in `tmux/.tmux.conf` against the VM.
+   Install workmux using `cargo install workmux --locked` after Rust is available,
+   or use an architecture-matched Linux binary from the
+   [official installation instructions](https://workmux.raine.dev/guide/installation/).
+   Ensure `~/.cargo/bin` (or the selected binary directory) is on `PATH`.
 5. Back up conflicting dotfiles, then use GNU Stow as the target user. All packages
    below target the home directory; their contents include the necessary `.config`
    paths:
 
    ```bash
    cd ~/.dotfiles
-   stow --target="$HOME" zsh tmux nvim-config git-config k9s-config
+   stow --target="$HOME" zsh tmux workmux nvim-config git-config k9s-config
    ```
 
 6. Install TPM at `~/.tmux/plugins/tpm` and install the plugins declared in
@@ -154,6 +160,10 @@ never on the Mac used to edit this repository.
    credentials specific to each user. Machine-specific shell settings can live in
    `~/.raftrc`. Desktop terminals and fonts belong on the SSH client; install optional
    AI tools and their configuration only when requested.
+   For Claude Code, merge the `hooks` from `claude/.claude/settings.json` into the
+   user's settings to register agents and update workmux status. Preserve existing
+   hooks and permissions; the Mac-specific permission paths in that file are not
+   Linux defaults. Install workmux before enabling these hooks.
 
 #### Completion checks on the VM
 
@@ -161,8 +171,29 @@ Verify the required commands and versions in a fresh login shell, Docker daemon
 access plus Compose/Buildx, tmux startup and plugins, and Neovim startup and
 `:checkhealth`. Confirm Stow links resolve to this checkout and configured
 formatters and language servers are available. Report failures and outstanding
-authentication explicitly. Creating a kind cluster is project-specific and is
-not part of the base installation.
+authentication explicitly. Check `workmux --version`, the `wm` alias, and that
+`~/.config/workmux/config.yaml` resolves to this checkout. Inside tmux, run `wm list`
+from a Git repository to confirm workmux loads its configuration. Creating a kind
+cluster is project-specific and is not part of the base installation.
+
+#### Workmux workflow
+
+The shared config uses one tmux session per worktree, a focused shell pane, and
+the same sidebar templates as `raft-mac`. From a Git repository inside tmux, run
+`wm add feature-name` to create a worktree and `wm list` to list worktrees.
+Nerd Font icons are enabled; configure the font on the SSH client, or set
+`nerdfont: false` and use a plain-text `window_prefix` if the client lacks one.
+
+For Codex status tracking, run `workmux setup --hooks` and select Codex. Review
+and trust the installed hooks in Codex when prompted; see the
+[Codex hook documentation](https://learn.chatgpt.com/docs/hooks).
+The Zsh configuration runs `codex --no-daemon` inside tmux so registration and
+status hooks inherit that pane's environment. A shared Codex daemon can retain
+the `TMUX_PANE` of an old terminal, causing missing or misdirected status updates.
+This means tmux-launched Codex sessions use a dedicated process rather than the
+shared background server. For launches that bypass Zsh aliases, pass
+`--no-daemon` explicitly. After applying this setting, exit existing Codex clients,
+reload `~/.localrc`, and use `codex --no-daemon resume <session-id>` to continue.
 
 ### Management
 

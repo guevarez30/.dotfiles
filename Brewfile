@@ -28,6 +28,7 @@ brew "fzf"          # Fuzzy finder for shell and editor integration
 ###################################################################################
 brew "neovim"       # Modern vim
 brew "tmux"         # Terminal multiplexer
+brew "raine/workmux/workmux" # Git worktrees with tmux sessions
 brew "git"          # Version control
 
 ###################################################################################
