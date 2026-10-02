@@ -77,10 +77,6 @@ alias loads='cd ~/raft-tech'
 alias src='source ~/.zshrc'
 alias diff='nvim -d'
 alias dif='command diff'
-# Deprecated: use tmux prefix+s for session switching/deletion.
-alias tms='~/.dotfiles/tmux/.config/tmux/tmux-sessionizer.sh'
-alias tmw='~/.dotfiles/tmux/.config/tmux/tmux-worktree.sh'
-alias tmwd='~/.dotfiles/tmux/.config/tmux/tmux-worktree-delete.sh'
 alias pretty="jq '.'"
 
 #####################################################################################
